@@ -1,10 +1,13 @@
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 
+// console.log(__dirname.slice(0,__dirname.indexOf('src')));
+// console.log(path.join(__dirname.indexOf('database'), "/user_info_data.sqlite"));
+
 class Database {
   constructor() {
-    this.userProfileDbPath =
-      "C:\\Users\\Danie\\Desktop\\live_streaming_website\\database\\data\\user_info_data.sqlite";
+    // "C:\\Users\\Danie\\Desktop\\live_streaming_website\\database\\data\\user_info_data.sqlite";
+    this.userProfileDbPath = path.join(__dirname.slice(0,__dirname.indexOf('src')), "/data/user_info_data.sqlite");
 
     this.db = new sqlite3.Database(this.userProfileDbPath);
   }

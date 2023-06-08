@@ -18,7 +18,7 @@ const tables = [
       subscription_id INTEGER PRIMARY KEY AUTOINCREMENT,
       subscriber_id INTEGER,
       subscribed_to_id INTEGER,
-      subscription_date DATETIME,
+      subscription_date DATETIME DEFAULT CURRENT_TIMESTAMP,
       subscription_duration INTEGER,
       subscription_tier INTEGER,
       FOREIGN KEY (subscriber_id) REFERENCES User(user_id),
