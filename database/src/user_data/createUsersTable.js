@@ -52,6 +52,3 @@ const tables = [
 tables.forEach((table) => {
   db.createTable(table.name, table.definition).then();
 });
-
-// Close the database connection after all table creations are done
-// db.close();
