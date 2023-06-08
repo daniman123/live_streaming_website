@@ -4,7 +4,7 @@ const tables = [
   {
     name: "User",
     definition: `
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER PRIMARY KEY AUTOINCREMENT,
       username VARCHAR(255) NOT NULL,
       email VARCHAR(255) NOT NULL,
       password VARCHAR(255) NOT NULL,
@@ -21,8 +21,8 @@ const tables = [
       subscription_date DATETIME,
       subscription_duration INTEGER,
       subscription_tier INTEGER,
-      FOREIGN KEY (subscriber_id) REFERENCES User(id),
-      FOREIGN KEY (subscribed_to_id) REFERENCES User(id)
+      FOREIGN KEY (subscriber_id) REFERENCES User(user_id),
+      FOREIGN KEY (subscribed_to_id) REFERENCES User(user_id)
     `,
   },
 ];

@@ -1,5 +1,3 @@
-const registerNewUser = require('../userRegistration/registerNewUser')
+const registerNewUser = require("./user_data/userRegistration/registerNewUser");
 
-registerNewUser("Vizualswami123","danim@gmail.com","password123")
-
-
+gisterNewUser("Vizualswami123", "danim@gmail.com", "password123");
