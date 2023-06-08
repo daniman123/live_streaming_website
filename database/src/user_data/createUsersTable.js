@@ -28,6 +28,8 @@ const tables = [
 ];
 
 // Loop over the array and create tables
-tables.forEach((table) => {
-  db.createTable(table.name, table.definition).then();
+tables.forEach(async (table) => {
+  await db.createTable(table.name, table.definition);
 });
+
+db.close()

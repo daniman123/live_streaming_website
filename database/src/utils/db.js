@@ -57,7 +57,6 @@ class Database {
       console.log(`Table '${tableName}' created successfully.`);
     } catch (error) {
       console.error(`Error creating table '${tableName}':`, error);
-    } finally {
       await this.close();
     }
   }
