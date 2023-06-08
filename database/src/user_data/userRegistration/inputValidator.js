@@ -7,6 +7,22 @@ class InputValidator {
     this.input = input;
   }
 
+  async validator() {
+    const sanitizedInput = this.sanitizeInput();
+
+    const isValid = await this.validateInput(sanitizedInput);
+    if (!isValid) return;
+
+    const [isUsernameDuplicate, isEmailDuplicate] = await Promise.all([
+      this.checkDuplicate(this.tableName, "username", this.input.username),
+      this.checkDuplicate(this.tableName, "email", this.input.email),
+    ]);
+
+    if (isUsernameDuplicate || isEmailDuplicate) return;
+
+    return sanitizedInput;
+  }
+
   sanitizeInput() {
     return this.db.sanitizeInput(this.input);
   }
@@ -15,32 +31,8 @@ class InputValidator {
     return this.db.validateInput(inp);
   }
 
-  // Check for duplicates
-  usernameDuplicate() {
-    return this.db.checkDuplicates(
-      this.tableName,
-      "username",
-      this.input.username
-    );
-  }
-
-  emailDuplicate() {
-    return this.db.checkDuplicates(this.tableName, "email", this.input.email);
-  }
-
-  async validator() {
-    const sanitizedInput = this.sanitizeInput();
-
-    const isValidateInput = this.validateInput(sanitizedInput);
-    if (!isValidateInput) return;
-
-    const isUsernameDuplicate = await this.usernameDuplicate();
-    if (isUsernameDuplicate) return;
-
-    const isEmailDuplicate = await this.emailDuplicate();
-    if (isEmailDuplicate) return;
-
-    return sanitizedInput;
+  checkDuplicate(tableName, field, value) {
+    return this.db.checkDuplicates(tableName, field, value);
   }
 }
 

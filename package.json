@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.10.3",
+    "async-mutex": "^0.4.0",
     "sqlite3": "^5.1.6"
   }
 }

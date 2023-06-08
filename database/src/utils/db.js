@@ -68,16 +68,14 @@ class Database {
       FROM ${tableName}
       WHERE ${columnName} = ?
     `;
-
     try {
       const result = await this.getSingleRow(query, [value]);
       const count = result ? result.count : 0;
-      return count > 0;
+      const condition = count > 0;
+      if (condition) console.log(`${columnName}: '${value}' already exists`);
+      return condition;
     } catch (error) {
-      console.error(
-        `Error checking duplicates in '${tableName}' table:`,
-        error
-      );
+      console.error(`Error checking duplicates in '${tableName}'`, error);
       return false;
     }
   }
@@ -203,17 +201,20 @@ class Database {
 
     // Validate username
     if (username.length < 3 || username.length > 20) {
+      console.log("Username length should be between 3 and 20 characters");
       return false; // Username length should be between 3 and 20 characters
     }
 
     // Validate email
     const emailRegex = /^[\w.-]+@[a-zA-Z_-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
+      console.log("Invalid email format");
       return false; // Invalid email format
     }
 
     // Validate password
     if (password.length < 8) {
+      console.log("Password should be at least 8 characters long");
       return false; // Password should be at least 8 characters long
     }
 

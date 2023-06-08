@@ -31,4 +31,3 @@ const tables = [
 tables.forEach((table) => {
   db.createTable(table.name, table.definition).then();
 });
-

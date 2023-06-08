@@ -15,8 +15,6 @@ class UserRepository {
     } catch (error) {
       console.error("Error inserting new user:", error);
       throw error;
-    } finally {
-      await db.close();
     }
   }
 }
