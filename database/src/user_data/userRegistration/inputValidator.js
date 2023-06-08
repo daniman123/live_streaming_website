@@ -1,21 +1,20 @@
 const db = require("../../utils/db");
 
 class InputValidator {
-  constructor(input) {
+  constructor() {
     this.db = db;
     this.tableName = "User";
-    this.input = input;
   }
 
-  async validator() {
-    const sanitizedInput = this.sanitizeInput();
+  async validator(input) {
+    const sanitizedInput = this.sanitizeInput(input);
 
-    const isValid = await this.validateInput(sanitizedInput);
+    const isValid = this.validateInput(sanitizedInput);
     if (!isValid) return;
 
     const [isUsernameDuplicate, isEmailDuplicate] = await Promise.all([
-      this.checkDuplicate(this.tableName, "username", this.input.username),
-      this.checkDuplicate(this.tableName, "email", this.input.email),
+      this.checkDuplicate(this.tableName, "username", input.username),
+      this.checkDuplicate(this.tableName, "email", input.email),
     ]);
 
     if (isUsernameDuplicate || isEmailDuplicate) return;
@@ -23,8 +22,8 @@ class InputValidator {
     return sanitizedInput;
   }
 
-  sanitizeInput() {
-    return this.db.sanitizeInput(this.input);
+  sanitizeInput(input) {
+    return this.db.sanitizeInput(input);
   }
 
   validateInput(inp) {

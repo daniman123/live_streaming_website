@@ -1,9 +1,8 @@
 const db = require("../../utils/db");
 const InputValidator = require("./InputValidator");
-const UserRepository = require("./userRepository");
+const insertUser = require("./userRepository");
 
 const inputValidator = new InputValidator();
-const userRepository = new UserRepository();
 
 async function registerNewUser(username, email, password) {
   const input = { username, email, password };
@@ -14,7 +13,11 @@ async function registerNewUser(username, email, password) {
     const sanitizedInput = await inputValidator.validator(input);
     if (!sanitizedInput) return;
 
-    await userRepository.insertUser(sanitizedInput);
+    await insertUser(
+      sanitizedInput.username,
+      sanitizedInput.email,
+      sanitizedInput.password
+    );
     await db.commitTransaction();
   } catch (error) {
     await db.rollbackTransaction();
@@ -25,4 +28,3 @@ async function registerNewUser(username, email, password) {
 }
 
 module.exports = registerNewUser;
-
