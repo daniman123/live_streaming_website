@@ -1,49 +1,28 @@
 const db = require("../utils/db");
 
-// Define an array of table names and definitions
 const tables = [
   {
-    name: "users",
+    name: "User",
     definition: `
-      id INTEGER PRIMARY KEY,
-      username TEXT NOT NULL,
-      email TEXT NOT NULL,
-      password TEXT NOT NULL,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username VARCHAR(255) NOT NULL,
+      email VARCHAR(255) NOT NULL,
+      password VARCHAR(255) NOT NULL,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     `,
   },
   {
-    name: "Channels",
+    name: "Subscription",
     definition: `
-      id INTEGER PRIMARY KEY,
-      name TEXT,
-      description TEXT,
-      user_id INTEGER,
-      FOREIGN KEY (user_id) REFERENCES Users (id)
-    `,
-  },
-  {
-    name: "Subscriptions",
-    definition: `
-      id INTEGER PRIMARY KEY,
-      user_id INTEGER,
-      channel_id INTEGER,
-      tier INTEGER,
-      start_date TEXT,
-      end_date TEXT,
-      FOREIGN KEY (user_id) REFERENCES Users (id),
-      FOREIGN KEY (channel_id) REFERENCES Channels (id)
-    `,
-  },
-  {
-    name: "Payments",
-    definition: `
-      id INTEGER PRIMARY KEY,
-      subscription_id INTEGER,
-      amount REAL,
-      payment_date TEXT,
-      FOREIGN KEY (subscription_id) REFERENCES Subscriptions (id)
+      subscription_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      subscriber_id INTEGER,
+      subscribed_to_id INTEGER,
+      subscription_date DATETIME,
+      subscription_duration INTEGER,
+      subscription_tier INTEGER,
+      FOREIGN KEY (subscriber_id) REFERENCES User(id),
+      FOREIGN KEY (subscribed_to_id) REFERENCES User(id)
     `,
   },
 ];
@@ -52,3 +31,4 @@ const tables = [
 tables.forEach((table) => {
   db.createTable(table.name, table.definition).then();
 });
+

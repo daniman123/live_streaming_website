@@ -4,7 +4,7 @@ const path = require("path");
 class Database {
   constructor() {
     this.userProfileDbPath =
-      "C:\\Users\\Danie\\OneDrive\\Skrivebord\\live_streaming_website\\database\\data\\user_info_data.sqlite";
+      "C:\\Users\\Danie\\Desktop\\live_streaming_website\\database\\data\\user_info_data.sqlite";
 
     this.db = new sqlite3.Database(this.userProfileDbPath);
   }
