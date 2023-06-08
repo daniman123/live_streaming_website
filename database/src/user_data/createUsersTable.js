@@ -32,4 +32,4 @@ tables.forEach(async (table) => {
   await db.createTable(table.name, table.definition);
 });
 
-db.close()
+db.close().then()
