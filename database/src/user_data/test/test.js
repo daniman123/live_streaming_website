@@ -1,5 +1,5 @@
 const registerNewUser = require("../userRegistration/registerNewUser");
-const createSubscription = require("../subscriptionData/createSubscription");
+const SubscriptionService = require("../subscriptionData/subscriptionService");
 
 // registerNewUser("vizual", "dani@gmail.com", "password123");
 // registerNewUser("xqc", "felx@gmail.com", "password123");
@@ -13,7 +13,8 @@ const subscriptionDate = new Date(); // Current date and time
 const subscriptionDuration = 30; // Subscription duration in days
 const subscriptionTier = 2; // Subscription tier (e.g., premium)
 
-createSubscription(
+ss = new SubscriptionService();
+ss.createSubscription(
   subscriberId,
   subscribedToId,
   subscriptionDate,
