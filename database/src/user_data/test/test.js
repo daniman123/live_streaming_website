@@ -7,8 +7,8 @@ const SubscriptionService = require("../subscriptionData/subscriptionService");
 // registerNewUser("yrg", "jsh@gmail.com", "password123");
 // registerNewUser("kailer", "kai@gmail.com", "password123");
 
-const subscriberId = 4; // ID of the subscribing user
-const subscribedToId = 2; // ID of the user being subscribed to
+const subscriberId = 5; // ID of the subscribing user
+const subscribedToId = 1; // ID of the user being subscribed to
 const subscriptionDate = new Date(); // Current date and time
 const subscriptionDuration = 30; // Subscription duration in days
 const subscriptionTier = 2; // Subscription tier (e.g., premium)

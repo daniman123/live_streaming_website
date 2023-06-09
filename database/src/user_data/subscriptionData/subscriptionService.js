@@ -1,5 +1,6 @@
 const db = require("../../utils/db");
-const SubscriptionDetails = require("./subscriptionDetails");
+const SubscriptionDetailsService = require("./subscriptionDetailsService");
+const { SELECT_SUBSCRIPTION } = require("./constants/subscriptionQueries");
 
 /**
  * The SubscriptionService class provides methods to manage subscriptions for a live streaming website.
@@ -29,15 +30,15 @@ class SubscriptionService {
     );
 
     if (existingSubscription) {
-      const subId = existingSubscription.subscription_id;
-      await SubscriptionDetails.updateSubscription(
-        subId,
+      const subscriptionId = existingSubscription.subscription_id;
+      await SubscriptionDetailsService.updateSubscriptionDetails(
+        subscriptionId,
         subscriptionDate,
         subscriptionDuration,
         subscriptionTier
       );
     } else {
-      await SubscriptionDetails.createNewSubscription(
+      await SubscriptionDetailsService.createSubscriptionDetails(
         subscriberId,
         subscribedToId,
         subscriptionDate,
@@ -54,16 +55,14 @@ class SubscriptionService {
    * @returns {Object} The subscription object if found, otherwise null.
    */
   async getSubscription(subscriberId, subscribedToId) {
-    const query = `
-      SELECT * FROM Subscription
-      WHERE subscriber_id = ? AND subscribed_to_id = ?
-    `;
     const params = [subscriberId, subscribedToId];
 
-    const subscriptions = await db.runQueryAndReturnResults(query, params);
+    const subscriptions = await db.runQueryAndReturnResults(
+      SELECT_SUBSCRIPTION,
+      params
+    );
     return subscriptions[0];
   }
 }
 
 module.exports = SubscriptionService;
-
