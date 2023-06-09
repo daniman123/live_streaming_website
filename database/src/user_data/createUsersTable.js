@@ -18,11 +18,19 @@ const tables = [
       subscription_id INTEGER PRIMARY KEY AUTOINCREMENT,
       subscriber_id INTEGER,
       subscribed_to_id INTEGER,
+      FOREIGN KEY (subscriber_id) REFERENCES User(user_id),
+      FOREIGN KEY (subscribed_to_id) REFERENCES User(user_id)
+    `,
+  },
+  {
+    name: "Subscription_details",
+    definition: `
+      subscription_detail_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      subscription_instance INTEGER,
       subscription_date DATETIME DEFAULT CURRENT_TIMESTAMP,
       subscription_duration INTEGER,
       subscription_tier INTEGER,
-      FOREIGN KEY (subscriber_id) REFERENCES User(user_id),
-      FOREIGN KEY (subscribed_to_id) REFERENCES User(user_id)
+      FOREIGN KEY (subscription_detail_id) REFERENCES Subscription(subscription_id)
     `,
   },
 ];
@@ -32,4 +40,4 @@ tables.forEach(async (table) => {
   await db.createTable(table.name, table.definition);
 });
 
-db.close().then()
+db.close().then();
