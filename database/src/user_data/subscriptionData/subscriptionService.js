@@ -1,6 +1,5 @@
 const db = require("../../utils/db");
 const SubscriptionDetailsService = require("./subscriptionDetailsService");
-const { SELECT_SUBSCRIPTION } = require("./constants/subscriptionQueries");
 
 /**
  * The SubscriptionService class provides methods to manage subscriptions for a live streaming website.
@@ -24,7 +23,7 @@ class SubscriptionService {
     subscriptionDuration,
     subscriptionTier
   ) {
-    let existingSubscription = await this.getSubscription(
+    let existingSubscription = await db.getSubscription(
       subscriberId,
       subscribedToId
     );
@@ -46,22 +45,6 @@ class SubscriptionService {
         subscriptionTier
       );
     }
-  }
-
-  /**
-   * Retrieves a subscription between the subscriber and subscribedTo user.
-   * @param {number} subscriberId - The ID of the subscriber user.
-   * @param {number} subscribedToId - The ID of the user being subscribed to.
-   * @returns {Object} The subscription object if found, otherwise null.
-   */
-  async getSubscription(subscriberId, subscribedToId) {
-    const params = [subscriberId, subscribedToId];
-
-    const subscriptions = await db.runQueryAndReturnResults(
-      SELECT_SUBSCRIPTION,
-      params
-    );
-    return subscriptions[0];
   }
 }
 

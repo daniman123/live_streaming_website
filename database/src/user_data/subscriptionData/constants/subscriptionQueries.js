@@ -8,13 +8,7 @@ const INSERT_SUBSCRIPTION_DETAILS = `
   VALUES (?, ?, ?, ?)
 `;
 
-const SELECT_SUBSCRIPTION = `
-  SELECT * FROM Subscription
-  WHERE subscriber_id = ? AND subscribed_to_id = ?
-`;
-
 module.exports = {
   INSERT_SUBSCRIPTION,
   INSERT_SUBSCRIPTION_DETAILS,
-  SELECT_SUBSCRIPTION,
 };

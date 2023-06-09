@@ -2,7 +2,6 @@ const db = require("../../utils/db");
 const {
   INSERT_SUBSCRIPTION,
   INSERT_SUBSCRIPTION_DETAILS,
-  SELECT_SUBSCRIPTION,
 } = require("./constants/subscriptionQueries");
 
 /**
@@ -29,7 +28,7 @@ class SubscriptionDetailsService {
 
     await db.runQuery(INSERT_SUBSCRIPTION, insertSubscriptionParams);
 
-    const existingSubscription = await this.getSubscription(
+    const existingSubscription = await db.getSubscription(
       subscriberId,
       subscribedToId
     );
@@ -66,16 +65,6 @@ class SubscriptionDetailsService {
     ];
 
     await db.runQuery(INSERT_SUBSCRIPTION_DETAILS, updateDetailsParams);
-  }
-
-  static async getSubscription(subscriberId, subscribedToId) {
-    const params = [subscriberId, subscribedToId];
-
-    const subscriptions = await db.runQueryAndReturnResults(
-      SELECT_SUBSCRIPTION,
-      params
-    );
-    return subscriptions[0];
   }
 }
 

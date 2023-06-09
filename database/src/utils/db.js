@@ -1,5 +1,6 @@
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
+const { SELECT_SUBSCRIPTION } = require("./constants/dbQueries");
 
 // console.log(__dirname.slice(0,__dirname.indexOf('src')));
 // console.log(path.join(__dirname.indexOf('database'), "/user_info_data.sqlite"));
@@ -7,7 +8,10 @@ const path = require("path");
 class Database {
   constructor() {
     // "C:\\Users\\Danie\\Desktop\\live_streaming_website\\database\\data\\user_info_data.sqlite";
-    this.userProfileDbPath = path.join(__dirname.slice(0,__dirname.indexOf('src')), "/data/user_info_data.sqlite");
+    this.userProfileDbPath = path.join(
+      __dirname.slice(0, __dirname.indexOf("src")),
+      "/data/user_info_data.sqlite"
+    );
 
     this.db = new sqlite3.Database(this.userProfileDbPath);
   }
@@ -232,6 +236,21 @@ class Database {
     };
 
     return sanitizedInput;
+  }
+
+  /**
+   * Retrieves a subscription between the subscriber and subscribedTo user.
+   * @param {number} subscriberId - The ID of the subscriber user.
+   * @param {number} subscribedToId - The ID of the user being subscribed to.
+   * @returns {Object} The subscription object if found, otherwise null.
+   */
+  async getSubscription(subscriberId, subscribedToId) {
+    const params = [subscriberId, subscribedToId];
+    const subscriptions = await this.runQueryAndReturnResults(
+      SELECT_SUBSCRIPTION,
+      params
+    );
+    return subscriptions[0];
   }
 
   async migrateDatabase() {
