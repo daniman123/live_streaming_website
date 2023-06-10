@@ -1,12 +1,15 @@
 class InputValidation {
   validateUsername(username) {
+    if (!username)
+      return "Username length should be between 3 and 20 characters.";
     if (username.length < 3 || username.length > 20) {
       return "Username length should be between 3 and 20 characters.";
     }
     return null; // Username is valid
   }
- 
+
   validateEmail(email) {
+    if (!email) return "Invalid email format.";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return "Invalid email format.";
@@ -15,6 +18,8 @@ class InputValidation {
   }
 
   validatePassword(password) {
+    if (!password) return "Password should be at least 8 characters long.";
+
     if (password.length < 8) {
       return "Password should be at least 8 characters long.";
     }

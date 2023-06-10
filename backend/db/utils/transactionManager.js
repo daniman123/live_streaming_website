@@ -3,7 +3,7 @@ const database = require("../database");
 class TransactionManager {
   async startTransaction() {
     try {
-      await database.runQuery("BEGIN EXCLUSIVE; BEGIN TRANSACTION");
+      await database.runQuery("BEGIN TRANSACTION");
       return "Transaction started";
     } catch (error) {
       // console.error("Error starting transaction:", error);

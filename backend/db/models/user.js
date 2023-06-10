@@ -28,8 +28,10 @@ class User {
       const isEmailValid = inputValidation.validateEmail(email);
       const isPasswordValid = inputValidation.validatePassword(password);
 
-      if (isNameValid || isEmailValid || isPasswordValid)
-        return isNameValid, isEmailValid, isPasswordValid;
+      if (isNameValid || isEmailValid || isPasswordValid) {
+        transactionManager.rollbackTransaction();
+        return [isNameValid, isEmailValid, isPasswordValid].filter(Boolean);
+      }
 
       const input = inputValidation.sanitizeInput(username, email, password);
 
@@ -57,7 +59,7 @@ class User {
       );
     } catch (error) {
       await transactionManager.rollbackTransaction();
-      throw new Error(`Error creating user: ${error.message}`);
+      return new Error(`Error creating user: ${error.message}`);
     }
   }
 

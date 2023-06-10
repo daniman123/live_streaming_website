@@ -24,10 +24,11 @@ app.post("/api/register", async (req, res) => {
   const { username, email, password } = req.body;
 
   // Perform user registration logic
-  await createUser(username, email, password);
+  const userStatus = await createUser(username, email, password);
 
   // Send a response indicating success or failure
-  res.json({ message: "User registered successfully" });
+  // res.json({ data: userStatus });
+  res.json(userStatus);
 });
 
 // Add more routes and middleware as needed...
