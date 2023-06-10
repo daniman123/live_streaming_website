@@ -5,7 +5,7 @@ class InputValidation {
     }
     return null; // Username is valid
   }
-
+ 
   validateEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {

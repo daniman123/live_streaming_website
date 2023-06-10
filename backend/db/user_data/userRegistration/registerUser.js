@@ -1,7 +1,7 @@
-const TransactionManager = require("../../db/transactionManager");
+const TransactionManager = require("../../transactionManager");
 const register = require("./register");
-const InputValidation = require("../../db/inputValidation");
-const DatabaseUtility = require("../../db/databaseUtility");
+const InputValidation = require("../../inputValidation");
+const DatabaseUtility = require("../../databaseUtility");
 
 async function registerUser(username, email, password) {
   const transactionManager = new TransactionManager();

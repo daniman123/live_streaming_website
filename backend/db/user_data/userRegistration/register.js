@@ -1,4 +1,4 @@
-const DatabaseConnection = require("../../db/db/databaseConnection");
+const DatabaseConnection = require("../../db/databaseConnection");
 const { INSERT_USER } = require("./constants/userRegistrationQueries");
 
 // Assuming you have an instance of the DatabaseConnection class

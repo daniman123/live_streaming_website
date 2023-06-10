@@ -2,8 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-const db = require("../database/src/utils/db");
-const registerNewUser = require("../database/src/user_data/userRegistration/registerNewUser");
+const db = require("../db/database");
+const createUser = require("../db/operations/createUser");
 
 // Middleware to enable CORS
 app.use(cors());
@@ -24,7 +24,7 @@ app.post("/api/register", async (req, res) => {
   const { username, email, password } = req.body;
 
   // Perform user registration logic
-  await registerNewUser(username, email, password);
+  await createUser(username, email, password);
 
   // Send a response indicating success or failure
   res.json({ message: "User registered successfully" });
