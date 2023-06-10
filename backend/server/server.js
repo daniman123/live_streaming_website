@@ -25,6 +25,7 @@ app.post("/api/register", async (req, res) => {
 
   // Perform user registration logic
   const userStatus = await createUser(username, email, password);
+  console.log("🚀 ~ file: server.js:28 ~ app.post ~ userStatus:", userStatus)
 
   // Send a response indicating success or failure
   // res.json({ data: userStatus });

@@ -43,7 +43,8 @@ class User {
       const isEmailDup = await checkDuplicates("User", "email", input.email);
 
       if (isNameDup || isEmailDup) {
-        return transactionManager.rollbackTransaction();
+        transactionManager.rollbackTransaction();
+        return [isNameDup, isEmailDup].filter(Boolean);
       }
       const params = [input.username, input.email, input.password];
       const result = await database.get(sql, params);

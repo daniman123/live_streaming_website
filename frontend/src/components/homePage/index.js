@@ -1,10 +1,13 @@
-// const db = require('../../../../backend/database/src/utils/db');
-// const registerNewUser = require("../userRegistration/registerNewUser");
+"use client";
 
-import React from 'react'
+import React from "react";
+import { BrowserRouter as Route } from "react-router-dom";
+import RegisterUser from "../registerUser";
 
 export default function Main() {
   return (
-    <div>Main</div>
-  )
+    <Route>
+      <RegisterUser />
+    </Route>
+  );
 }

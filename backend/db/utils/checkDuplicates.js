@@ -10,7 +10,7 @@ async function checkDuplicates(tableName, columnName, value) {
     const result = await database.get(query, [value]);
     const count = result ? result[0].count : 0;
     const condition = count > 0;
-    if (condition) console.log(`${columnName}: '${value}' already exists`);
+    if (condition) return `${columnName}: '${value}' already exists`;
     return condition;
   } catch (error) {
     console.error(`Error checking duplicates in '${tableName}'`, error);
