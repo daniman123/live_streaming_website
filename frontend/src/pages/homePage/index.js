@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import NavBar from "./components/navBar/index";
+import NavBar from "../../components/navBar/index";
 
 function HomePage() {
   return (
