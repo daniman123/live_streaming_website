@@ -1,0 +1,17 @@
+.nav_bar {
+  width: 100%;
+  display: inline-flex;
+  background-color: aqua;
+}
+
+div.nav_container {
+	position: relative;
+  width: 100%;
+  padding: 10px;
+}
+
+.search_bar {
+	position: absolute;
+	left: 100px;
+  display: inline-flex;
+}
