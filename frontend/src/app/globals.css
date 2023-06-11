@@ -1,5 +1,19 @@
 * {
-  box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 0.2fr 1fr 0.3fr; /* Create three equal-width columns */
+  height: 100vh; /* Set the height as needed */
+  gap: 5px; /* Add gap between sections if desired */
+}
+
+.section {
+  border: 1px solid black;
+}
+
+button {
+  cursor: pointer;
 }

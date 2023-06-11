@@ -2,12 +2,12 @@ import React from "react";
 
 function Search() {
   return (
-    <div className="search_bar">
-      <div className="bar">
-        <input className="search_bar_input"></input>
+    <div className="search-bar">
+      <div className="search-bar-container">
+        <input className="search-bar-input" placeholder="Search"></input>
       </div>
-      <div className="button">
-        <button className="search_bar_button">search</button>
+      <div className="search-bar-btn-container">
+        <button className="search-bar-button">search</button>
       </div>
     </div>
   );

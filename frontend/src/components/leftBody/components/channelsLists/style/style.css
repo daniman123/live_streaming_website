@@ -1,0 +1,40 @@
+.channels__list__element {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin-bottom: 10px; /*Adjust the margin as needed */
+  cursor: pointer;
+}
+
+.metadata {
+  display: flex;
+  flex-direction: column;
+  /* width: 40%; */
+  /* margin-right: 10px; Adjust the margin as needed */
+}
+
+.viewer__count {
+  display: flex;
+}
+
+.user__name {
+  font-weight: bold;
+}
+
+.category {
+  font-size: small;
+}
+
+.pfp {
+  padding: 10px;
+}
+
+div.metadata > p {
+  overflow: hidden;
+}
+
+div.viewer__count > p {
+  position: absolute;
+  left: 80%;
+  font-size:small;
+}

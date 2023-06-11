@@ -1,13 +1,9 @@
 "use client";
+import "./style/style.css";
 import React from "react";
-import NavBar from "../../components/navBar/index";
 
 function HomePage() {
-  return (
-    <div>
-      <NavBar />
-    </div>
-  );
+  return <></>;
 }
 
 export default HomePage;
