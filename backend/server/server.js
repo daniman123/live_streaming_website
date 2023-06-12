@@ -3,7 +3,7 @@ const cors = require("cors");
 const app = express();
 
 const db = require("../db/database");
-const createUser = require("../db/operations/createUser");
+const authRoutes = require("../controllers/authController");
 
 // Middleware to enable CORS
 app.use(cors());
@@ -19,18 +19,7 @@ app.use((req, res, next) => {
 
 // Sample route to handle GET requests
 
-app.post("/api/register", async (req, res) => {
-  // Retrieve user data from the request body
-  const { username, email, password } = req.body;
-
-  // Perform user registration logic
-  const userStatus = await createUser(username, email, password);
-  console.log("🚀 ~ file: server.js:28 ~ app.post ~ userStatus:", userStatus)
-
-  // Send a response indicating success or failure
-  // res.json({ data: userStatus });
-  res.json(userStatus);
-});
+app.use("/auth", authRoutes);
 
 // Add more routes and middleware as needed...
 

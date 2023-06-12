@@ -1,19 +1,11 @@
-const User = require("../models/User");
+const createUser = require("../db/operations/createUser");
 
 async function register(req, res) {
-  // Implementation of registration logic...
-}
-
-async function login(req, res) {
-  // Implementation of login logic...
-}
-
-async function logout(req, res) {
-  // Implementation of logout logic...
+  const { username, email, password } = req.body;
+  const newUser = await createUser(username, email, password);
+  res.status(201).json(newUser);
 }
 
 module.exports = {
   register,
-  login,
-  logout,
 };

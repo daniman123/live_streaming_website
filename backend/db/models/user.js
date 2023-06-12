@@ -16,51 +16,66 @@ class User {
   }
 
   static async create(username, email, password) {
-    const sql = `
-      INSERT INTO User (username, email, password, created_at, updated_at)
-      VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-    `;
-
     try {
       await transactionManager.startTransaction();
 
-      const isNameValid = inputValidation.validateUsername(username);
-      const isEmailValid = inputValidation.validateEmail(email);
-      const isPasswordValid = inputValidation.validatePassword(password);
-
-      if (isNameValid || isEmailValid || isPasswordValid) {
-        transactionManager.rollbackTransaction();
-        return [isNameValid, isEmailValid, isPasswordValid].filter(Boolean);
-      }
-
+      const errors = [];
       const input = inputValidation.sanitizeInput(username, email, password);
 
-      const isNameDup = await checkDuplicates(
+      const isUsernameValid = inputValidation.validateUsername(input.username);
+      if (isUsernameValid) {
+        errors.push(isUsernameValid);
+      }
+      const isEmailValid = inputValidation.validateEmail(input.email);
+      if (isEmailValid) {
+        errors.push(isEmailValid);
+      }
+      const isPasswordValid = inputValidation.validatePassword(input.password);
+      if (isPasswordValid) {
+        errors.push(isPasswordValid);
+      }
+      const isUsernameDuplicate = await checkDuplicates(
         "User",
         "username",
         input.username
       );
-      const isEmailDup = await checkDuplicates("User", "email", input.email);
-
-      if (isNameDup || isEmailDup) {
-        transactionManager.rollbackTransaction();
-        return [isNameDup, isEmailDup].filter(Boolean);
+      if (isUsernameDuplicate) {
+        errors.push(isUsernameDuplicate);
       }
+      const isEmailDuplicate = await checkDuplicates(
+        "User",
+        "email",
+        input.email
+      );
+      if (isEmailDuplicate) {
+        errors.push(isEmailDuplicate);
+      }
+
+      if (errors.length > 0) {
+        await transactionManager.rollbackTransaction();
+        return { errors };
+      }
+
+      const sql = `
+        INSERT INTO User (username, email, password, created_at, updated_at)
+        VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+      `;
       const params = [input.username, input.email, input.password];
       const result = await database.get(sql, params);
       const { lastID } = result;
       await transactionManager.commitTransaction();
+
       return new User(
         lastID,
-        username,
-        email,
-        password,
+        input.username,
+        input.email,
+        input.password,
         new Date(),
         new Date()
       );
     } catch (error) {
       await transactionManager.rollbackTransaction();
-      return new Error(`Error creating user: ${error.message}`);
+      return { error: `Error creating user: ${error.message}` };
     }
   }
 
