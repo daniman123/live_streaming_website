@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
+  "proxy": "http://localhost:8000",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,7 +9,6 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "proxy": "http://localhost:8000",
   "dependencies": {
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.4",

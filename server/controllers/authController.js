@@ -1,4 +1,4 @@
-const createUser = require("../../backend/db/operations/createUser");
+const createUser = require("../../database/operations/createUser");
 
 async function register(req, res) {
   const { username, email, password } = req.body;

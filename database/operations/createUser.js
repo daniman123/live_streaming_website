@@ -14,7 +14,7 @@ createUser("bhbib ", "szam@d.com", "133frgrr").then((user) => {
   if (user instanceof User) {
     // User creation was successful
     // Access the user properties
-    console.log();
+    console.log(user);
   } else {
     // User creation failed due to validation or duplicate errors
     // Handle the errors
