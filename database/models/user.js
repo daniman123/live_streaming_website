@@ -6,8 +6,8 @@ const InputValidation = require("../utils/inputValidation");
 const inputValidation = new InputValidation();
 
 class User {
-  constructor(id, username, email, password, createdAt, updatedAt) {
-    this.id = id;
+  constructor(user_id, username, email, password, createdAt, updatedAt) {
+    this.user_id = user_id;
     this.username = username;
     this.email = email;
     this.password = password;
@@ -79,20 +79,46 @@ class User {
     }
   }
 
-  static async getById(id) {
-    const sql = "SELECT * FROM User WHERE id = ?";
-    const params = [id];
+  static async getByUsername(username) {
+    const sql = "SELECT * FROM User WHERE username = ?";
+    const params = [username];
 
     try {
-      const result = await database.get(sql, params);
+      let result = await database.get(sql, params);
+      result = result[0];
+      // return result;
       if (result) {
         return new User(
-          result.id,
+          result.user_id,
           result.username,
           result.email,
           result.password,
-          new Date(result.created_at),
-          new Date(result.updated_at)
+          result.created_at,
+          result.updated_at
+        );
+      } else {
+        return null;
+      }
+    } catch (error) {
+      throw new Error(`Error fetching user: ${error.message}`);
+    }
+  }
+
+  static async getById(user_id) {
+    const sql = "SELECT * FROM User WHERE user_id = ?";
+    const params = [user_id];
+
+    try {
+      const result = await database.get(sql, params);
+      return result[0];
+      if (result) {
+        return new User(
+          result.user_id,
+          result.username,
+          result.email,
+          result.password,
+          result.created_at,
+          result.updated_at
         );
       } else {
         return null;
@@ -106,9 +132,9 @@ class User {
     const sql = `
       UPDATE User
       SET username = ?, email = ?, password = ?, updated_at = CURRENT_TIMESTAMP
-      WHERE id = ?
+      WHERE user_id = ?
     `;
-    const params = [this.username, this.email, this.password, this.id];
+    const params = [this.username, this.email, this.password, this.user_id];
 
     try {
       await database.runQuery(sql, params);

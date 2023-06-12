@@ -19,3 +19,15 @@ export const register = async (userData) => {
     throw new Error(error.message);
   }
 };
+
+export const getFollowing = async (userData) => {
+  try {
+    const nm = "yoooo";
+    const response = await axios.get(`${API_URL}/get_following`, {
+      params: { username: nm },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};

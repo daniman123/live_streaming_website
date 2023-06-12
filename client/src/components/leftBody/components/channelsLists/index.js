@@ -4,6 +4,7 @@ import React from "react";
 import "./style/style.css";
 
 function ChannelsLists({ name, title, channels }) {
+  console.log(channels);
   return (
     <div className="left__body__element">
       <div className={name + "__title__wrapper"}>
@@ -18,11 +19,11 @@ function ChannelsLists({ name, title, channels }) {
                   <p>PFP</p>
                 </div>
                 <div className="metadata">
-                  <p className="user__name">{channel.username}</p>
-                  <p className="category">{channel.category}</p>
+                  <p className="user__name">{channel}</p>
+                  <p className="category">{channel}</p>
                 </div>
                 <div className="viewer__count">
-                  <p>{channel.viewer_count}</p>
+                  <p>{channel}</p>
                 </div>
               </li>
             ))}

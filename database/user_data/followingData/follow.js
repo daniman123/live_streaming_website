@@ -1,4 +1,4 @@
-const db = require("../../utils/db");
+const db = require("../../database");
 const {
   INSERT_FOLLOW,
   SELECT_FOLLOW,
@@ -24,13 +24,10 @@ async function UnFollowUser(followerId, followedId) {
 
 async function getFollow(followerId, followedId) {
   const params = [followerId, followedId];
-  const subscriptions = await db.runQueryAndReturnResults(
-    SELECT_FOLLOW,
-    params
-  );
+  const subscriptions = await db.get(SELECT_FOLLOW, params);
   return subscriptions[0];
 }
-// FollowUser(1, 5, new Date());
-UnFollowUser(1, 5);
+FollowUser(1, 9, new Date());
+// UnFollowUser(1, 5);
 
 module.exports = FollowUser;
