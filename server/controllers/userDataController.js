@@ -1,15 +1,20 @@
-const getUserFollowing = require("../../database/operations/userOps/getUserFollowing");
+const UserOpsService = require("../services/userOpsService");
 
-async function getFollowing(req, res) {
-  // Extract the necessary information from the request body
-  const { username } = req.body;
+class UserOpsController {
+  constructor() {
+    this.userOpsService = new UserOpsService();
+    this.getFollowing = this.getFollowing.bind(this);
+  }
 
-  // console.log("🚀 ~ file: userDataController.js:6 ~ getFollowing ~ username:", username)
-  const registration = await getUserFollowing(req.query.username);
+  async getFollowing(req, res) {
+    const { username } = req.body;
+    const registration = await this.userOpsService.getFollowing(username);
+    this.sendResponse(res, registration);
+  }
 
-  res.json({ message: registration });
+  sendResponse(res, data) {
+    res.json(data);
+  }
 }
 
-module.exports = {
-  getFollowing,
-};
+module.exports = new UserOpsController();

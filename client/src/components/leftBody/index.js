@@ -1,47 +1,58 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
-
-import "./style/style.css";
-
 import ActionButtons from "./components/actionButtons/index";
 import ChannelsLists from "./components/channelsLists";
+import { fetchFollowing } from "../../api/auth";
+import "./style/style.css";
 
-import { getFollowing } from "../../api/auth";
 
 function LeftBody() {
-  const [channels, setChannels] = useState({});
+  const [followedChannels, setFollowedChannels] = useState(null);
+  const [recommendedChannels, setRecommendedChannels] = useState(null);
 
   useEffect(() => {
-    getFollowing("yoooo").then((res) => {
-      setChannels({
-        followed: {
-          name: "followers__channels",
-          title: "Followed channels",
-          channels: res.message,
-        },
-        recommended: {
-          name: "recommended__channels",
-          title: "Recommended channels",
-          channels: res.message,
-        },
-      });
-    });
+    const fetchDataFromApi = async () => {
+      const data = await fetchFollowing("yoooo");
+
+      setFollowedChannels(data);
+      setRecommendedChannels(data);
+    };
+
+    fetchDataFromApi();
   }, []);
+
+  const channels = {
+    followed: {
+      name: "followers__channels",
+      title: "Followed channels",
+      channels: followedChannels,
+    },
+    recommended: {
+      name: "recommended__channels",
+      title: "Recommended channels",
+      channels: recommendedChannels,
+    },
+  };
 
   return (
     <div className="left__body">
       <div className="left__body__element">
         <ActionButtons />
       </div>
-      {Object.keys(channels).map((channel, index) => (
+      {followedChannels && (
         <ChannelsLists
-          key={index}
-          name={channels[channel].name}
-          title={channels[channel].title}
-          channels={channels[channel].channels}
+          name={channels.followed.name}
+          title={channels.followed.title}
+          channels={channels.followed.channels}
         />
-      ))}
+      )}
+      {recommendedChannels && (
+        <ChannelsLists
+          name={channels.recommended.name}
+          title={channels.recommended.title}
+          channels={channels.recommended.channels}
+        />
+      )}
     </div>
   );
 }

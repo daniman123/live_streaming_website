@@ -1,33 +1,17 @@
-import axios from "axios";
+import { fetchData } from "./utils/fetch";
 
-import API_URL from "./apiConfig";
+export const fetchFollowing = async (userData) => {
+  const url = "/user/following";
+  const method = "post";
+  const options = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: {
+      username: userData,
+    },
+  };
+  const response = await fetchData(url, method, options);
 
-export const login = async (credentials) => {
-  try {
-    const response = await axios.post(`${API_URL}/login`, credentials);
-    return response.data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-
-export const register = async (userData) => {
-  try {
-    const response = await axios.post(`${API_URL}/register`, userData);
-    return response.data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-
-export const getFollowing = async (userData) => {
-  try {
-    const nm = "yoooo";
-    const response = await axios.get(`${API_URL}/get_following`, {
-      params: { username: nm },
-    });
-    return response.data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
+  return response;
 };

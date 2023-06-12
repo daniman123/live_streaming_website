@@ -7,4 +7,4 @@ curl -X POST -H "Content-Type: application/json" -d '{"username":"exampless", "e
 curl -X POST -H "Content-Type: application/json" -d '{"username":"s", "email":"examplmple.com", "password":"2"}' http://localhost:8000/register
 
 ###
-curl -X GET  -H "Content-Type: application/json" -d '{"username":"yoooo"}' http://localhost:8000/get_following
+curl -X POST   -H "Content-Type: application/json" -d '{"username":"yoooo"}' http://localhost:8000/user/following
