@@ -1,7 +1,5 @@
-// import Image from "next/image";
-// import styles from "./page.module.css";
-
-import Feed from "@/components/feed";
+import Feed from "@/components/feed/index";
+import MainFeed from "@/pages/homePage/index";
 import NavBar from "../components/navBar/index";
 import LeftBody from "../components/leftBody/index";
 
@@ -14,7 +12,7 @@ export default function Home() {
           <LeftBody />
         </div>
         <div className="section">
-          <Feed />
+          <MainFeed />
         </div>
         <div className="section"></div>
       </div>

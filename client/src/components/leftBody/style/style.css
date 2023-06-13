@@ -1,18 +1,19 @@
 .left__body__element {
-	padding: 10px;
+  padding: 10px;
 }
-
 
 .action_buttons {
   position: relative;
 }
 
 .action_buttons,
-.action_buttons > button {
+.action_buttons > button,
+.action_buttons > a > button {
   cursor: pointer;
 }
 
-.action_buttons > button {
+.action_buttons > button,
+.action_buttons > a > button {
   display: list-item;
   width: 95%;
   margin: 5px;
@@ -24,7 +25,8 @@
   opacity: 0.85;
 }
 
-.action_buttons > button:hover {
-	box-shadow: 0px 0px 1.5px 0px rgba(0, 0, 0, 0.5);
+.action_buttons > button:hover,
+.action_buttons > a > button:hover {
+  box-shadow: 0px 0px 1.5px 0px rgba(0, 0, 0, 0.5);
   opacity: 1;
 }

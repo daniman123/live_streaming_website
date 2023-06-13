@@ -1,9 +1,14 @@
-.channels__list__element {
+.channels__list__element > a {
   display: flex;
   position: relative;
   align-items: center;
   margin-bottom: 10px; /*Adjust the margin as needed */
   cursor: pointer;
+}
+
+.hidden-link {
+  text-decoration: none;
+  color: inherit;
 }
 
 .metadata {
@@ -36,5 +41,5 @@ div.metadata > p {
 div.viewer__count > p {
   position: absolute;
   left: 80%;
-  font-size:small;
+  font-size: small;
 }

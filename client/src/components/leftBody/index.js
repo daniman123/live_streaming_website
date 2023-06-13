@@ -5,7 +5,6 @@ import ChannelsLists from "./components/channelsLists";
 import { fetchFollowing } from "../../api/auth";
 import "./style/style.css";
 
-
 function LeftBody() {
   const [followedChannels, setFollowedChannels] = useState(null);
   const [recommendedChannels, setRecommendedChannels] = useState(null);

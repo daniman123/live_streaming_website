@@ -1,12 +1,19 @@
-import React from "react";
-import VideoPlayer from "./components/videoPlayer";
+"use client";
 
-function User() {
+import React from "react";
+
+import "./style/style.css";
+
+import VideoPlayer from "./components/videoPlayerContainer/index";
+import StreamTitleBanner from "./components/streamTitleBanner";
+
+function UserFeed() {
   return (
     <div>
       <VideoPlayer />
+      <StreamTitleBanner />
     </div>
   );
 }
 
-export default User;
+export default UserFeed;

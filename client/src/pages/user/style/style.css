@@ -1,0 +1,26 @@
+.stream__title__banner {
+  display: flex;
+  width: 100%;
+}
+
+.pfp__banner{
+    width: 10%;
+}
+
+.metadata__banner {
+  display: flex;
+}
+
+.stream__title__banner > div {
+  width: 100%;
+  padding: 15px;
+}
+
+.viewer__count__banner {
+  position: relative;
+}
+
+.viewer__count__banner > p {
+  position: absolute;
+  left: 85%;
+}
