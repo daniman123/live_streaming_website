@@ -1,7 +1,7 @@
 // import Image from "next/image";
 // import styles from "./page.module.css";
 
-import Feed from "@/pages/feed";
+import Feed from "@/components/feed";
 import NavBar from "../components/navBar/index";
 import LeftBody from "../components/leftBody/index";
 
