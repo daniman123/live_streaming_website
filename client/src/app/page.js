@@ -1,7 +1,7 @@
 // import Image from "next/image";
 // import styles from "./page.module.css";
 
-import HomePage from "@/pages/homePage";
+import Feed from "@/pages/feed";
 import NavBar from "../components/navBar/index";
 import LeftBody from "../components/leftBody/index";
 
@@ -14,7 +14,7 @@ export default function Home() {
           <LeftBody />
         </div>
         <div className="section">
-          <HomePage />
+          <Feed />
         </div>
         <div className="section"></div>
       </div>
