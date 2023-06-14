@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import RegisterUser from "../../../../../pages/registerUser/index";
-
+import withRegistration from "../userRegistration/withRegistration/index";
+import RegisterUser from "../userRegistration/registerUser/index";
 import "../style/style.css";
+
+const EnhancedRegisterUser = withRegistration(RegisterUser);
 
 const SignupButton = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -10,14 +12,14 @@ const SignupButton = () => {
     setShowPopup(true);
   };
 
-  const handleClosePopup = () => {
+  const handleClose = () => {
     setShowPopup(false);
   };
 
   return (
     <>
       <button onClick={handleButtonClick}>Sign Up</button>
-      {showPopup && <RegisterUser onClose={handleClosePopup} />}
+      {showPopup && <EnhancedRegisterUser onClose={handleClose} />}
     </>
   );
 };
