@@ -10,7 +10,8 @@ const RegisterUser = ({ onClose }) => {
 
   const handleRegister = async () => {
     try {
-      await postRegister(username, email, password);
+      const response = await postRegister(username, email, password);
+      console.log("🚀 ~ file: index.js:14 ~ handleRegister ~ response:", response)
     } catch (error) {
       console.log(JSON.parse(error.message));
     }

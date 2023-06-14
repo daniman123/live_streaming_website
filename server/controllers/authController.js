@@ -9,7 +9,7 @@ async function register(req, res) {
       message: {
         name: registration.username,
         email: registration.email,
-        data: registration.createdAt,
+        date: registration.createdAt,
       },
     });
   } catch (error) {
