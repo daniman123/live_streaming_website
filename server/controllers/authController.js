@@ -1,15 +1,13 @@
 const createUser = require("../../database/operations/userOps/createUser");
 
 async function register(req, res) {
-  // Extract the necessary information from the request body
   const { username, email, password } = req.body;
 
-  const registration = await createUser(username, email, password);
-
-  if (registration instanceof Object) {
+  try {
+    const registration = await createUser(username, email, password);
     res.json({ message: registration });
-  } else {
-    res.json({ message: registration });
+  } catch (error) {
+    res.json({ message: error.message });
   }
 }
 

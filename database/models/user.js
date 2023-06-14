@@ -53,7 +53,7 @@ class User {
 
       if (errors.length > 0) {
         await transactionManager.rollbackTransaction();
-        return { errors };
+        throw new Error(errors);
       }
 
       const sql = `
@@ -75,7 +75,7 @@ class User {
       );
     } catch (error) {
       await transactionManager.rollbackTransaction();
-      return { error: `Error creating user: ${error.message}` };
+      throw new Error(`Error creating user: ${error.message}`);
     }
   }
 
@@ -86,7 +86,6 @@ class User {
     try {
       let result = await database.get(sql, params);
       result = result[0];
-      // return result;
       if (result) {
         return new User(
           result.user_id,

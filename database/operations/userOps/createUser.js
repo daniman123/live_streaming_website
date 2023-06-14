@@ -1,12 +1,10 @@
 const User = require("../../models/user");
 
 async function createUser(username, email, password) {
-  let newUser;
   try {
-    newUser = await User.create(username, email, password);
-    return newUser;
+    return User.create(username, email, password);
   } catch (error) {
-    return newUser;
+    return error;
   }
 }
 

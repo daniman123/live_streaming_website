@@ -1,10 +1,11 @@
 GET http://localhost:8000/register
 
 ###
-curl -X POST -H "Content-Type: application/json" -d '{"username":"exampless", "email":"examplsse@example.com", "password":"password123"}' http://localhost:8000/register
+curl -X POST -H "Content-Type: application/json" -d '{"username":"examplesys", "email":"examplssey@example.com", "password":"password123"}' http://localhost:8000/register
 
 ###
 curl -X POST -H "Content-Type: application/json" -d '{"username":"s", "email":"examplmple.com", "password":"2"}' http://localhost:8000/register
 
 ###
 curl -X POST   -H "Content-Type: application/json" -d '{"username":"yoooo"}' http://localhost:8000/user/following
+ 

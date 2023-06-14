@@ -28,7 +28,7 @@ class TransactionManager {
       return "Transaction rolled back";
     } catch (error) {
       // console.error("Error rolling back transaction:", error);
-      throw error;
+      // throw error;
     }
   }
 }
