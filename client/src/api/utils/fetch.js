@@ -37,7 +37,6 @@ const handleRequestError = (error) => {
 
   if (response) {
     const { status, data } = response;
-    // throw new Error(`Request failed with status ${status}: ${data}`);
     throw new Error(JSON.stringify({ status: status, data: data }));
   } else {
     throw new Error("Request failed: no response received");

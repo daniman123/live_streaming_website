@@ -19,41 +19,46 @@ class User {
     try {
       await transactionManager.startTransaction();
 
-      const errors = [];
+      const errors = {
+        username: null,
+        email: null,
+        password: null,
+      };
       const input = inputValidation.sanitizeInput(username, email, password);
 
       const isUsernameValid = inputValidation.validateUsername(input.username);
       if (isUsernameValid) {
-        errors.push(isUsernameValid);
+        errors.username = isUsernameValid;
       }
       const isEmailValid = inputValidation.validateEmail(input.email);
       if (isEmailValid) {
-        errors.push(isEmailValid);
+        errors.email = isEmailValid;
       }
       const isPasswordValid = inputValidation.validatePassword(input.password);
       if (isPasswordValid) {
-        errors.push(isPasswordValid);
+        errors.password = isPasswordValid;
       }
       const isUsernameDuplicate = await checkDuplicates(
         "User",
         "username",
         input.username
       );
-      if (isUsernameDuplicate) {
-        errors.push(isUsernameDuplicate);
+      if (isUsernameDuplicate && !isUsernameValid) {
+        errors.username = isUsernameDuplicate;
       }
       const isEmailDuplicate = await checkDuplicates(
         "User",
         "email",
         input.email
       );
-      if (isEmailDuplicate) {
-        errors.push(isEmailDuplicate);
+      if (isEmailDuplicate && !isEmailValid) {
+        errors.email = isEmailDuplicate;
       }
 
-      if (errors.length > 0) {
+      var allNull = Object.values(errors).every((value) => value === null);
+      if (!allNull) {
         await transactionManager.rollbackTransaction();
-        throw new Error(errors);
+        throw new Error(JSON.stringify(errors));
       }
 
       const sql = `
@@ -75,7 +80,7 @@ class User {
       );
     } catch (error) {
       await transactionManager.rollbackTransaction();
-      throw new Error(`Error creating user: ${error.message}`);
+      throw new Error(error.message);
     }
   }
 

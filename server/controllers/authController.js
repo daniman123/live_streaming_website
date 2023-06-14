@@ -13,7 +13,7 @@ async function register(req, res) {
       },
     });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json(error.message);
   }
 }
 
