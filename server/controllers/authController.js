@@ -5,9 +5,15 @@ async function register(req, res) {
 
   try {
     const registration = await createUser(username, email, password);
-    res.json({ message: registration });
+    res.json({
+      message: {
+        name: registration.username,
+        email: registration.email,
+        data: registration.createdAt,
+      },
+    });
   } catch (error) {
-    res.json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 }
 

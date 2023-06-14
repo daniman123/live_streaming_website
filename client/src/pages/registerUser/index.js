@@ -1,17 +1,24 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { postRegister } from "../../api/auth";
 
-const RegisterUser = () => {
+const RegisterUser = ({ onClose }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = async () => {};
+  const handleRegister = async () => {
+    try {
+      await postRegister(username, email, password);
+    } catch (error) {
+      console.log(JSON.parse(error.message));
+    }
+  };
 
   return (
-    <div>
-      <div>
+    <div className="popup">
+      <div className="popup-content">
         <input
           type="text"
           placeholder="Username"
@@ -31,6 +38,7 @@ const RegisterUser = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button onClick={handleRegister}>Register</button>
+        <button onClick={onClose}>Close</button>
       </div>
     </div>
   );

@@ -15,3 +15,19 @@ export const fetchFollowing = async (userData) => {
 
   return response;
 };
+
+export const postRegister = async (username, email, password) => {
+  const url = "/register";
+  const method = "post";
+  const options = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: {
+      username: username,
+      email: email,
+      password: password,
+    },
+  };
+  return fetchData(url, method, options);
+};
