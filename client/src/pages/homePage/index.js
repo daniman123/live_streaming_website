@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-function MainFeed() {
-  return (
-    <div>MainFeed</div>
-  )
-}
+const HomePage = () => {
+  return <div>HomePage</div>;
+};
 
-export default MainFeed
+export default HomePage;

@@ -1,6 +1,6 @@
-import HomePage from "@/pages/homePage/index";
-import NavBar from "../components/navBar/index";
-import LeftBody from "../components/leftBody/index";
+import DiscoverPage from "@/pages/discoverPage/index";
+import NavBar from "../../components/navBar/index";
+import LeftBody from "../../components/leftBody/index";
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
           <LeftBody />
         </div>
         <div className="section">
-          <HomePage />
+          <DiscoverPage />
         </div>
         <div className="section"></div>
       </div>

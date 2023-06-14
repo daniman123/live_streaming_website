@@ -5,9 +5,13 @@
 
 .content {
   display: grid;
-  grid-template-columns: 0.4fr auto 0.5fr; /* Create three equal-width columns */
+  grid-template-columns: 160px auto 0.5fr; /* Create three equal-width columns */
   height: 100vh; /* Set the height as needed */
   gap: 5px; /* Add gap between sections if desired */
+}
+
+div.left__body {
+  width: 160px;
 }
 
 .section {

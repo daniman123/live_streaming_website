@@ -1,4 +1,3 @@
-import Feed from "@/components/feed/index";
 import UserFeed from "@/pages/user/index";
 import NavBar from "@/components/navBar/index";
 import LeftBody from "@/components/leftBody/index";

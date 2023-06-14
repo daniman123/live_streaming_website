@@ -2,11 +2,12 @@
 
 const VideoPlayer = () => {
   return (
-    <video
-      src="https://cdn-useast1.kapwing.com/source_63b73edf508e5b00181c54a0.mp4"
+    <iframe
+      src="https://embed.twitch.tv/?allowfullscreen=true&autoplay=true&channel=HasanAbi&controls=true&height=100%25&layout=video&muted=false&parent=localhost&referrer=http%3A%2F%2Flocalhost%3A3000%2Fdsadf&theme=dark&time=0h0m0s&width=100%25"
       controls
-      style={{ width: "100%" }}
-    ></video>
+      style={{ width: "100%", height: "700px" }}
+      allowFullScreen="True"
+    ></iframe>
   );
 };
 
