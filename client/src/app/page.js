@@ -4,7 +4,7 @@ import LeftBody from "../layouts/leftBody/index";
 
 export default function Home() {
   return (
-    <>
+    <div>
       <NavBar />
       <div className="content">
         <div className="section">
@@ -15,6 +15,6 @@ export default function Home() {
         </div>
         <div className="section"></div>
       </div>
-    </>
+    </div>
   );
 }
