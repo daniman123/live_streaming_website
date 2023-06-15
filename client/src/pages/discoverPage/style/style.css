@@ -15,10 +15,53 @@
 }
 
 .video-grid-item {
-  background-color: #f0f0f0; /* Adjust the background color as needed */
-  border: 1px solid #000; /* Adjust the border styles as needed */
-  border-radius: 12px;
-  padding: 5px; /* Adjust the padding as needed */
+  background-color: #f0f0f0;
+  border: 0.2em solid #e6e6e6;
+  border-radius: 10px;
+  padding: 5px;
   height: 160px;
   width: 300px;
+  cursor: pointer;
+  box-shadow: 0 0 0 rgba(0, 172, 252, 0);
+  transition: box-shadow 0.3s;
+}
+
+.video-grid-item:hover {
+  animation: radiate 3s infinite;
+}
+
+@keyframes radiate {
+  0% {
+    box-shadow: 10px 0 0 rgba(0, 172, 252, 0);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0, 172, 252, 0.5);
+  }
+  100% {
+    box-shadow: 0 15px 0 rgba(0, 172, 252, 0);
+  }
+}
+
+
+#randomColorElement:hover {
+  border: 0.2em solid var(--random-color);
+  transition: border 3s;
+}
+
+#randomColorElement:hover {
+  --random-color: #7ccfff9a; /* Set a specific color on hover */
+}
+
+@keyframes randomColorAnimation {
+  0% {
+    --random-color: #c2d0ff;
+  }
+
+  100% {
+    --random-color: #7ccfff9a;
+  }
+}
+
+.animatedRandomColor:hover {
+  animation: randomColorAnimation 3s infinite alternate;
 }

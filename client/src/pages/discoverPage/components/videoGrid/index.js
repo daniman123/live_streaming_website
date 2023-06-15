@@ -1,15 +1,25 @@
+"use client";
+import React, { useEffect } from "react";
+
 const VideoGrid = () => {
   const elementCount = 60; // Number of elements to generate
 
-  const elements = []; // Array to hold the generated elements
+  useEffect(() => {
+    const animateRandomColor = () => {
+      const elements = document.querySelectorAll("randomColorElement");
+      elements.forEach((element) => {
+        element.classList.add("animatedRandomColor");
+      });
+    };
 
-  for (let i = 0; i < elementCount; i++) {
-    elements.push(
-      <div key={i} className="video-grid-item">
-        Element {i + 1}
-      </div>
-    );
-  }
+    animateRandomColor();
+  }, []);
+
+  const elements = Array.from({ length: elementCount }, (_, i) => (
+    <div key={i} className="video-grid-item" id="randomColorElement">
+      Element {i + 1}
+    </div>
+  ));
 
   return <div className="video-grid-container">{elements}</div>;
 };
