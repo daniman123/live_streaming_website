@@ -2,7 +2,6 @@ import React from "react";
 import withUserForm from "../withUserForm/index";
 import UserForm from "../userForm/index";
 
-
 const RegistrationForm = (props) => {
   const { handleRegister } = props;
 
@@ -14,6 +13,7 @@ const RegistrationForm = (props) => {
 
   return (
     <UserForm
+      message="Register Account"
       handleSubmit={handleRegister}
       buttonText="Register"
       inputFields={inputFields}

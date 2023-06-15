@@ -12,6 +12,7 @@ const LoginForm = (props) => {
 
   return (
     <UserForm
+      message="Log in"
       handleSubmit={handleLogin}
       buttonText="Log in"
       inputFields={inputFields}
