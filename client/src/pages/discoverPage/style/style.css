@@ -27,7 +27,7 @@
 }
 
 .video-grid-item:hover {
-  animation: radiate 3s infinite;
+  animation: radiate 3.5s infinite;
 }
 
 @keyframes radiate {
@@ -49,7 +49,7 @@
 }
 
 #randomColorElement:hover {
-  --random-color: #7ccfff9a; /* Set a specific color on hover */
+  --random-color: #afdcf79a; /* Set a specific color on hover */
 }
 
 @keyframes randomColorAnimation {
