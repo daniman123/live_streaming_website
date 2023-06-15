@@ -16,7 +16,9 @@ const UserForm = (props) => {
   return (
     <div className="popup">
       <div className="popup-content">
-        <h4 className="popup-banner">{message}</h4>
+        <h4 className="popup-banner">
+          {message + (inputAlerts.status ? " " + inputAlerts.status : "")}
+        </h4>
         {inputFields.map((field) =>
           renderInput(field.name, field.type, field.label)
         )}
@@ -26,7 +28,7 @@ const UserForm = (props) => {
             Close
           </button>
         </div>
-        <p>{inputAlerts.status}</p>
+        {/* <p>{inputAlerts.status}</p> */}
       </div>
     </div>
   );
