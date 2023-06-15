@@ -1,6 +1,6 @@
 import UserFeed from "@/pages/user/index";
-import NavBar from "@/components/navBar/index";
-import LeftBody from "@/components/leftBody/index";
+import NavBar from "@/layouts/navBar/index";
+import LeftBody from "@/layouts/leftBody/index";
 
 export default function Home() {
   return (

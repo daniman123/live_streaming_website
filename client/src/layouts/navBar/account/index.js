@@ -1,7 +1,5 @@
 import React from "react";
 
-import SignupButton from "./components/signupButton/index";
-
 import withPopup from "@/hoc/popup/withPopup";
 import RegistrationForm from "@/hoc/forms/registrationForm/index";
 import LoginForm from "@/hoc/forms/loginForm/index";

@@ -7,7 +7,7 @@ async function getFollowedUserIds(followerId) {
   const result = await database.get(sql, params);
   return result.map((dict) => dict.followed_id);
 }
-
+ 
 async function getUsernamesForFollowedIds(userIds) {
   const usernamePromises = userIds.map(async (id) => {
     const user = await User.getById(id);

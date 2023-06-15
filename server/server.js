@@ -17,6 +17,14 @@ app.use((req, res, next) => {
 app.use("/", authRoutes);
 app.use("/", userDataRoutes);
 
+app.get("/recommended", async (req, res) => {
+  const {
+    getRecommended,
+  } = require("../database/operations/generalOps/getRecommended");
+  const rec = await getRecommended();
+  res.json(rec);
+});
+
 app.listen(PORT, () => {
   console.log("LISTENING ON PORT:", PORT);
 });

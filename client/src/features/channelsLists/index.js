@@ -1,6 +1,6 @@
 "use client";
 
-import Link from 'next/link';
+import Link from "next/link";
 
 import React from "react";
 import "./style/style.css";
@@ -25,7 +25,7 @@ function ChannelsLists({ name, title, channels }) {
                     <p className="category">{channel}</p>
                   </div>
                   <div className="viewer__count">
-                    <p>{channel}</p>
+                    <p>777777</p>
                   </div>
                 </Link>
               </li>

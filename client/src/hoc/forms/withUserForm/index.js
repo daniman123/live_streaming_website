@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { postForm } from "@/api/auth";
+import { postForm } from "@/api/postFetch";
 
 const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
   return (props) => {

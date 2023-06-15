@@ -14,12 +14,15 @@
 .metadata {
   display: flex;
   flex-direction: column;
-  /* width: 40%; */
-  /* margin-right: 10px; Adjust the margin as needed */
+  width: 100px;
+  padding-right: 20px;
+  
 }
 
-.viewer__count {
-  display: flex;
+.metadata > p{
+overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .user__name {
@@ -30,12 +33,40 @@
   font-size: small;
 }
 
+div.viewer__count{
+  width: 100%
+}
+
+div.viewer__count > p {
+  font-size: small;
+  direction: rtl;
+  text-align: right;
+}
+
 .pfp {
   padding: 10px;
 }
 
+/* .viewer__count {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+
+p{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 div.metadata > p {
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 div.viewer__count > p {
@@ -43,3 +74,6 @@ div.viewer__count > p {
   left: 80%;
   font-size: small;
 }
+*/
+
+

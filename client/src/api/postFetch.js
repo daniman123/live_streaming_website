@@ -1,6 +1,8 @@
 import { fetchData } from "./utils/fetch";
 
-export const fetchFollowing = async (userData) => {
+export const postFollowing = async (userData = null) => {
+  if (!userData) return;
+
   const url = "/user/following";
   const method = "post";
   const options = {
