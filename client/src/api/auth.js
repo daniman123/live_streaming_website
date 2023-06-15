@@ -31,3 +31,15 @@ export const postRegister = async (username, email, password) => {
   };
   return fetchData(url, method, options);
 };
+
+export const postForm = async (fetchUrl, inputData) => {
+  const url = fetchUrl;
+  const method = "post";
+  const options = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: inputData,
+  };
+  return fetchData(url, method, options);
+};

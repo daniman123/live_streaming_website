@@ -2,11 +2,18 @@ import React from "react";
 
 import SignupButton from "./components/signupButton/index";
 
+import withPopup from "@/hoc/popup/withPopup";
+import RegistrationForm from "@/hoc/forms/registrationForm/index";
+import LoginForm from "@/hoc/forms/loginForm/index";
+
+const EnhancedRegistrationFormPopup = withPopup(RegistrationForm, "Sign up");
+const EnhancedLoginFormPopup = withPopup(LoginForm, "Log in");
+
 function Account() {
   return (
     <div className="account">
-      <SignupButton />
-      <button className="log_in_button">log in</button>
+      <EnhancedRegistrationFormPopup />
+      <EnhancedLoginFormPopup />
       <button className="user_button">user</button>
     </div>
   );

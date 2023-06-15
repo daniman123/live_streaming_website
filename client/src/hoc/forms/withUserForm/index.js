@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { postRegister } from "@/api/auth";
+import { postForm } from "@/api/auth";
 
-const withRegistration = (WrappedComponent, initialState = {}) => {
+const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
   return (props) => {
     const [userInput, setUserInput] = useState({ ...initialState });
 
@@ -18,16 +18,15 @@ const withRegistration = (WrappedComponent, initialState = {}) => {
     const handleRegister = async () => {
       try {
         setInputAlerts({});
-        const { username, email, password } = userInput;
-        await postRegister(username, email, password);
-        setInputAlerts({ status: "User registered!" });
-        props.onClose();
+        await postForm(fetchUrl, userInput);
+        setInputAlerts({ status: "Succes!" });
+        props.togglePopup();
       } catch (error) {
-        handleRegisterError(error);
+        handleError(error);
       }
     };
 
-    const handleRegisterError = (error) => {
+    const handleError = (error) => {
       const { status, data } = JSON.parse(error.message);
       const ERRORS = JSON.parse(data);
       setInputAlerts((prevState) => ({
@@ -62,4 +61,4 @@ const withRegistration = (WrappedComponent, initialState = {}) => {
   };
 };
 
-export default withRegistration;
+export default withUserForm;
