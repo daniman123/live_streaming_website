@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/", authRoutes);
-app.use("/", userDataRoutes);
+// app.use("/", userDataRoutes);
 
 app.get("/recommended", async (req, res) => {
   const {
