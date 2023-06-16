@@ -7,4 +7,11 @@ async function recommendedList(req, res) {
   res.json(rec);
 }
 
-module.exports = { recommendedList };
+const { getUsers } = require("../../database/operations/generalOps/getUsers");
+
+async function users(req, res) {
+  const rec = await getUsers();
+  res.json(rec);
+}
+
+module.exports = { users, recommendedList };

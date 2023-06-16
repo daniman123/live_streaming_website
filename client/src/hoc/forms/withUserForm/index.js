@@ -27,6 +27,7 @@ const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
     };
 
     const handleError = (error) => {
+      if (!error) return;
       const { status, data } = JSON.parse(error.message);
       const ERRORS = JSON.parse(data);
       setInputAlerts((prevState) => ({

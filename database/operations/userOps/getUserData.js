@@ -7,7 +7,7 @@ async function getUserData(username) {
     return userData;
   } catch (error) {
     return userData;
-  }
+  } 
 }
 
 

@@ -6,7 +6,7 @@ import LoginForm from "@/hoc/forms/loginForm/index";
 
 const EnhancedRegistrationFormPopup = withPopup(RegistrationForm, "Sign up");
 const EnhancedLoginFormPopup = withPopup(LoginForm, "Log in");
-
+ 
 function Account() {
   return (
     <div className="account">

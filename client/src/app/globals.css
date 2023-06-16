@@ -3,14 +3,26 @@
   margin: 0;
 }
 
-.content {
-  display: grid;
-  grid-template-columns: 240px auto 290px; /* Create three equal-width columns */
-  height: 200vh; /* Set the height as needed */
-  gap: 5px; /* Add gap between sections if desired */
+body {
+  /* background-color: whitesmoke; */
+  background-color: white;
 }
 
+.hidden-link {
+  text-decoration: none;
+  color: inherit;
+}
 
+.content__wrapper {
+  display: flex;
+}
+
+/* .content {
+  display: grid;
+  grid-template-columns: 240px auto 290px; 
+  height: 200vh; 
+  gap: 5px; 
+}
 
 .section {
   position: relative;
@@ -19,7 +31,7 @@
 
 button {
   cursor: pointer;
-}
+} */
 
 .hidden-link {
   text-decoration: none;

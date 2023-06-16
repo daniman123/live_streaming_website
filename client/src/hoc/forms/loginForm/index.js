@@ -3,7 +3,7 @@ import withUserForm from "../withUserForm/index";
 import UserForm from "../userForm/index";
 
 const LoginForm = (props) => {
-  const { handleLogin } = props;
+  const { handleRegister } = props;
 
   const inputFields = [
     { name: "username", type: "text", label: "Username" },
@@ -13,7 +13,7 @@ const LoginForm = (props) => {
   return (
     <UserForm
       message="Log in"
-      handleSubmit={handleLogin}
+      handleSubmit={handleRegister}
       buttonText="Log in"
       inputFields={inputFields}
       {...props}
@@ -26,4 +26,4 @@ const initialState = {
   password: "",
 };
 
-export default withUserForm(LoginForm, "/logon", initialState);
+export default withUserForm(LoginForm, "/login", initialState);

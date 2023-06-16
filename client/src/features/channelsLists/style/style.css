@@ -1,3 +1,7 @@
+.left__body__element{
+border-top: 2.5px solid rgb(207, 207, 207);
+}
+
 .channels__list__element > a {
   display: flex;
   position: relative;
@@ -16,11 +20,10 @@
   flex-direction: column;
   width: 100px;
   padding-right: 20px;
-  
 }
 
-.metadata > p{
-overflow: hidden;
+.metadata > p {
+  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -33,8 +36,8 @@ overflow: hidden;
   font-size: small;
 }
 
-div.viewer__count{
-  width: 100%
+div.viewer__count {
+  width: 100%;
 }
 
 div.viewer__count > p {
@@ -46,34 +49,3 @@ div.viewer__count > p {
 .pfp {
   padding: 10px;
 }
-
-/* .viewer__count {
-  display: flex;
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-
-
-p{
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-div.metadata > p {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-div.viewer__count > p {
-  position: absolute;
-  left: 80%;
-  font-size: small;
-}
-*/
-
-

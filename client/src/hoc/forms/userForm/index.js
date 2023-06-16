@@ -28,7 +28,6 @@ const UserForm = (props) => {
             Close
           </button>
         </div>
-        {/* <p>{inputAlerts.status}</p> */}
       </div>
     </div>
   );
