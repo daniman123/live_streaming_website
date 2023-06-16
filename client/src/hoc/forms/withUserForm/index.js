@@ -18,7 +18,8 @@ const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
     const handleRegister = async () => {
       try {
         setInputAlerts({});
-        await postForm(fetchUrl, userInput);
+        const result = await postForm(fetchUrl, userInput);
+        console.log("🚀 ~ file: index.js:22 ~ handleRegister ~ result:", result)
         setInputAlerts({ status: "Succes!" });
         props.togglePopup();
       } catch (error) {

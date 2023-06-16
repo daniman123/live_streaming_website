@@ -1,5 +1,7 @@
 import { fetchData } from "./utils/fetch";
 
+// Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZ2FiIiwiaWF0IjoxNjg2OTU2NzYwLCJleHAiOjE2ODY5NTc2NjB9.tJzmAN-0alV1nPVuUo7NvCi_QpCoInkOI8SmHptmTvY"}`,
+
 export const postFollowing = async (userData = null) => {
   if (!userData) return;
 

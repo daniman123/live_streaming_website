@@ -7,7 +7,7 @@ async function getFollowedUserIds(followerId) {
   const result = await database.get(sql, params);
   return result.map((dict) => dict.followed_id);
 }
- 
+
 async function getUsernamesForFollowedIds(userIds) {
   const usernamePromises = userIds.map(async (id) => {
     const user = await User.getById(id);
@@ -17,10 +17,14 @@ async function getUsernamesForFollowedIds(userIds) {
 }
 
 async function userFollowList(username) {
-  const user = await User.getByUsername(username);
-  const followedUserIds = await getFollowedUserIds(user.user_id);
-  const followedUsernames = await getUsernamesForFollowedIds(followedUserIds);
-  return followedUsernames;
+  try {
+    const user = await User.getByUsername(username);
+    const followedUserIds = await getFollowedUserIds(user.user_id);
+    const followedUsernames = await getUsernamesForFollowedIds(followedUserIds);
+    return followedUsernames;
+  } catch (error) {
+    return;
+  }
 }
 
 module.exports = userFollowList;
