@@ -1,5 +1,4 @@
 const sqlite3 = require("sqlite3");
-const { promisify } = require("util");
 const path = require("path");
 
 class Database {

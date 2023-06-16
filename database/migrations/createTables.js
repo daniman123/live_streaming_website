@@ -10,7 +10,7 @@ async function createTables() {
       console.log(result);
     }
   } catch (error) {
-    console.error(error);
+    console.error(error); 
     // Handle any errors that occur during table creation
   }
 }

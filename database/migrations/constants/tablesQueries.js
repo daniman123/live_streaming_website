@@ -10,6 +10,15 @@ const TABLES = {
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       `,
   },
+  USER_TOKEN_TABLE: {
+    NAME: "Tokens",
+    DEFINITION: `
+        token_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        token VARCHAR(255) NOT NULL,
+        username VARCHAR(255) NOT NULL,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      `,
+  },
   FOLLOWING_TABLE: {
     NAME: "Following",
     DEFINITION: `

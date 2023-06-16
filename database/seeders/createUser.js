@@ -2,9 +2,9 @@ const User = require("../models/user");
 
 async function createUser() {
   try {
-    const username = "josssss_doe";
-    const email = "jossss@example.com";
-    const password = "password123";
+    const username = "gab";
+    const email = "gab@example.com";
+    const password = "12345678";
 
     const newUser = await User.create(username, email, password);
     console.log(newUser);

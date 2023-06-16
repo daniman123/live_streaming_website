@@ -4,10 +4,10 @@ GET http://localhost:8000/users
 curl -X POST -H "Content-Type: application/json" -d '{"username":"examp32lesys", "email":"exampls32sey@example.com", "password":"password123"}' http://localhost:8000/register
 
 ###
-curl -X POST -H "Content-Type: application/json" -d '{"username":"s", "email":"examplmple.com", "password":"2"}' http://localhost:8000/register
+curl -X POST -H "Content-Type: application/json" -d '{"username":"gab", "email":"gab@example.com", "password":"12345678"}' http://localhost:8000/register
 
 ###
 curl -X POST   -H "Content-Type: application/json" -d '{"username":"yoooo"}' http://localhost:8000/user/following
 
 ###
-curl -X POST   -H "Content-Type: application/json" -d '{"username":"gano","password":"12345678"}' http://localhost:8000/login
+curl -X POST   -H "Content-Type: application/json" -d '{"username":"gab","password":"12345678"}' http://localhost:8000/login
