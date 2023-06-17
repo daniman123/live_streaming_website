@@ -7,6 +7,7 @@ const { authenticateToken } = require("./middlewares/auth-middleware");
 const PORT = 8000;
 
 const authRoutes = require("./routes/authRoutes");
+const refreshRoutes = require("./routes/refreshRoutes");
 const userDataRoutes = require("./routes/userDataRoutes");
 const generalRoutes = require("./routes/generalRoutes");
 
@@ -21,9 +22,10 @@ app.use((req, res, next) => {
 app.use(cookieParser());
 
 app.use("/", generalRoutes);
-app.use("/", authRoutes);
 
-// app.use(authenticateToken);
+app.use("/", authRoutes);
+app.use("/", refreshRoutes);
+
 app.use("/", authenticateToken, userDataRoutes);
 
 app.listen(PORT, () => {

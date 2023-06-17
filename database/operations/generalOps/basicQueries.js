@@ -29,7 +29,37 @@ async function update(username, token) {
   }
 }
 
+async function getRefreshToken(token) {
+  const sql = `
+    SELECT token , username
+    FROM Tokens
+    WHERE token = ?
+  `;
+  const params = [token];
+
+  try {
+    return await database.get(sql, params);
+  } catch (error) {
+    throw new Error(`Error getting user/Token: ${error.message}`);
+  }
+}
+
+async function deleteRefreshToken(token) {
+  const sql = `
+    UPDATE Tokens SET token = NULL WHERE token = ?
+  `;
+  const params = [token];
+
+  try {
+    await database.runQuery(sql, params);
+  } catch (error) {
+    throw new Error(`Error deleting user/Token: ${error.message}`);
+  }
+}
+
 module.exports = {
   update,
   insert,
+  getRefreshToken,
+  deleteRefreshToken,
 };

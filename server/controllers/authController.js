@@ -2,11 +2,14 @@ const getUserData = require("../../database/operations/userOps/getUserData");
 const {
   insert,
   update,
+  getRefreshToken,
+  deleteRefreshToken,
 } = require("../../database/operations/generalOps/basicQueries");
 const createUser = require("../../database/operations/userOps/createUser");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
 require("dotenv").config();
 
 async function register(req, res) {
@@ -87,7 +90,34 @@ async function login(req, res) {
   }
 }
 
+async function logout(req, res) {
+  // On client, delete accessToken
+
+  const cookies = req.cookies;
+  if (!cookies?.jwt) return res.sendStatus(204); //sucess content deleted
+  const refreshToken = cookies.jwt;
+
+  let user;
+  try {
+    user = await getRefreshToken(refreshToken);
+
+    if (!user) {
+      res.clearCookie("jwt", { httpOnly: true });
+      return res.sendStatus(204);
+    }
+
+    // delete refreshToken in db
+    await deleteRefreshToken(refreshToken);
+
+    res.clearCookie("jwt", { httpOnly: true }); // in Production add option: secure: true, for https
+    res.sendStatus(204);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
 module.exports = {
   register,
   login,
+  logout,
 };
