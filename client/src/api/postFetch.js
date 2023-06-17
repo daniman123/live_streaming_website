@@ -1,15 +1,16 @@
 import { fetchData } from "./utils/fetch";
-
-// Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZ2FiIiwiaWF0IjoxNjg2OTU2NzYwLCJleHAiOjE2ODY5NTc2NjB9.tJzmAN-0alV1nPVuUo7NvCi_QpCoInkOI8SmHptmTvY"}`,
+import { useSelector } from "react-redux";
 
 export const postFollowing = async (userData = null) => {
   if (!userData) return;
+  const accessToken = useSelector((state) => state.accessToken.accessToken);
 
   const url = "/user/following";
   const method = "post";
   const options = {
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer${accessToken}`,
     },
     data: {
       username: userData,

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addMessage, receiveMessage, updateUserList } from "../../store/chat";
+import { addMessage, receiveMessage, updateUserList } from "../../redux/store/chat";
 import ChatMessage from "./chatMessage/index";
 import UserList from "./userList/index";
 import ChatInput from "./chatInput/index";

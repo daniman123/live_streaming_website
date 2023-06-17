@@ -4,7 +4,7 @@ GET http://localhost:8000/users
 curl -X POST -H "Content-Type: application/json" -d '{"username":"examp32lesys", "email":"exampls32sey@example.com", "password":"password123"}' http://localhost:8000/register
 
 ###
-curl -X POST -H "Content-Type: application/json" -d '{"username":"gab", "email":"gab@example.com", "password":"12345678"}' http://localhost:8000/register
+curl -X POST -H "Content-Type: application/json" -d '{"username":"gabys", "email":"gabys@example.com", "password":"12345678"}' http://localhost:8000/register
 
 ###
 curl -X POST   -H "Content-Type: application/json" -d '{"username":"gab"}' http://localhost:8000/user/following

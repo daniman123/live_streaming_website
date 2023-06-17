@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { postForm } from "@/api/postFetch";
 
+import { useDispatch, useSelector } from "react-redux";
+import { setAccessToken } from "../../../redux/actions/accessTokenActions";
+
 const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
   return (props) => {
+    const count = useSelector((state) => state.counter.value);
+    const dispatch = useDispatch();
     const [userInput, setUserInput] = useState({ ...initialState });
 
     const [inputAlerts, setInputAlerts] = useState({});
@@ -19,7 +24,12 @@ const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
       try {
         setInputAlerts({});
         const result = await postForm(fetchUrl, userInput);
-        console.log("🚀 ~ file: index.js:22 ~ handleRegister ~ result:", result)
+        dispatch(setAccessToken(result));
+
+        console.log(
+          "🚀 ~ file: index.js:22 ~ handleRegister ~ resultsss:",
+          result
+        );
         setInputAlerts({ status: "Succes!" });
         props.togglePopup();
       } catch (error) {
