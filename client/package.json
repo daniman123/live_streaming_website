@@ -20,6 +20,7 @@
     "react-twitch-embed": "^3.0.1",
     "redux": "^4.2.1",
     "supports-color": "^8.1.1",
-    "video.js": "^8.3.0"
+    "video.js": "^8.3.0",
+    "zustand": "^4.3.8"
   }
 }

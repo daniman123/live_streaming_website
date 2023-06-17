@@ -4,8 +4,6 @@ import NavBar from "../layouts/navBar/index";
 import LeftBody from "../layouts/leftBody/index";
 import Footer from "../layouts/footer/index";
 
-import { Provider } from "react-redux";
-import {store} from "../redux/store";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,14 +16,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider store={store}>
           <NavBar />
           <div className="content__wrapper">
             <LeftBody />
             {children}
           </div>
           <Footer />
-        </Provider>
       </body>
     </html>
   );

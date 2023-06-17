@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { postForm } from "@/api/postFetch";
-
-import { useDispatch, useSelector } from "react-redux";
-import { setAccessToken } from "../../../redux/actions/accessTokenActions";
+import { useTokenStore } from "@/store/tokenStore";
 
 const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
   return (props) => {
-    const count = useSelector((state) => state.counter.value);
-    const dispatch = useDispatch();
+    const { token, setToken } = useTokenStore();
     const [userInput, setUserInput] = useState({ ...initialState });
 
     const [inputAlerts, setInputAlerts] = useState({});
@@ -24,12 +21,7 @@ const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
       try {
         setInputAlerts({});
         const result = await postForm(fetchUrl, userInput);
-        dispatch(setAccessToken(result));
-
-        console.log(
-          "🚀 ~ file: index.js:22 ~ handleRegister ~ resultsss:",
-          result
-        );
+        setToken(result);
         setInputAlerts({ status: "Succes!" });
         props.togglePopup();
       } catch (error) {
@@ -38,6 +30,7 @@ const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
     };
 
     const handleError = (error) => {
+      console.log("🚀 ~ file: index.js:38 ~ handleError ~ error:", error);
       if (!error) return;
       const { status, data } = JSON.parse(error.message);
       const ERRORS = JSON.parse(data);

@@ -7,7 +7,13 @@ curl -X POST -H "Content-Type: application/json" -d '{"username":"examp32lesys",
 curl -X POST -H "Content-Type: application/json" -d '{"username":"gabys", "email":"gabys@example.com", "password":"12345678"}' http://localhost:8000/register
 
 ###
-curl -X POST   -H "Content-Type: application/json" -d '{"username":"gab"}' http://localhost:8000/user/following
+curl -X POST   -H "Content-Type: application/json,Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZ2FiIiwiaWF0IjoxNjg3MDEwOTExLCJleHAiOjE2ODcwMTE4MTF9.hTK7ngIorrk-eSZcNo7nD1pe84bzEwIEm51JAFiq3wE" -d '{"username":"gab"}' http://localhost:8000/user/following
 
 ###
 curl -X POST   -H "Content-Type: application/json" -d '{"username":"gab","password":"12345678"}' http://localhost:8000/login
+
+###
+POST http://localhost:8000/user/following
+Content-Type: application/json
+Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZ2FiIiwiaWF0IjoxNjg3MDEzMzIwLCJleHAiOjE2ODcwMTQyMjB9.VoAIkeEyIJqfGfwEiUuoM5RPl1afJsu_lVYdm-jPG4M
+username: gab
