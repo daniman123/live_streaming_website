@@ -10,7 +10,7 @@ import StreamTitleBanner from "./components/streamTitleBanner";
 
 function UserFeed() {
   return (
-    <div>
+    <div className="stream_content">
       <VideoPlayer />
       <StreamTitleBanner />
     </div>

@@ -15,7 +15,6 @@ export const postFollowing = async (userData = null, token) => {
     },
   };
   const response = await fetchData(url, method, options);
-  
 
   return response;
 };

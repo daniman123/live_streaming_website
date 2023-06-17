@@ -10,8 +10,7 @@ import { getRecommended } from "@/api/getFetch";
 const Lists = () => {
   const [followed, setFollowed] = useState("");
   const [recommended, setRecommended] = useState("");
-  const { token, setToken } = useTokenStore();
-
+  const token = useTokenStore((state) => state.token);
   const channels = {
     followed: {
       name: "followers__channels",
@@ -28,11 +27,10 @@ const Lists = () => {
   useEffect(() => {
     if (token !== null) {
       postFollowing("gab", token).then((res) => {
-        console.log("🚀 ~ file: index.js:20 ~ postFollowing ~ res:", res);
         setFollowed(res);
       });
     }
-    console.log("🚀 ~ file: index.js:23 ~ useEffect ~ channels:", channels);
+    setFollowed(null);
     getRecommended().then((res) => setRecommended(res));
   }, [token]);
 

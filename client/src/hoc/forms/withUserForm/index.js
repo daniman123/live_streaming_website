@@ -42,7 +42,7 @@ const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
     };
 
     const renderInput = (name, type, placeholder) => (
-      <div className="userInput__wrapper">
+      <div key={name} className="userInput__wrapper">
         <h5>{inputAlerts[name]}</h5>
         <input
           className="userInput"

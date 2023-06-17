@@ -18,4 +18,4 @@ Content-Type: application/json
 Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZ2FiIiwiaWF0IjoxNjg3MDE5MTY3LCJleHAiOjE2ODcwMjAwNjd9.Ajt_s5OikWh6DCPTfeft3ZkQiFr3r3s0ft6iYCih92o
 
 ###
-GET http://localhost:8000/refresh
+GET http://localhost:8000/logout
