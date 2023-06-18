@@ -10,8 +10,10 @@ const VideoGrid = () => {
   useEffect(() => {
     const fetchRandomPhotos = async () => {
       try {
-        const response = await axios.get("https://source.unsplash.com/random");
-        const imageUrl = response.request.responseURL;
+        const response = await axios.get(
+          "https://dog.ceo/api/breeds/image/random"
+        );
+        const imageUrl = response.data.message;
         setImageUrls(Array(elementCount).fill(imageUrl));
       } catch (error) {
         console.error(error);

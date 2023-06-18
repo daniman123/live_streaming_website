@@ -1,11 +1,10 @@
 import "./style/style.css";
 
-import WebRTC from "./components/index";
+import WebRTC from "../../features/webRTC/index";
 
 function HomePage() {
   return (
     <div className="home__page">
-      HomePage
       <WebRTC />
     </div>
   );
