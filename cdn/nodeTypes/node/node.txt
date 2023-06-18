@@ -33,3 +33,91 @@ To separate concerns in the given `Node` class, you can apply the following appr
 4. **Data Transmission Concern**: The methods `sendChunk` and `receiveChunk` are responsible for sending and receiving chunks of streaming data. This concern can be separated into a separate module or class responsible for data transmission. This module or class can handle the logic to send and receive data between peer nodes.
 
 By separating these concerns, you can achieve a more modular and organized codebase. Each module or class will have a clear responsibility, making the code easier to understand, maintain, and test.
+
+
+ClassDescripts:
+
+
+Description:
+
+The `EventHandler` class is a wrapper around the `EventEmitter` class from the "events" module. It provides a simplified interface for emitting and handling events.
+
+The class has the following methods:
+
+- `emit(event, ...args)`: This method emits an event with an optional list of arguments. It takes the name of the event as the first parameter and any additional arguments as subsequent parameters. The event is emitted using the underlying `EventEmitter` instance.
+
+- `on(event, listener)`: This method registers a listener for the specified event. It takes the name of the event as the first parameter and a callback function as the second parameter. The callback function will be called when the event is emitted.
+
+- `once(event, listener)`: This method registers a one-time listener for the specified event. The listener will be automatically removed after it is called once. It takes the name of the event as the first parameter and a callback function as the second parameter.
+
+- `removeListener(event, listener)`: This method removes a previously registered listener for the specified event. It takes the name of the event as the first parameter and the callback function to remove as the second parameter.
+
+- `removeAllListeners(event)`: This method removes all listeners for the specified event. It takes the name of the event as the parameter.
+
+- `removeAllListeners()`: This method removes all listeners for all events.
+
+The `EventHandler` class encapsulates the functionality of the `EventEmitter` class and provides a simplified and more intuitive interface for emitting and handling events in JavaScript applications.
+
+
+Description:
+
+The `ConnectionManager` class handles the management of connections with peer nodes. It provides methods for establishing connections, handling retries, and managing connection parameters.
+
+The class has the following methods:
+
+- `constructor(maxConnections, connectionTimeout, maxConnectionRetries, connectionRetryInterval)`: This is the constructor of the `ConnectionManager` class. It initializes the connection parameters such as the maximum number of connections allowed, connection timeout, maximum connection retries, and connection retry interval. It also initializes the `connectedPeers` map to track connected peers and the `connectionPool` set for connection reusability.
+
+- `establishConnection(peerNode, retryCount)`: This method establishes a connection with a peer node. It takes the identifier or address of the peer node as the first parameter and the number of connection retries made so far as the optional second parameter. It returns a promise that resolves when the connection is established or rejects if the maximum number of retries is reached.
+
+- `attemptConnection(peerNode)`: This method attempts to establish a connection with a peer node. It takes the identifier or address of the peer node as the parameter and returns a promise that resolves when the connection is established or rejects if it fails.
+
+- `addPeer(connection)`: This method adds a peer to the connected peers. It takes a connection object associated with the peer as the parameter.
+
+- `removePeer(peerNode)`: This method removes a peer from the connected peers. It takes the identifier or address of the peer node to remove as the parameter.
+
+- `getConnectionFromPool()`: This method retrieves a connection from the connection pool, if available. It returns the connection object from the pool or null if no available connections.
+
+- `releaseConnectionToPool(connection)`: This method releases a connection back to the connection pool. It takes a connection object to release to the pool as the parameter.
+
+- `establishConnections(peerNodes)`: This method establishes connections with multiple peer nodes. It takes an array of identifiers or addresses of the peer nodes as the parameter and returns a promise that resolves when all connections are established.
+
+- `handleIncomingConnection(peerNode)`: This method handles an incoming connection from a peer node. It takes the identifier or address of the peer node as the parameter. It can be used to implement connection reuse or other pooling-related logic.
+
+The `ConnectionManager` class also includes a helper function `generateConnectionId()` that generates a unique connection ID.
+
+The class provides a way to manage connections with peer nodes, including establishing connections, handling retries, and managing connection parameters. It allows for connection reuse through a connection pool and tracks connected peers using a map.
+
+
+
+Description:
+
+The PeerDiscovery class handles the discovery of peer nodes using a Distributed Hash Table (DHT). It provides methods for finding and retrieving information about peers in the network.
+
+The class has the following methods:
+
+constructor(options = {}): This is the constructor of the PeerDiscovery class. It creates an instance of the DHT using the provided options and initializes the discoveredPeers array and error property.
+
+startListening(): This method starts listening for peers in the Distributed Hash Table (DHT). It returns a promise that resolves when the DHT is listening for peers.
+
+findPeersInDHT(): This method finds peers in the Distributed Hash Table (DHT). It returns a promise that resolves to an array of discovered peer nodes. It sets a timeout of 10 seconds and stops listening for peers after that. When a peer is found, it adds it to the discoveredPeers array.
+
+stopListening(): This method stops listening for peers in the Distributed Hash Table (DHT). It destroys the DHT instance.
+
+The PeerDiscovery class encapsulates the functionality of discovering peers using a DHT and provides methods to start and stop the peer discovery process. Additional peer discovery-related methods can be added to the class as needed.
+
+
+
+Description:
+
+The `DataTransmission` class handles the transmission of data chunks between peers. It provides methods for sending and receiving data chunks in a streaming fashion.
+
+The class has the following methods:
+
+- `constructor()`: This is the constructor of the `DataTransmission` class. Any required initialization logic can be added here.
+
+- `sendChunk(peerNode, data)`: This method sends a data chunk to a peer node. It takes the identifier or address of the peer node as the first parameter and the data chunk to send as the second parameter. The implementation of this method should include the logic to send the chunk of streaming data to the `peerNode`. The example provided in the code simply logs a message indicating the chunk being sent.
+
+- `receiveChunk(peerNode, data)`: This method receives a data chunk from a peer node. It takes the identifier or address of the peer node that sent the data chunk as the first parameter and the received data chunk as the second parameter. The implementation of this method should include the logic to handle the received chunk of streaming data from the `peerNode`. The example provided in the code simply logs a message indicating the chunk being received.
+
+The `DataTransmission` class can be used to facilitate the transmission of data chunks between peers in a streaming fashion. It provides a basic structure for sending and receiving data, but the actual implementation of the data transmission logic would need to be added based on the specific requirements and protocols of the application.
+

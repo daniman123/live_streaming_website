@@ -1,3 +1,5 @@
+const net = require("net");
+
 /**
  * The `ConnectionManager` class handles the management of connections with peer nodes.
  * It provides methods for establishing connections, handling retries, and managing connection parameters.
@@ -57,22 +59,52 @@ class ConnectionManager {
       return;
     }
 
-    // Establish a new connection
-    // Implement the logic to establish a connection with the peer node.
-    // Example: initiate connection with `peerNode`
+    try {
+      await this.attemptConnection(peerNode);
+      const newConnection = {
+        peerNode,
+        connectionId: generateConnectionId(),
+      };
+      this.addPeer(newConnection);
+    } catch (error) {
+      console.error(
+        `Connection attempt failed for ${peerNode}: ${error.message}`
+      );
+      await new Promise((resolve) =>
+        setTimeout(resolve, this.connectionRetryInterval)
+      );
+      await this.establishConnection(peerNode, retryCount + 1);
+    }
+  }
 
-    // Assume connection is established successfully
-    const newConnection = {
-      peerNode,
-      connectionId: generateConnectionId(),
-    };
-    this.addPeer(newConnection);
+  /**
+   * Attempts to establish a connection with a peer node.
+   *
+   * @param {string} peerNode - The identifier or address of the peer node.
+   * @returns {Promise<void>} A Promise that resolves when the connection is established or rejects if it fails.
+   */
+  async attemptConnection(peerNode) {
+    return new Promise((resolve, reject) => {
+      // Implement the logic to establish a connection with the peer node
+      const connection = net.createConnection({
+        host: peerNode.host,
+        port: peerNode.port,
+      });
 
-    // Retry establishing the connection
-    await new Promise((resolve) =>
-      setTimeout(resolve, this.connectionRetryInterval)
-    );
-    await this.establishConnection(peerNode, retryCount + 1);
+      // Set up event handlers for connection success and failure
+      connection.on("connect", () => {
+        // Connection successful
+        resolve();
+      });
+
+      connection.on("error", (error) => {
+        // Connection failed
+        reject(error);
+      });
+
+      // Initiate the connection
+      connection.connect(peerNode);
+    });
   }
 
   /**
@@ -158,3 +190,35 @@ function generateConnectionId() {
 }
 
 module.exports = ConnectionManager;
+
+/* 
+
+Description:
+
+The `ConnectionManager` class handles the management of connections with peer nodes. It provides methods for establishing connections, handling retries, and managing connection parameters.
+
+The class has the following methods:
+
+- `constructor(maxConnections, connectionTimeout, maxConnectionRetries, connectionRetryInterval)`: This is the constructor of the `ConnectionManager` class. It initializes the connection parameters such as the maximum number of connections allowed, connection timeout, maximum connection retries, and connection retry interval. It also initializes the `connectedPeers` map to track connected peers and the `connectionPool` set for connection reusability.
+
+- `establishConnection(peerNode, retryCount)`: This method establishes a connection with a peer node. It takes the identifier or address of the peer node as the first parameter and the number of connection retries made so far as the optional second parameter. It returns a promise that resolves when the connection is established or rejects if the maximum number of retries is reached.
+
+- `attemptConnection(peerNode)`: This method attempts to establish a connection with a peer node. It takes the identifier or address of the peer node as the parameter and returns a promise that resolves when the connection is established or rejects if it fails.
+
+- `addPeer(connection)`: This method adds a peer to the connected peers. It takes a connection object associated with the peer as the parameter.
+
+- `removePeer(peerNode)`: This method removes a peer from the connected peers. It takes the identifier or address of the peer node to remove as the parameter.
+
+- `getConnectionFromPool()`: This method retrieves a connection from the connection pool, if available. It returns the connection object from the pool or null if no available connections.
+
+- `releaseConnectionToPool(connection)`: This method releases a connection back to the connection pool. It takes a connection object to release to the pool as the parameter.
+
+- `establishConnections(peerNodes)`: This method establishes connections with multiple peer nodes. It takes an array of identifiers or addresses of the peer nodes as the parameter and returns a promise that resolves when all connections are established.
+
+- `handleIncomingConnection(peerNode)`: This method handles an incoming connection from a peer node. It takes the identifier or address of the peer node as the parameter. It can be used to implement connection reuse or other pooling-related logic.
+
+The `ConnectionManager` class also includes a helper function `generateConnectionId()` that generates a unique connection ID.
+
+The class provides a way to manage connections with peer nodes, including establishing connections, handling retries, and managing connection parameters. It allows for connection reuse through a connection pool and tracks connected peers using a map.
+
+*/

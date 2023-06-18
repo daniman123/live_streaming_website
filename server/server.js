@@ -1,33 +1,36 @@
 const express = require("express");
 const cors = require("cors");
-const app = express();
 const cookieParser = require("cookie-parser");
 const { authenticateToken } = require("./middlewares/auth-middleware");
 
 const PORT = 8000;
 
-const authRoutes = require("./routes/authRoutes");
-const refreshRoutes = require("./routes/refreshRoutes");
-const userDataRoutes = require("./routes/userDataRoutes");
-const generalRoutes = require("./routes/generalRoutes");
+const routes = [
+  { path: "/", router: require("./routes/generalRoutes") },
+  { path: "/", router: require("./routes/authRoutes") },
+  { path: "/", router: require("./routes/refreshRoutes") },
+  { path: "/", router: require("./routes/userDataRoutes"), middleware: authenticateToken },
+];
 
-app.use(express.json());
-app.use(cors());
+function setupServer() {
+  const app = express();
+  app.use(express.json());
+  app.use(cors());
+  app.use(cookieParser());
 
-app.use((req, res, next) => {
-  console.log("🚀 INCOMING:", req.method, "REQUEST");
-  next();
-});
+  console.log("🚀 Server started.");
 
-app.use(cookieParser());
+  routes.forEach((route) => {
+    if (route.middleware) {
+      app.use(route.path, route.middleware, route.router);
+    } else {
+      app.use(route.path, route.router);
+    }
+  });
 
-app.use("/", generalRoutes);
+  app.listen(PORT, () => {
+    console.log("LISTENING ON PORT:", PORT);
+  });
+}
 
-app.use("/", authRoutes);
-app.use("/", refreshRoutes);
-
-app.use("/", authenticateToken, userDataRoutes);
-
-app.listen(PORT, () => {
-  console.log("LISTENING ON PORT:", PORT);
-});
+setupServer();

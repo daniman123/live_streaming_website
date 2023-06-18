@@ -1,13 +1,14 @@
-import React from "react";
-
 import "./style/style.css";
 
-const HomePage = () => {
+import WebRTC from "./components/index";
+
+function HomePage() {
   return (
     <div className="home__page">
       HomePage
+      <WebRTC />
     </div>
   );
-};
+}
 
 export default HomePage;

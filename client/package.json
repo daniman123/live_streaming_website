@@ -19,6 +19,8 @@
     "react-redux": "^8.1.0",
     "react-twitch-embed": "^3.0.1",
     "redux": "^4.2.1",
+    "simple-peer": "^9.11.1",
+    "socket.io-client": "^4.6.2",
     "supports-color": "^8.1.1",
     "uuid": "^9.0.0",
     "video.js": "^8.3.0",
