@@ -13,7 +13,7 @@ class UserOpsController {
   }
 
   sendResponse(res, data) {
-    res.json(data);
+    res.json({ data });
   }
 }
 

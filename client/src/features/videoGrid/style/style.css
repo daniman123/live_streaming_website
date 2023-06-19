@@ -1,5 +1,5 @@
-.discover__page{
-  height: 100vh;
+.discover__page {
+  height: auto;
 }
 
 .discover__title {
@@ -7,7 +7,9 @@
   box-shadow: 10px 4px 10px seashell;
 }
 
+
 .video-grid-container {
+  margin-bottom: 170px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

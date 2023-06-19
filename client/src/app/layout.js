@@ -4,7 +4,6 @@ import NavBar from "../layouts/navBar/index";
 import LeftBody from "../layouts/leftBody/index";
 import Footer from "../layouts/footer/index";
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -16,12 +15,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
+        <header>
           <NavBar />
-          <div className="content__wrapper">
-            <LeftBody />
-            {children}
-          </div>
+        </header>
+        <div className="content__wrapper">
+          <LeftBody />
+          {children}
+        </div>
+        <footer>
           <Footer />
+        </footer>
       </body>
     </html>
   );

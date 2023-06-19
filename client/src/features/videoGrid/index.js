@@ -1,21 +1,17 @@
-"use client";
+import Grid from "./components/createGrid";
 
-import { getDiscoverMedia, getRecommended } from "../../api/getFetch";
-import { createGrid } from "./components/createGrid";
-import useFetch from "../../api/utils/useFetch";
-
-const VideoGrid = () => {
-  const elementCount = 60;
-
-  const { data, loading, error } = useFetch(getRecommended, elementCount);
+const VideoGrid = (props) => {
+  const { data, loading, error } = props;
 
   if (error) {
     return <div>Error: {error}</div>;
   }
 
-  const elements = createGrid(elementCount, loading, data);
-
-  return <div className="video-grid-container">{elements}</div>;
+  return (
+    <div className="video-grid-container-wrapper">
+      <Grid loading={loading} options={data} />
+    </div>
+  );
 };
 
 export default VideoGrid;

@@ -9,9 +9,15 @@ import useFetch from "../../../../api/utils/useFetch";
 
 const Lists = () => {
   const { token, username } = useTokenStore((state) => state);
+  const [recommendedChannels, setRecommendedChannels] = useState(null);
 
-  const { data: followedChannels } = useFetch(postFollowing, username, token);
-  const { data: recommendedChannels } = useFetch(getRecommended);
+  const { data, loading, error } = useFetch(postFollowing, username, token);
+
+  useEffect(() => {
+    getRecommended().then((res) => {
+      setRecommendedChannels(res);
+    });
+  }, []);
 
   const renderChannelsLists = (name, title, channels) => {
     return <ChannelsLists name={name} title={title} channels={channels} />;
@@ -19,11 +25,11 @@ const Lists = () => {
 
   return (
     <div>
-      {followedChannels &&
+      {data &&
         renderChannelsLists(
           "followers__channels",
           "Followed channels",
-          followedChannels
+          data
         )}
       {recommendedChannels &&
         renderChannelsLists(

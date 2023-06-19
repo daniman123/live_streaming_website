@@ -21,6 +21,12 @@ async function register(req, res) {
 
     const registration = await createUser(username, email, hashedPassword);
 
+    const accessToken = jwt.sign(
+      { name: username },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "15m" }
+    );
+
     const refreshToken = jwt.sign(
       { name: username },
       process.env.REFRESH_TOKEN_SECRET,
@@ -34,13 +40,19 @@ async function register(req, res) {
 
     await insert(username, refreshToken);
 
-    res.json({
-      message: {
-        name: registration.username,
-        email: registration.email,
-        date: registration.createdAt,
-      },
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
     });
+    res.status(200).json({ accessToken: accessToken });
+
+    // res.json({
+    //   message: {
+    //     name: registration.username,
+    //     email: registration.email,
+    //     date: registration.createdAt,
+    //   },
+    // });
   } catch (error) {
     res.status(400).json(error.message);
   }

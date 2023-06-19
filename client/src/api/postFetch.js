@@ -15,8 +15,8 @@ export const postFollowing = async (userData = null, token) => {
     },
   };
   const response = await fetchData(url, method, options);
-
-  return response;
+  const { data } = response;
+  return data;
 };
 
 export const postRegister = async (username, email, password) => {

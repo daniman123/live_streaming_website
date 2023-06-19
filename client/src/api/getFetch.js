@@ -6,7 +6,6 @@ import { fetchData } from "./utils/fetch";
  */
 export const getRecommended = async () => {
   const url = "/recommended";
-
   return fetchData(url);
 };
 

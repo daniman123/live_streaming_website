@@ -1,17 +1,12 @@
-"use client";
+import { useEffect, useState, useRef } from "react";
 
-import { useEffect, useState } from "react";
-
-/**
- * Custom hook for fetching data.
- *
- * @param {Function} request - The function that performs the data request.
- * @returns {Object} - The fetched data, loading state, and error state.
- */
 const useFetch = (request, ...args) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const prevRequest = useRef();
+  const prevArgs = useRef([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,10 +20,26 @@ const useFetch = (request, ...args) => {
       }
     };
 
-    fetchData();
-  }, [request, ...args]);
+    if (
+      prevRequest.current !== request ||
+      !arraysEqual(prevArgs.current, args)
+    ) {
+      fetchData();
+    }
+
+    prevRequest.current = request;
+    prevArgs.current = args;
+  }, [request, args]);
 
   return { data, loading, error };
+};
+
+const arraysEqual = (arr1, arr2) => {
+  if (arr1.length !== arr2.length) return false;
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) return false;
+  }
+  return true;
 };
 
 export default useFetch;
