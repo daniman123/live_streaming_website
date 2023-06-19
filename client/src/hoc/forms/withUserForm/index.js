@@ -4,13 +4,14 @@ import { useTokenStore } from "@/store/tokenStore";
 
 const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
   return (props) => {
-    const { token, setToken } = useTokenStore();
+    const { token, setToken, setUsername } = useTokenStore();
     const [userInput, setUserInput] = useState({ ...initialState });
 
     const [inputAlerts, setInputAlerts] = useState({});
 
     const handleInputChange = (e) => {
       const { name, value } = e.target;
+      if (name === "username") setUsername(value);
       setUserInput((prevState) => ({
         ...prevState,
         [name]: value,

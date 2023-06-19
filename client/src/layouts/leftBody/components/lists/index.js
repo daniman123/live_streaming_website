@@ -11,6 +11,7 @@ const Lists = () => {
   const [followed, setFollowed] = useState("");
   const [recommended, setRecommended] = useState("");
   const token = useTokenStore((state) => state.token);
+  const username = useTokenStore((state) => state);
   const channels = {
     followed: {
       name: "followers__channels",
@@ -26,7 +27,7 @@ const Lists = () => {
 
   useEffect(() => {
     if (token !== null) {
-      postFollowing("gab", token).then((res) => {
+      postFollowing(username.username, token).then((res) => {
         setFollowed(res);
       });
     }
