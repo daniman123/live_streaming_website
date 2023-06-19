@@ -1,42 +1,69 @@
 const express = require("express");
-const app = express();
-const http = require("http").createServer(app);
-const io = require("socket.io")(http, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
-  },
-});
+const http = require("http");
+const socketIO = require("socket.io");
 
-const PORT = 7000; // Choose a port for the signaling server
+class SignalingServer {
+  constructor(port) {
+    this.app = express();
+    this.server = http.createServer(this.app);
+    this.io = socketIO(this.server, {
+      cors: {
+        origin: "*",
+        methods: ["GET", "POST"],
+      },
+    });
+    this.PORT = port;
+    this.initializeSocketEvents();
+  }
 
-// Handle socket connection
-io.on("connection", (socket) => {
-  // Handle "join" event
-  socket.on("join", (room) => {
+  initializeSocketEvents() {
+    this.io.on("connection", this.handleSocketConnection.bind(this));
+  }
+
+  handleSocketConnection(socket) {
+    socket.on("join", this.handleJoin.bind(this, socket));
+    socket.on("offer", this.handleOffer.bind(this, socket));
+    socket.on("answer", this.handleAnswer.bind(this, socket));
+    socket.on("ice-candidate", this.handleIceCandidate.bind(this, socket));
+    socket.on("signal", this.handleSignal.bind(this, socket));
+    socket.on("stream", this.handleStream.bind(this, socket));
+  }
+
+  handleJoin(socket, room) {
     socket.join(room);
-  });
+  }
 
-  // Handle "offer" event
-  socket.on("offer", (room, offer) => {
+  handleOffer(socket, room, offer) {
     socket.to(room).emit("offer", offer);
     console.log("Offer sent to room:", room);
-  });
+  }
 
-  // Handle "answer" event
-  socket.on("answer", (room, answer) => {
+  handleAnswer(socket, room, answer) {
     socket.to(room).emit("answer", answer);
     console.log("Answer sent to room:", room);
-  });
+  }
 
-  // Handle "ice-candidate" event
-  socket.on("ice-candidate", (room, candidate) => {
+  handleIceCandidate(socket, room, candidate) {
     socket.to(room).emit("ice-candidate", candidate);
     console.log("ICE candidate sent to room:", room);
-  });
-});
+  }
 
-// Start the signaling server
-http.listen(PORT, () => {
-  console.log(`Signaling server listening on port ${PORT}`);
-});
+  handleSignal(socket, room, signal) {
+    socket.to(room).emit("signal", signal);
+    console.log("Signal sent to room:", room);
+  }
+
+  handleStream(socket, room, streamData) {
+    socket.to(room).emit("stream", streamData);
+    console.log("Stream sent to room:", room);
+  }
+
+  start() {
+    this.server.listen(this.PORT, () => {
+      console.log("Signaling server listening on port", this.PORT);
+    });
+  }
+}
+
+const signalingServer = new SignalingServer(7000);
+signalingServer.start();
