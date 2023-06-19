@@ -1,45 +1,48 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
+/**
+ * Custom hook for fetching data asynchronously.
+ * @param {Function} request - The request function to fetch data.
+ * @param {...any} args - Additional arguments to pass to the request function.
+ * @returns {Object} - The data, loading state, and error state.
+ */
 const useFetch = (request, ...args) => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [state, setState] = useState({
+    data: null,
+    loading: true,
+    error: null,
+  });
+
+  const { data, loading, error } = state;
 
   const prevRequest = useRef();
   const prevArgs = useRef([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await request(...args);
-        setData(response);
-        setLoading(false);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
-      }
-    };
+  /**
+   * Fetches the data using the provided request function.
+   */
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await request(...args);
+      setState({ data: response, loading: false, error: null });
+    } catch (error) {
+      setState({ data: null, loading: false, error: error.message });
+    }
+  }, [request, args]);
 
+  useEffect(() => {
     if (
       prevRequest.current !== request ||
-      !arraysEqual(prevArgs.current, args)
+      JSON.stringify(prevArgs.current) !== JSON.stringify(args)
     ) {
       fetchData();
     }
 
     prevRequest.current = request;
     prevArgs.current = args;
-  }, [request, args]);
+  }, [fetchData, request, args]);
 
   return { data, loading, error };
-};
-
-const arraysEqual = (arr1, arr2) => {
-  if (arr1.length !== arr2.length) return false;
-  for (let i = 0; i < arr1.length; i++) {
-    if (arr1[i] !== arr2[i]) return false;
-  }
-  return true;
 };
 
 export default useFetch;
