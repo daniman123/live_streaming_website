@@ -7,29 +7,29 @@ require("dotenv").config();
 
 async function handleRefreshToken(req, res) {
   const cookies = req.cookies;
-  console.log(
-    "🚀 ~ file: refreshController.js:10 ~ handleRefreshToken ~ cookies:",
-    cookies
-  );
+  // console.log(
+  //   "🚀 ~ file: refreshController.js:10 ~ handleRefreshToken ~ cookies:",
+  //   cookies
+  // );
   if (!cookies?.jwt) return res.sendStatus(401);
-  console.log(
-    "🚀 ~ file: refreshController.js:14 ~ handleRefreshToken ~ cookies.jwt:",
-    cookies.jwt
-  );
+  // console.log(
+  //   "🚀 ~ file: refreshController.js:14 ~ handleRefreshToken ~ cookies.jwt:",
+  //   cookies.jwt
+  // );
 
   const refreshToken = cookies.jwt;
-  console.log(
-    "🚀 ~ file: refreshController.js:17 ~ handleRefreshToken ~ refreshToken:",
-    refreshToken
-  );
+  // console.log(
+  //   "🚀 ~ file: refreshController.js:17 ~ handleRefreshToken ~ refreshToken:",
+  //   refreshToken
+  // );
 
   let user;
   try {
     user = await getRefreshToken(refreshToken);
-    console.log(
-      "🚀 ~ file: refreshController.js:29 ~ handleRefreshToken ~ user:",
-      user
-    );
+    // console.log(
+    //   "🚀 ~ file: refreshController.js:29 ~ handleRefreshToken ~ user:",
+    //   user
+    // );
     if (!user) {
       res
         .status(401)

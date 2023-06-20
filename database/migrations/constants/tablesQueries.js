@@ -14,7 +14,7 @@ const TABLES = {
     NAME: "Tokens",
     DEFINITION: `
         token_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        token VARCHAR(255) NOT NULL,
+        token VARCHAR(255),
         username VARCHAR(255) NOT NULL,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       `,

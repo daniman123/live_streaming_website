@@ -1,3 +1,5 @@
+"use client";
+
 import "./style/style.css";
 import withFeedWrapper from "@/hoc/feedWrapper/index";
 

@@ -15,7 +15,12 @@ const routes = [
 function setupServer() {
   const app = express();
   app.use(express.json());
-  app.use(cors());
+  app.use(
+    cors({
+      origin: "http://localhost:3000", // Replace with the origin of your Next.js app
+      credentials: true, // Enable CORS with credentials
+    })
+  );
   app.use(cookieParser());
 
   console.log("🚀 Server started.");

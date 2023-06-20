@@ -9,6 +9,7 @@ async function logout(req, res) {
   // On client, delete accessToken
 
   const cookies = req.cookies;
+  console.log("🚀 ~ file: logoutController.js:12 ~ logout ~ cookies:", cookies)
   if (!cookies?.jwt) return res.sendStatus(204); //sucess content deleted
   const refreshToken = cookies.jwt;
 

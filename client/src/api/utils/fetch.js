@@ -1,19 +1,12 @@
 import axios from "axios";
-
 import API_URL from "../config/apiConfig";
 
 const apiClient = axios.create({
   baseURL: API_URL,
+  withCredentials: true, // Include cookies in the request
 });
 
-/**
- * Utility function to fetch data from an API using Axios.
- * @param {string} url - The URL to make the request to.
- * @param {string} [method='get'] - The HTTP method to use for the request.
- * @param {Object} [options={}] - Additional options to pass to the Axios request.
- * @returns {Promise} - A Promise that resolves to the fetched data.
- * @throws {Error} - If the request fails or no response is received.
- */
+// Utility function to fetch data from an API using Axios
 export const fetchData = async (url, method = "get", options = {}) => {
   try {
     const response = await apiClient.request({
@@ -27,11 +20,7 @@ export const fetchData = async (url, method = "get", options = {}) => {
   }
 };
 
-/**
- * Handles the error that occurred during the API request.
- * @param {Error} error - The error object from the API request.
- * @throws {Error} - If the request failed or no response was received.
- */
+// Handles the error that occurred during the API request
 const handleRequestError = (error) => {
   const { response } = error;
 

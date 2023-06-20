@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import WebRTC from "@/features/webRTC";
 import withAuth from "../../../hoc/authWrapper/index";

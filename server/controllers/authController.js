@@ -40,19 +40,7 @@ async function register(req, res) {
 
     await insert(username, refreshToken);
 
-    res.cookie("jwt", refreshToken, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
     res.status(200).json({ accessToken: accessToken });
-
-    // res.json({
-    //   message: {
-    //     name: registration.username,
-    //     email: registration.email,
-    //     date: registration.createdAt,
-    //   },
-    // });
   } catch (error) {
     res.status(400).json(error.message);
   }
@@ -90,7 +78,6 @@ async function login(req, res) {
       });
 
       await update(username, refreshToken);
-
       res.status(200).json({ accessToken: accessToken });
     } else {
       res
@@ -106,6 +93,7 @@ async function logout(req, res) {
   // On client, delete accessToken
 
   const cookies = req.cookies;
+  console.log("🚀 ~ file: authController.js:96 ~ logout ~ cookies:", cookies)
   if (!cookies?.jwt) return res.sendStatus(204); //sucess content deleted
   const refreshToken = cookies.jwt;
 
