@@ -1,14 +1,14 @@
 const database = require("../../database");
 
-async function getRecommended() {
+async function getRecommended(limit) {
   const query = `
   SELECT username
   FROM User
   ORDER BY RANDOM()
-  LIMIT 10;
+  LIMIT ?;
 `;
-
-  const result = await database.get(query);
+  const params = [limit];
+  const result = await database.get(query, params);
   return result.map((dict) => dict.username);
 }
 

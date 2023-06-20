@@ -11,7 +11,7 @@ const Lists = () => {
   const { token, username } = useTokenStore((state) => state);
 
   const { data: followedChannels } = useFetch(postFollowing, username, token);
-  const { data: recommendedChannels } = useFetch(getRecommended);
+  const { data: recommendedChannels } = useFetch(getRecommended, 14);
 
   const renderChannelsLists = (name, title, channels) => {
     return <ChannelsLists name={name} title={title} channels={channels} />;

@@ -4,9 +4,17 @@ import { fetchData } from "./utils/fetch";
  * Retrieves recommended data.
  * @returns {Promise<any>} A promise that resolves with the recommended data.
  */
-export const getRecommended = async () => {
+export const getRecommended = async (amount) => {
   const url = "/recommended";
-  return fetchData(url);
+  const options = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: {
+      limit: amount,
+    },
+  };
+  return fetchData(url, "post", options);
 };
 
 /**

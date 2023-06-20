@@ -3,7 +3,10 @@ const {
 } = require("../../database/operations/generalOps/getRecommended");
 
 async function recommendedList(req, res) {
-  const rec = await getRecommended();
+  const { limit } = req.body;
+
+  const input = limit ? limit : 10;
+  const rec = await getRecommended(input);
   res.json(rec);
 }
 
