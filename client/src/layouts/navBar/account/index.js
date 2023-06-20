@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTokenStore } from "@/store/tokenStore";
+import Link from "next/link";
 
 import withPopup from "@/hoc/popup/withPopup";
 import RegistrationForm from "@/hoc/forms/registrationForm/index";
@@ -11,7 +12,7 @@ const EnhancedLoginFormPopup = withPopup(LoginForm, "Log in");
 
 function Account() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const { token, removeToken } = useTokenStore();
+  const { token, removeToken, username } = useTokenStore();
 
   useEffect(() => {
     if (token !== null) {
@@ -28,9 +29,17 @@ function Account() {
   return (
     <div className="account">
       {loggedIn ? (
-        <button onClick={handleLogout} className="user_button">
-          Log Out
-        </button>
+        <>
+          <button onClick={handleLogout} className="logout__button">
+            Log Out
+          </button>
+          <Link href={username} className="hidden-link">
+            <button className="user_button">Your Channel</button>
+          </Link>
+          <Link href={"/dashboard/" + username} className="hidden-link">
+            <button className="user_button">Dashboard</button>
+          </Link>
+        </>
       ) : (
         <div>
           <EnhancedRegistrationFormPopup />

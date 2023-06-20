@@ -5,16 +5,24 @@
  * @param {object} options.data - The data used to populate the grid.
  * @returns {JSX.Element} - The grid component.
  */
-function Grid({ loading, options: { data } }) {
+function Grid(props) {
+  const {
+    loading,
+    options: {
+      data: [dati],
+    },
+  } = props;
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="video-grid-container">
-      {Object.values(data).map((item, index) => (
-        <GridItem key={index} item={item} />
-      ))}
+      {dati &&
+        Object.values(dati.data).map((item, index) => (
+          <GridItem key={index} item={item} />
+        ))}
     </div>
   );
 }

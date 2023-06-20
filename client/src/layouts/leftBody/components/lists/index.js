@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import ChannelsLists from "../../../../features/channelsLists/index";
+import ChannelsList from "../../../../features/channelsList/index";
 import { useTokenStore } from "@/store/tokenStore";
 import { postFollowing } from "@/api/postFetch";
 import { getRecommended } from "@/api/getFetch";
@@ -11,22 +10,22 @@ const Lists = () => {
   const { token, username } = useTokenStore((state) => state);
 
   const { data: followedChannels } = useFetch(postFollowing, username, token);
-  const { data: recommendedChannels } = useFetch(getRecommended, 14);
+  const { data: recommendedChannels } = useFetch(getRecommended, 10);
 
-  const renderChannelsLists = (name, title, channels) => {
-    return <ChannelsLists name={name} title={title} channels={channels} />;
+  const renderChannelsList = (name, title, channels) => {
+    return <ChannelsList name={name} title={title} channels={channels} />;
   };
 
   return (
     <div>
       {followedChannels &&
-        renderChannelsLists(
+        renderChannelsList(
           "followers__channels",
           "Followed channels",
           followedChannels
         )}
       {recommendedChannels &&
-        renderChannelsLists(
+        renderChannelsList(
           "recommended__channels",
           "Recommended channels",
           recommendedChannels

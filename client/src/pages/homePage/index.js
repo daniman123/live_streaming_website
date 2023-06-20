@@ -1,13 +1,8 @@
 import "./style/style.css";
-
-import WebRTC from "../../features/webRTC/index";
+import withFeedWrapper from "@/hoc/feedWrapper/index";
 
 function HomePage() {
-  return (
-    <div className="home__page">
-      <WebRTC />
-    </div>
-  );
+  return <div className="home__page">HomePage</div>;
 }
 
-export default HomePage;
+export default withFeedWrapper(HomePage);
