@@ -1,5 +1,5 @@
-.left__body__element{
-border-top: 2.5px solid rgb(207, 207, 207);
+.left__body__element {
+  border-top: 2.5px solid rgb(207, 207, 207);
 }
 
 .channels__list__element > a {
@@ -48,4 +48,21 @@ div.viewer__count > p {
 
 .pfp {
   padding: 10px;
+}
+
+a.discover__followers {
+  color: #007bff; /* Link color */
+  text-decoration: none; /* Remove underline */
+}
+
+a.discover__followers:hover {
+  text-decoration: underline 3px solid; /* Add underline on hover */
+}
+
+a.discover__followers:visited {
+  color: #597ab6; /* Visited link color */
+}
+
+a.discover__followers:focus {
+  outline: none; /* Remove focus outline */
 }

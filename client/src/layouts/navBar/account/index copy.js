@@ -14,7 +14,13 @@ const EnhancedLoginFormPopup = withPopup(LoginForm, "Log in");
 
 function Account() {
   const { removeToken, setLogin, setToken, token } = useTokenStore();
-  const { data, loading, error } = useFetch(setToken);
+  
+  useEffect(() => {
+    async function getData() {
+      await setToken();
+    }
+    getData();
+  }, []);
 
   const userStatus = useTokenStore((state) => state.isLoggedIn);
   const userToken = useTokenStore((state) => state.token);
@@ -25,6 +31,8 @@ function Account() {
     }
   }, [token]);
 
+  console.log("🚀 ~ file: index.js:28 ~ Account ~ userToken:", userToken);
+
   async function handleLogout() {
     await getLogout(token);
     removeToken();
@@ -32,7 +40,7 @@ function Account() {
 
   return (
     <div className="account">
-      {userStatus && !loading ? (
+      {userStatus ? (
         <>
           <button onClick={handleLogout} className="logout__button">
             Log Out

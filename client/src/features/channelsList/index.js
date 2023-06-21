@@ -30,9 +30,22 @@ function ChannelsList({ title, channels }) {
       </div>
       <div className="channels__list__content__wrapper">
         <ul className="channels__list__content">
-          {channels.map((channel, index) => (
-            <ChannelListItem key={index} channel={channel} />
-          ))}
+          {channels.length ? (
+            channels.map((channel, index) => (
+              <ChannelListItem key={index} channel={channel} />
+            ))
+          ) : (
+            <li>
+              <br></br>
+              <p>
+                Discover and follow new channels. They'll be shown right here.
+              </p>
+              <br></br>
+              <Link href="/discover" className="discover__followers">Start exploring now!</Link>
+              <br></br>
+              <br></br>
+            </li>
+          )}
         </ul>
       </div>
     </div>

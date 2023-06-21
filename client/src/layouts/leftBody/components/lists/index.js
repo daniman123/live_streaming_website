@@ -7,9 +7,13 @@ import { getRecommended } from "@/api/getFetch";
 import useFetch from "../../../../api/utils/useFetch";
 
 const Lists = () => {
-  const { token, username } = useTokenStore((state) => state);
+  const userToken = useTokenStore((state) => state.token);
 
-  const { data: followedChannels } = useFetch(postFollowing, username, token);
+  const { data: followedChannels, loading } = useFetch(
+    postFollowing,
+    userToken?.name,
+    userToken?.accessToken
+  );
   const { data: recommendedChannels } = useFetch(getRecommended, 10);
 
   const renderChannelsList = (name, title, channels) => {
@@ -18,7 +22,8 @@ const Lists = () => {
 
   return (
     <div>
-      {followedChannels &&
+      {!loading &&
+        followedChannels &&
         renderChannelsList(
           "followers__channels",
           "Followed channels",
