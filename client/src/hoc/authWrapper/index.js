@@ -14,11 +14,7 @@ export default function withAuth(Component) {
     useEffect(() => {
       const verifyRefreshToken = async () => {
         try {
-          const response = await fetchData("/refresh", "get");
-          console.log(
-            "🚀 ~ file: index.js:18 ~ verifyRefreshToken ~ response:",
-            response.accessToken
-          );
+          await fetchData("/refresh", "get");
         } catch (error) {
           console.error(
             "🚀 ~ file: index.js:15 ~ verifyRefreshToken ~ error:",
@@ -30,7 +26,6 @@ export default function withAuth(Component) {
       };
       !token ? verifyRefreshToken() : setIsLoading(false);
     }, []);
-
 
     if (!isLoading) {
       // Redirect to login or display an error message

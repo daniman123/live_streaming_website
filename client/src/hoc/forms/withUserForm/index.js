@@ -25,6 +25,7 @@ const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
         setToken(result);
         setInputAlerts({ status: "Succes!" });
         props.togglePopup();
+        window.location.reload();
       } catch (error) {
         handleError(error);
       }

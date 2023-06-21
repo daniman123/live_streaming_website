@@ -7,10 +7,10 @@ class UserOpsController {
   }
 
   async getFollowing(req, res) {
-    console.log(
-      "🚀 ~ file: userDataController.js:10 ~ UserOpsController ~ getFollowing ~ req:",
-      req.cookies.jwt
-    );
+    // console.log(
+      // "🚀 ~ file: userDataController.js:10 ~ UserOpsController ~ getFollowing ~ req:",
+      // req.cookies.jwt
+    // );
 
     const { username } = req.body;
     const registration = await this.userOpsService.getFollowing(username);

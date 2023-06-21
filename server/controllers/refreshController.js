@@ -27,8 +27,8 @@ async function handleRefreshToken(req, res) {
   try {
     user = await getRefreshToken(refreshToken);
     // console.log(
-    //   "🚀 ~ file: refreshController.js:29 ~ handleRefreshToken ~ user:",
-    //   user
+      // "🚀 ~ file: refreshController.js:29 ~ handleRefreshToken ~ user:",
+      // user[0].username
     // );
     if (!user) {
       res
@@ -48,10 +48,19 @@ async function handleRefreshToken(req, res) {
           { expiresIn: "15m" }
         );
 
-        res.json({ accessToken });
+        res.json({
+          accessToken,
+          name: user[0].username
+        });
+        
       }
     );
-  } catch {}
+  } catch (error) {
+    console.error(
+      "🚀 ~ file: refreshController.js:58 ~ handleRefreshToken ~ error:",
+      error
+    );
+  }
 }
 
 module.exports = {
