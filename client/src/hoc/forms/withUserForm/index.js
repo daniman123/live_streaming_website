@@ -4,7 +4,7 @@ import { useTokenStore } from "@/store/tokenStore";
 
 const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
   return (props) => {
-    const { token, setToken, setUsername } = useTokenStore();
+    const { token, setToken, setUsername, setLogin } = useTokenStore();
     const [userInput, setUserInput] = useState({ ...initialState });
 
     const [inputAlerts, setInputAlerts] = useState({});
@@ -24,8 +24,9 @@ const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
         const result = await postForm(fetchUrl, userInput);
         setToken(result);
         setInputAlerts({ status: "Succes!" });
+        setLogin();
         props.togglePopup();
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         handleError(error);
       }

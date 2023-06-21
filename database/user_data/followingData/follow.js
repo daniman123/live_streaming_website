@@ -27,7 +27,7 @@ async function getFollow(followerId, followedId) {
   const subscriptions = await db.get(SELECT_FOLLOW, params);
   return subscriptions[0];
 }
-FollowUser(3, 1, new Date());
+FollowUser(2, 4, new Date());
 // UnFollowUser(1, 5);
 
 module.exports = FollowUser;
