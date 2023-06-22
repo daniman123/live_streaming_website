@@ -1,6 +1,11 @@
 import { useEffect, useRef } from "react";
 import io from "socket.io-client";
 import SimplePeer from "simple-peer";
+import {
+  initializeLocalStream,
+  handleOfferEvent,
+  createPeerConnection,
+} from "./WebRTCUtils";
 
 /**
  * Custom hook for WebRTC functionality.
@@ -15,7 +20,7 @@ export const useWebRTC = () => {
 
   useEffect(() => {
     initializeSocketConnection();
-    initializeLocalStream();
+    initializeLocalStream(videoRef, localStreamRef);
     socketRef.current.on("offer", handleOfferEvent);
 
     return endCall;
@@ -26,57 +31,6 @@ export const useWebRTC = () => {
    */
   const initializeSocketConnection = () => {
     socketRef.current = io.connect("http://localhost:7000");
-  };
-
-  /**
-   * Initializes the local media stream.
-   */
-  const initializeLocalStream = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
-      videoRef.current.srcObject = stream;
-      localStreamRef.current = stream;
-    } catch (error) {
-      console.error("Error accessing camera and microphone:", error);
-    }
-  };
-
-  /**
-   * Handles the "offer" event received from the signaling server.
-   * Initiates the peer connection and signals the offer to the remote peer.
-   * @param {Object} offer - The offer received from the signaling server.
-   */
-  const handleOfferEvent = (offer) => {
-    createPeerConnection(false);
-    peerRef.current.signal(offer);
-  };
-
-  /**
-   * Creates a new peer connection.
-   * @param {boolean} initiator - Whether the current client is the initiator of the connection.
-   */
-  const createPeerConnection = (initiator) => {
-    peerRef.current = new SimplePeer({
-      initiator,
-      stream: localStreamRef.current,
-    });
-
-    peerRef.current.on("signal", (data) => {
-      socketRef.current.emit("offer", data);
-    });
-
-    peerRef.current.on("stream", handleRemoteStream);
-  };
-
-  /**
-   * Handles the remote stream received from the peer connection and updates the video element.
-   * @param {MediaStream} remoteStream - The remote stream.
-   */
-  const handleRemoteStream = (remoteStream) => {
-    videoRef.current.srcObject = remoteStream;
   };
 
   /**
@@ -100,7 +54,7 @@ export const useWebRTC = () => {
    * Starts a call by initiating the peer connection.
    */
   const startCall = () => {
-    createPeerConnection(true);
+    createPeerConnection(true, peerRef, localStreamRef, socketRef);
   };
 
   return {

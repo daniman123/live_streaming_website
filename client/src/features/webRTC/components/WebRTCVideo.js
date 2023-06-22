@@ -1,7 +1,11 @@
 import React from "react";
 
 const WebRTCVideo = ({ videoRef }) => {
-  return <video ref={videoRef} autoPlay playsInline />;
+  return (
+    <div>
+      <video ref={videoRef} autoPlay playsInline />;
+    </div>
+  );
 };
 
 export default WebRTCVideo;

@@ -3,11 +3,11 @@ import Link from "next/link";
 
 function Logo() {
   return (
-    <>
+    <div className="logo__wrapper">
       <Link href="/" className="hidden-link">
-        <div>Logo</div>
+        <div className="logo">LOGO</div>
       </Link>
-    </>
+    </div>
   );
 }
 

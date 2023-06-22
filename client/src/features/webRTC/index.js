@@ -6,7 +6,7 @@ import WebRTCCallButtons from "./components/WebRTCCallButtons";
 import { useWebRTC } from "./utils/useWebRTC";
 
 const WebRTC = () => {
-  const { videoRef, startCall, endCall } = useWebRTC();
+  const { videoRef, startCall, endCall } = useWebRTC(12);
 
   return (
     <div>

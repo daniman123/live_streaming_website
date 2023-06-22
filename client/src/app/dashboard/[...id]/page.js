@@ -1,7 +1,7 @@
 "use client";
 
 import WebRTC from "@/features/webRTC";
-import withAuth from "../../../hoc/authWrapper/index";
+import withFeedWrapper from "../../../hoc/feedWrapper/index";
 
 function Dashboard() {
   return (
@@ -11,4 +11,5 @@ function Dashboard() {
   );
 }
 
-export default withAuth(Dashboard);
+export default withFeedWrapper(Dashboard);
+// export default Dashboard;

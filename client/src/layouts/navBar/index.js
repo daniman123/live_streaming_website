@@ -2,7 +2,7 @@
 
 import "./style/style.css";
 import React from "react";
-import Search from "./search/index";
+import Search from "../../features/search/index";
 import Account from "../../features/account/index";
 import Logo from "../../features/logo/index";
 

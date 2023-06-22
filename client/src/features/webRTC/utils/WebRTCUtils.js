@@ -22,8 +22,11 @@ export const initializeLocalStream = async (videoRef, localStreamRef) => {
  * Handles the "offer" event received from the signaling server.
  * Initiates the peer connection and signals the offer to the remote peer.
  * @param {Object} offer - The offer received from the signaling server.
+ * @param {Object} peerRef - Reference to the peer connection.
+ * @param {Object} localStreamRef - Reference to the local stream.
+ * @param {Object} socketRef - Reference to the socket connection.
  */
-export const handleOfferEvent = (offer) => {
+export const handleOfferEvent = (offer, peerRef, localStreamRef, socketRef) => {
   createPeerConnection(false, peerRef, localStreamRef, socketRef);
   peerRef.current.signal(offer);
 };
@@ -35,7 +38,13 @@ export const handleOfferEvent = (offer) => {
  * @param {Object} localStreamRef - Reference to the local stream.
  * @param {Object} socketRef - Reference to the socket connection.
  */
-export const createPeerConnection = (initiator, peerRef, localStreamRef, socketRef) => {
+export const createPeerConnection = (
+  initiator,
+  peerRef,
+  localStreamRef,
+  socketRef,
+  videoRef // Add videoRef as an argument
+) => {
   peerRef.current = new SimplePeer({
     initiator,
     stream: localStreamRef.current,
@@ -45,14 +54,17 @@ export const createPeerConnection = (initiator, peerRef, localStreamRef, socketR
     socketRef.current.emit("offer", data);
   });
 
-  peerRef.current.on("stream", handleRemoteStream);
+  peerRef.current.on("stream", (remoteStream) => {
+    handleRemoteStream(remoteStream, peerRef, videoRef); // Pass videoRef
+  });
 };
 
 /**
  * Handles the remote stream received from the peer connection and updates the video element.
  * @param {MediaStream} remoteStream - The remote stream.
+ * @param {Object} peerRef - Reference to the peer connection.
  * @param {Object} videoRef - Reference to the video element.
  */
-export const handleRemoteStream = (remoteStream, videoRef) => {
+export const handleRemoteStream = (remoteStream, peerRef, videoRef) => {
   videoRef.current.srcObject = remoteStream;
 };

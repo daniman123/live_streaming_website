@@ -11,14 +11,14 @@ import {
  * Manages the socket connection, peer connection, and local stream.
  * @returns {Object} An object containing references and functions for WebRTC.
  */
-export const useWebRTC = () => {
+export const useWebRTC = (roomId) => {
   const videoRef = useRef(null);
   const socketRef = useRef(null);
   const peerRef = useRef(null);
   const localStreamRef = useRef(null);
 
   useEffect(() => {
-    initializeSocketConnection();
+    initializeSocketConnection(roomId);
     initializeLocalStream(videoRef, localStreamRef);
     socketRef.current.on("offer", handleOfferEvent);
 
@@ -30,6 +30,8 @@ export const useWebRTC = () => {
    */
   const initializeSocketConnection = () => {
     socketRef.current = io.connect("http://localhost:7000");
+    // Emit the "joinRoom" event with the room ID or name
+    socketRef.current.emit("joinRoom", roomId);
   };
 
   /**
@@ -52,8 +54,9 @@ export const useWebRTC = () => {
   /**
    * Starts a call by initiating the peer connection.
    */
-  const startCall = () => {
+  const startCall = (roomId) => {
     createPeerConnection(true, peerRef, localStreamRef, socketRef);
+    socketRef.current.emit("joinRoom", roomId);
   };
 
   return {
