@@ -1,10 +1,10 @@
 "use client";
 
-import ChannelsList from "../../../../features/channelsList/index";
+import ChannelsList from "../channelsList/index";
 import { useTokenStore } from "@/store/tokenStore";
 import { postFollowing } from "@/api/postFetch";
 import { getRecommended } from "@/api/getFetch";
-import useFetch from "../../../../api/utils/useFetch";
+import useFetch from "../../api/utils/useFetch";
 
 const Lists = () => {
   const userToken = useTokenStore((state) => state.token);

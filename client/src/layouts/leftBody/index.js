@@ -1,5 +1,5 @@
 import ActionButtons from "../../features/actionButtons/index";
-import Lists from "./components/lists";
+import Lists from "../../features/lists";
 
 import "./style/style.css";
 

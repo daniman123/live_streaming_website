@@ -3,8 +3,8 @@
 import "./style/style.css";
 import React from "react";
 import Search from "./search/index";
-import Account from "./account/index";
-import Logo from "./logo/index";
+import Account from "../../features/account/index";
+import Logo from "../../features/logo/index";
 
 function NavBar() {
   return (
