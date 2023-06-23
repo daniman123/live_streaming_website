@@ -5,7 +5,7 @@ import { TokenStoreState, tokenStore } from "@/store/tokenStore";
 interface UserNavProps {
   removeToken: () => void;
   token: tokenStore;
-  userToken: TokenStoreState;
+  userToken: tokenStore;
 }
 
 function UserNav({ removeToken, token, userToken }: UserNavProps) {
