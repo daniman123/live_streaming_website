@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import API_URL from "../config/apiConfig";
 
 const apiClient = axios.create({
@@ -6,10 +6,13 @@ const apiClient = axios.create({
   withCredentials: true, // Include cookies in the request
 });
 
+// Define the RequestOptions type based on the usage within fetchData function
+export type RequestOptions = AxiosRequestConfig;
+
 // Utility function to fetch data from an API using Axios
-export const fetchData = async (url, method = "get", options = {}) => {
+export const fetchData = async (url: string, method: string = "get", options: RequestOptions = {}): Promise<any> => {
   try {
-    const response = await apiClient.request({
+    const response: AxiosResponse = await apiClient.request({
       url,
       method,
       ...options,
@@ -21,7 +24,7 @@ export const fetchData = async (url, method = "get", options = {}) => {
 };
 
 // Handles the error that occurred during the API request
-const handleRequestError = (error) => {
+const handleRequestError = (error: any): void => {
   const { response } = error;
 
   if (response) {

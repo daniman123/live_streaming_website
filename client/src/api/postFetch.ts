@@ -1,11 +1,11 @@
-import { fetchData } from "./utils/fetch";
+import { fetchData, RequestOptions } from "./utils/fetch";
 
-export const postFollowing = async (userData = null, token) => {
+export const postFollowing = async (userData: any | null, token: string): Promise<any> => {
   if (!userData || !token) return;
 
   const url = "/user/following";
   const method = "post";
-  const options = {
+  const options: RequestOptions = {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -19,10 +19,10 @@ export const postFollowing = async (userData = null, token) => {
   return data;
 };
 
-export const postRegister = async (username, email, password) => {
+export const postRegister = async (username: string, email: string, password: string): Promise<any> => {
   const url = "/register";
   const method = "post";
-  const options = {
+  const options: RequestOptions = {
     headers: {
       "Content-Type": "application/json",
     },
@@ -35,10 +35,10 @@ export const postRegister = async (username, email, password) => {
   return fetchData(url, method, options);
 };
 
-export const postForm = async (fetchUrl, inputData) => {
+export const postForm = async (fetchUrl: string, inputData: any): Promise<any> => {
   const url = fetchUrl;
   const method = "post";
-  const options = {
+  const options: RequestOptions = {
     headers: {
       "Content-Type": "application/json",
     },

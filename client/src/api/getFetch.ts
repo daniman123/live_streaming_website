@@ -1,12 +1,12 @@
-import { fetchData } from "./utils/fetch";
+import { fetchData, RequestOptions } from "./utils/fetch";
 
 /**
  * Retrieves recommended data.
  * @returns {Promise<any>} A promise that resolves with the recommended data.
  */
-export const getRecommended = async (amount) => {
+export const getRecommended = async (amount: number): Promise<any> => {
   const url = "/recommended";
-  const options = {
+  const options: RequestOptions = {
     headers: {
       "Content-Type": "application/json",
     },
@@ -22,7 +22,7 @@ export const getRecommended = async (amount) => {
  * @param {number} [n=1] - The number of images to retrieve.
  * @returns {Promise<string[]>} A promise that resolves with an array of image URLs.
  */
-export const getDiscoverMedia = async (n = 1) => {
+export const getDiscoverMedia = async (n: number = 1): Promise<string[]> => {
   const url = "https://dog.ceo/api/breeds/image/random";
   const method = "get";
 
@@ -37,11 +37,10 @@ export const getDiscoverMedia = async (n = 1) => {
  * @param {object} token - The access token.
  * @returns {Promise<void>} A promise that resolves when the logout is complete.
  */
-export const getLogout = async (token) => {
-
+export const getLogout = async (token: any): Promise<void> => {
   const url = "/logout";
   const method = "get";
-  const options = {
+  const options: RequestOptions = {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -49,5 +48,3 @@ export const getLogout = async (token) => {
   };
   await fetchData(url, method, options);
 };
-
-module.exports = { getRecommended, getDiscoverMedia, getLogout };

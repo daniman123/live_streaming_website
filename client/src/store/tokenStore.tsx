@@ -1,8 +1,13 @@
 import { fetchData } from "../api/utils/fetch";
 import { create } from "zustand";
 
-interface TokenStoreState {
-  token: string | null;
+interface tokenStore {
+  name: string;
+  accessToken: string;
+}
+
+export interface TokenStoreState {
+  token: tokenStore | null;
   username: string | null;
   isLoggedIn: boolean;
   setLogin: () => void;
