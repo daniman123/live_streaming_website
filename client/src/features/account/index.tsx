@@ -10,7 +10,7 @@ const Account: React.FC = () => {
   const { data, loading, error } = useFetch(setToken);
 
   const userStatus:boolean = useTokenStore((state) => state.isLoggedIn);
-  const userToken:Object = useTokenStore((state) => state.token);
+  const userToken = useTokenStore((state) => state.token);
 
   useEffect(() => {
     if (token) {

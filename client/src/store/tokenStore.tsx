@@ -1,7 +1,7 @@
 import { fetchData } from "../api/utils/fetch";
 import { create } from "zustand";
 
-interface tokenStore {
+export interface tokenStore {
   name: string;
   accessToken: string;
 }

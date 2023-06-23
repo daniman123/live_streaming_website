@@ -12,4 +12,3 @@ function Dashboard() {
 }
 
 export default withFeedWrapper(Dashboard);
-// export default Dashboard;

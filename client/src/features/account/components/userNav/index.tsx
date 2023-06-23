@@ -1,7 +1,14 @@
 import Link from "next/link";
 import { getLogout } from "../../../../api/getFetch";
+import { TokenStoreState, tokenStore } from "@/store/tokenStore";
 
-function UserNav({ removeToken, token, userToken }) {
+interface UserNavProps {
+  removeToken: () => void;
+  token: tokenStore;
+  userToken: TokenStoreState;
+}
+
+function UserNav({ removeToken, token, userToken }: UserNavProps) {
   async function handleLogout() {
     await getLogout(token);
     removeToken();
