@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getLogout } from "@/api/getFetch";
+import { getLogout } from "../../../../api/getFetch";
 
 function UserNav({ removeToken, token, userToken }) {
   async function handleLogout() {

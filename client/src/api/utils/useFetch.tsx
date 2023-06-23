@@ -1,15 +1,16 @@
-"use client";
-
 import { useEffect, useState, useRef, useCallback } from "react";
 
-/**
- * Custom hook for fetching data asynchronously.
- * @param {Function} request - The request function to fetch data.
- * @param {...any} args - Additional arguments to pass to the request function.
- * @returns {Object} - The data, loading state, and error state.
- */
-const useFetch = (request, ...args) => {
-  const [state, setState] = useState({
+type FetchState<T> = {
+  data: T | null;
+  loading: boolean;
+  error: Object | null;
+};
+
+const useFetch = <T,>(
+  request: (...args: any[]) => Promise<T>,
+  ...args: any[]
+): FetchState<T> => {
+  const [state, setState] = useState<FetchState<T>>({
     data: null,
     loading: true,
     error: null,
@@ -17,18 +18,15 @@ const useFetch = (request, ...args) => {
 
   const { data, loading, error } = state;
 
-  const prevRequest = useRef();
-  const prevArgs = useRef([]);
+  const prevRequest = useRef<(...args: any[]) => Promise<T>>();
+  const prevArgs = useRef<any[]>([]);
 
-  /**
-   * Fetches the data using the provided request function.
-   */
   const fetchData = useCallback(async () => {
     try {
       const response = await request(...args);
       setState({ data: response, loading: false, error: null });
     } catch (error) {
-      setState({ data: null, loading: false, error: error.message });
+      setState({ data: null, loading: false, error: Object(error) });
     }
   }, [request, args]);
 

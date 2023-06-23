@@ -41,7 +41,9 @@ function ChannelsList({ title, channels }) {
                 Discover and follow new channels. They'll be shown right here.
               </p>
               <br></br>
-              <Link href="/discover" className="discover__followers">Start exploring now!</Link>
+              <Link href="/discover" className="discover__followers">
+                <div>Start exploring now!</div>
+              </Link>
               <br></br>
               <br></br>
             </li>

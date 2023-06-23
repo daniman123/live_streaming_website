@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
-import { useTokenStore } from "@/store/tokenStore";
+import { useTokenStore } from "../../store/tokenStore";
 import useFetch from "../../api/utils/useFetch";
 
 import GuestNav from "./components/guestNav/index";
 import UserNav from "./components/userNav/index";
 
-function Account() {
+const Account: React.FC = () => {
   const { removeToken, setLogin, setToken, token } = useTokenStore();
   const { data, loading, error } = useFetch(setToken);
 
-  const userStatus = useTokenStore((state) => state.isLoggedIn);
-  const userToken = useTokenStore((state) => state.token);
+  const userStatus:boolean = useTokenStore((state) => state.isLoggedIn);
+  const userToken:Object = useTokenStore((state) => state.token);
 
   useEffect(() => {
     if (token) {
@@ -31,6 +31,6 @@ function Account() {
       )}
     </div>
   );
-}
+};
 
 export default Account;

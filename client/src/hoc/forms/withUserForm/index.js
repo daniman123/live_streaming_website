@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { postForm } from "@/api/postFetch";
-import { useTokenStore } from "@/store/tokenStore";
+import { postForm } from "../../../api/postFetch";
+import { useTokenStore } from "../../../store/tokenStore";
 
 const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
   return (props) => {

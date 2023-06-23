@@ -1,4 +1,4 @@
-import HomePage from "@/pages/homePage/index";
+import HomePage from "../pages/homePage/index";
 
 // https://docs.livepeer.org/
 

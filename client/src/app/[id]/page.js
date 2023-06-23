@@ -1,4 +1,4 @@
-import UserFeed from "@/pages/user/index";
+import UserFeed from "../../pages/user/index";
 
 export default function Home() {
   return (

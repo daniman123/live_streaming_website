@@ -1,4 +1,4 @@
-import { fetchData } from "@/api/utils/fetch";
+import { fetchData } from "../api/utils/fetch";
 import { create } from "zustand";
 
 export const useTokenStore = create((set) => ({
