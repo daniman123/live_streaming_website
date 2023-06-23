@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { fetchData } from "../../api/utils/fetch";
-import { useTokenStore } from "@/store/tokenStore";
+import { useTokenStore } from "../../store/tokenStore";
 
 const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);

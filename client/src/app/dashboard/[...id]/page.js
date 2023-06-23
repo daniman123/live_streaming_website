@@ -1,6 +1,6 @@
 "use client";
 
-import WebRTC from "@/features/webRTC";
+import WebRTC from "../../../features/webRTC";
 import withFeedWrapper from "../../../hoc/feedWrapper/index";
 
 function Dashboard() {
