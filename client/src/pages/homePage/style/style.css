@@ -1,0 +1,11 @@
+.home__hero__section {
+  border: 1px solid rgb(155, 71, 11);
+}
+
+.home__media__pagination {
+  border: 1px solid black;
+}
+
+.media__wrapper {
+  display: flex;
+}

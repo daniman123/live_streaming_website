@@ -1,18 +1,20 @@
+import React from "react";
 import Link from "next/link";
 import { getLogout } from "../../../../api/getFetch";
-import { TokenStoreState, tokenStore } from "@/store/tokenStore";
+import { tokenStore } from "@/store/tokenStore";
 
 interface UserNavProps {
   removeToken: () => void;
-  token: tokenStore;
-  userToken: tokenStore;
+  token: tokenStore | null;
+  userToken: tokenStore | null;
 }
 
-function UserNav({ removeToken, token, userToken }: UserNavProps) {
+const UserNav: React.FC<UserNavProps> = ({ removeToken, token, userToken }) => {
   async function handleLogout() {
     await getLogout(token);
     removeToken();
   }
+  
   return (
     <div className="user__account__nav">
       <button onClick={handleLogout} className="logout__button">
@@ -30,6 +32,6 @@ function UserNav({ removeToken, token, userToken }: UserNavProps) {
       )}
     </div>
   );
-}
+};
 
 export default UserNav;

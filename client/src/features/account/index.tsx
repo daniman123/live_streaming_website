@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useTokenStore } from "../../store/tokenStore";
+import { useTokenStore, tokenStore } from "../../store/tokenStore";
 import useFetch from "../../api/utils/useFetch";
 
 import GuestNav from "./components/guestNav/index";
@@ -9,7 +9,7 @@ const Account: React.FC = () => {
   const { removeToken, setLogin, setToken, token } = useTokenStore();
   const { data, loading, error } = useFetch(setToken);
 
-  const userStatus:boolean = useTokenStore((state) => state.isLoggedIn);
+  const userStatus: boolean = useTokenStore((state) => state.isLoggedIn);
   const userToken = useTokenStore((state) => state.token);
 
   useEffect(() => {
