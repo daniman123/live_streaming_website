@@ -1,9 +1,13 @@
 import React from "react";
 import Link from "next/link";
-import PropTypes from "prop-types";
+
 import "./style/style.css";
 
-function ChannelListItem({ channel }) {
+interface ChannelListItemProps {
+  channel: string;
+}
+
+function ChannelListItem({ channel }: ChannelListItemProps) {
   return (
     <li className="channels__list__element">
       <Link href={channel} className="hidden-link">
@@ -22,7 +26,12 @@ function ChannelListItem({ channel }) {
   );
 }
 
-function ChannelsList({ title, channels }) {
+interface ChannelsListProps {
+  title: string;
+  channels: string[];
+}
+
+function ChannelsList({ title, channels }: ChannelsListProps) {
   return (
     <div className="left__body__element">
       <div className="channels__title__wrapper">
@@ -53,10 +62,5 @@ function ChannelsList({ title, channels }) {
     </div>
   );
 }
-
-ChannelsList.propTypes = {
-  title: PropTypes.string.isRequired,
-  channels: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
 
 export default ChannelsList;
