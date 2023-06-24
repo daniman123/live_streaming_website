@@ -90,9 +90,18 @@ const HeroSection: React.FC = () => {
         ))}
       </div>
 
-      <div className="controls">
-        <button onClick={goToPreviousSlide}>Previous</button>
-        <button onClick={goToNextSlide}>Next</button>
+      <div className="controls__wrapper">
+        <div className="controls">
+          <button
+            className="previous__median__pagination"
+            onClick={goToPreviousSlide}
+          >
+            ←
+          </button>
+          <button className="next__median__pagination" onClick={goToNextSlide}>
+            →
+          </button>
+        </div>
       </div>
     </div>
   );
