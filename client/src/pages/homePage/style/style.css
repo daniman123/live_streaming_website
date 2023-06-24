@@ -9,3 +9,49 @@
 .media__wrapper {
   display: flex;
 }
+.hero-section {
+  position: relative;
+}
+
+.slideshow {
+  display: flex;
+  overflow: hidden;
+}
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.slide img {
+  width: 100%;
+  height: auto;
+}
+
+.slide h2 {
+  font-size: 24px;
+}
+
+.slide p {
+  font-size: 16px;
+}
+.slide.active {
+  opacity: 0;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.controls > button {
+border: none;
+width: 150px;
+height: 30px;
+}
