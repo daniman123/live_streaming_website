@@ -14,7 +14,6 @@ function StreamersSpotlight({ data }) {
           <div className="home__to_discover">Discover {'>'} </div>
         </Link>
       </div>
-
       <SpotLightGrid data={data} />
     </div>
   );
