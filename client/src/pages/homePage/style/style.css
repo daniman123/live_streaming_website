@@ -1,6 +1,6 @@
 .home__hero__section,
 .home__media__pagination {
-  border: 1px solid inherit;
+  border: 1px solid red;
 }
 
 .media__wrapper {
@@ -17,6 +17,7 @@
   overflow: hidden;
   align-items: center;
   justify-content: center;
+  height: 450px;
 }
 
 .slide {
@@ -25,18 +26,21 @@
   align-items: center;
   justify-content: center;
   width: 400px;
-  height: 100%;
-  opacity: 0.7;
+  opacity: 0.85;
+  cursor: pointer;
 }
 
 .slide img {
   width: 90%;
   height: 70%;
+  border-radius: 10px;
 }
 
-.slide:nth-child(2) ,
-  .slide:hover {
+.slide:nth-child(2),
+.slide:hover {
   opacity: 1;
+  transform: translateY(-2%);
+  transform: scale(110%);
 }
 
 .controls__wrapper {
@@ -75,4 +79,37 @@
 
 .next__median__pagination {
   right: var(--buttons);
+}
+
+.slide__stats > * {
+  margin-left: 15px;
+}
+
+.slide__stats {
+  width: 90%;
+  position: relative;
+  border-bottom: 2.5px solid rgb(196, 119, 84);
+  border-radius: 12px;
+}
+
+.slide__stats::before,
+.slide__stats::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 10%,
+    rgb(250, 225, 208) 80%,
+    transparent
+  );
+}
+
+.slide__stats::before {
+  left: 0;
+}
+.slide__stats::after {
+  right: 0;
 }

@@ -117,8 +117,10 @@ const Slide: React.FC<SlideProps> = ({ media }) => {
   return (
     <div className="slide">
       <img src={image} alt={title} />
-      <h2>{title}</h2>
-      <p>{type}</p>
+      <div className="slide__stats">
+        <h4>{title}</h4>
+        <p>{type}</p>
+      </div>
     </div>
   );
 };
