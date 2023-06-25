@@ -3,12 +3,15 @@
 import "./style/style.css";
 import withFeedWrapper from "../../hoc/feedWrapper/index";
 import HeroSection from "../../features/heroSection/index";
+import StreamersSpotlight from "../../features/streamersSpotlight/index";
 
-function HomePage() {
+type Props = {};
+
+function HomePage({ data }) {
   return (
     <div className="home__page">
-      HomePage
       <HeroSection />
+      <StreamersSpotlight data={data[0].data} />
     </div>
   );
 }

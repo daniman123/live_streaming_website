@@ -1,15 +1,10 @@
 import Grid from "./components/createGrid";
+import "../../features/videoGrid/style/style.css";
 
-const VideoGrid = (props) => {
-  const { data, loading, error } = props;
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
+const VideoGrid = ({ data }) => {
   return (
     <div className="video-grid-container-wrapper">
-      <Grid loading={loading} options={data} />
+      <Grid data={data} />
     </div>
   );
 };
