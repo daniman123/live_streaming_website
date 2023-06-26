@@ -27,6 +27,7 @@ export const initializeLocalStream = async (videoRef, localStreamRef) => {
  * @param {Object} socketRef - Reference to the socket connection.
  */
 export const handleOfferEvent = (offer, peerRef, localStreamRef, socketRef) => {
+  console.log("🚀 ~ file: WebRTCUtils.js:30 ~ handleOfferEvent ~ localStreamRef:", localStreamRef)
   createPeerConnection(false, peerRef, localStreamRef, socketRef);
   peerRef.current.signal(offer);
 };
@@ -51,7 +52,7 @@ export const createPeerConnection = (
   });
 
   peerRef.current.on("signal", (data) => {
-    socketRef.current.emit("offer", data);
+    socketRef.current.emit("signal", data);
   });
 
   peerRef.current.on("stream", (remoteStream) => {

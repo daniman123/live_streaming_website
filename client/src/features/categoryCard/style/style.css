@@ -1,11 +1,21 @@
 .category__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: relative;
   height: 250px;
   width: 150px;
   margin: 10px;
   border: 5px solid rgb(251, 247, 247);
-  border-radius: 5px;
+  border-radius: 1rem;
   box-shadow: 0 0 10px 1px gray;
+  cursor: pointer;
+}
+
+.category__card:hover {
+  transform: translateY(-5%) scaleY(102%) scaleX(101%);
+  /* transform: ; */
 }
 
 .image__content {
@@ -14,15 +24,24 @@
 }
 
 .category__image {
-  border-radius: 2px;
+  border-radius: 1rem 1rem 0.2rem 0.2rem;
   height: 100%;
   width: 100%;
 }
+.category__image:hover {
+  box-shadow: 0 0 5px 0px gray;
+}
+
 .card__meta__data {
   height: 40px;
   width: 100%;
 }
 .card__meta__data > p {
   height: 50%;
-  margin: 0 0 0 10px;
+  margin: 0 0.5rem 0 5%;
+}
+
+.category__viewers {
+  font-size: small;
+  font-weight: bold;
 }

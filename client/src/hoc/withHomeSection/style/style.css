@@ -1,0 +1,17 @@
+.home__content__section__top__bar {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 30px;
+  background-color: rgba(0, 96, 185, 0.904);
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.title__wrapper {
+  margin-left: 7px;
+}
+
+.home__to__link {
+  margin-right: 50px;
+}

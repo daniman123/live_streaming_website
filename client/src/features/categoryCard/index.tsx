@@ -12,7 +12,7 @@ const CategoryCard = () => {
       </div>
       <div className="card__meta__data">
         <p className="category__name">{category}</p>
-        <p className="category__viewers">{totalViewers}</p>
+        <p className="category__viewers">{totalViewers} Viewers</p>
       </div>
     </div>
   );

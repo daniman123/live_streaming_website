@@ -1,4 +1,4 @@
-import "../../features/videoGrid/style/style.css";
+import "./style/style.css";
 import withFeedWrapper from "@/hoc/feedWrapper/index";
 import VideoGrid from "../../features/videoGrid/index";
 

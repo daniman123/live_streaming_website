@@ -4,7 +4,6 @@
 }
 
 body {
-  /* background-color: whitesmoke; */
   background-color: white;
 }
 
@@ -17,23 +16,4 @@ body {
   display: flex;
 }
 
-/* .content {
-  display: grid;
-  grid-template-columns: 240px auto 290px; 
-  height: 200vh; 
-  gap: 5px; 
-}
 
-.section {
-  position: relative;
-  border: 1px solid black;
-}
-
-button {
-  cursor: pointer;
-} */
-
-.hidden-link {
-  text-decoration: none;
-  color: inherit;
-}

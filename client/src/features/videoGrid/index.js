@@ -1,5 +1,5 @@
 import Grid from "./components/createGrid";
-import "../../features/videoGrid/style/style.css";
+import "./style/style.css";
 
 const VideoGrid = ({ data }) => {
   return (

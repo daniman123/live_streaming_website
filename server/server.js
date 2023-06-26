@@ -9,8 +9,9 @@ const routes = [
   { path: "/", router: require("./routes/generalRoutes") },
   { path: "/", router: require("./routes/authRoutes") },
   { path: "/", router: require("./routes/refreshRoutes") },
-  { path: "/", router: require("./routes/userDataRoutes"), middleware: authenticateToken },
+  { path: "/", router: require("./routes/userDataRoutes") },
 ];
+// { path: "/", router: require("./routes/userDataRoutes"), middleware: authenticateToken },
 
 function setupServer() {
   const app = express();

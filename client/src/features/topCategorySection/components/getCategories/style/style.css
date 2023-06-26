@@ -1,0 +1,5 @@
+.cat__cards__home__section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
