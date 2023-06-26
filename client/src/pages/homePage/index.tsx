@@ -4,7 +4,7 @@ import "./style/style.css";
 import withFeedWrapper from "../../hoc/feedWrapper/index";
 import HeroSection from "../../features/heroSection/index";
 import StreamersSpotlight from "../../features/streamersSpotlight/index";
-import TopCategorySection from "@/features/topCategorySection";
+import TopCategorySection from "../../features/topCategorySection/index";
 
 type Props = {};
 
