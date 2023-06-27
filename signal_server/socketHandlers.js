@@ -8,7 +8,6 @@ const {
 function handleJoin(socket) {
   socket.on("join", (room) => {
     socket.join(room);
-    createRoom(room);
   });
 }
 
