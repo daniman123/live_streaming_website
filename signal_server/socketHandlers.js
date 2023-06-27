@@ -1,12 +1,8 @@
-const {
-  createRoom,
-  deleteRoom,
-  getUsersInRoom,
-  broadcastToRoom,
-} = require("./roomManager");
+
 
 function handleJoin(socket) {
   socket.on("join", (room) => {
+    console.log("🚀 ~ file: socketHandlers.js:5 ~ socket.on ~ room:", room)
     socket.join(room);
   });
 }

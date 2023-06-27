@@ -1,47 +1,40 @@
 const express = require("express");
+const app = express();
 const http = require("http");
-const socketIO = require("socket.io");
+const cors = require("cors");
+const { Server } = require("socket.io");
 
-const {
-  handleJoin,
-  handleOffer,
-  handleAnswer,
-  handleIceCandidate,
-  handleSignal,
-  handleStream,
-} = require("./socketHandlers");
+const PORT = 3001;
 
-class SignalingServer {
-  constructor(port) {
-    this.app = express();
-    this.server = http.createServer(this.app);
-    this.io = socketIO(this.server, {
-      cors: {
-        origin: "*",
-        methods: ["GET", "POST"],
-      },
-    });
-    this.PORT = port;
-    this.initializeSocketEvents();
-  }
+app.use(cors());
 
-  initializeSocketEvents() {
-    this.io.on("connection", (socket) => {
-      socket.emit("userId", socket.id);
-      handleJoin(socket);
-      handleOffer(socket);
-      handleAnswer(socket);
-      handleIceCandidate(socket);
-      handleSignal(socket);
-      handleStream(socket);
-    });
-  }
+const server = http.createServer(app);
 
-  start() {
-    this.server.listen(this.PORT, () => {
-      console.log("Signaling server listening on port", this.PORT);
-    });
-  }
-}
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
 
-module.exports = { SignalingServer };
+io.on("connection", (socket) => {
+  console.log("User Connected:", socket.id);
+
+  socket.on("joinRoom", (data) => {
+    socket.join(data);
+    console.log("User with ID:", socket.id, "room", data);
+  });
+
+  socket.on("sendMessage", (data) => {
+    socket.to(data.room).emit("receiveMessage", data);
+    console.log("🚀 ~ file: signalingServer.js:30 ~ socket.on ~ data:", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  });
+});
+
+server.listen(PORT, () => {
+  console.log("SERVER RUNNING on PORT:", PORT);
+});

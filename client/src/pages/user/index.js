@@ -12,7 +12,7 @@ import Viewer from "./components/viewer";
 function UserFeed() {
   return (
     <div className="stream_content">
-      <Viewer />
+      {/* <Viewer /> */}
       <StreamTitleBanner />
     </div>
   );

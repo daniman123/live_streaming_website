@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "devStart": "nodemon ./server/server.js",
-    "devSigStart": "nodemon ./signal_server/index.js",
+    "devSigStart": "nodemon ./signal_server/signalingServer.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

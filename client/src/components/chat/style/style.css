@@ -1,0 +1,97 @@
+.chat__wrapper > * {
+  padding-left: 0.2rem;
+}
+
+.chat__wrapper {
+  height: 100vh;
+  width: 250px;
+  background-color: lightslategray;
+}
+
+.chat__header__wrapper {
+  height: 4%;
+  background-color: rgb(84, 97, 110);
+}
+
+/* Track */
+.chat__body::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track - vertical */
+.chat__body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Thumb */
+.chat__body::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Thumb on hover */
+.chat__body::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.chat__body {
+  height: 88%;
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow: auto;
+}
+
+.chat__footer {
+  padding-top: 1%;
+  height: 8%;
+  background-color: rgb(66, 77, 88);
+  box-shadow: 0 0 5px 0 black;
+}
+
+.chat__message {
+  display: flex;
+  /* align-items: center; */
+  /* height: 20px; */
+  margin-bottom: 7px;
+}
+
+.chat__message__input {
+  height: 40px;
+  width: 86%;
+  outline: none;
+  background-color: rgb(84, 97, 110);
+  padding-left: 0.3rem;
+  color: white;
+  border-radius: 5px;
+}
+
+.chat__message__input::placeholder {
+  color: white;
+  opacity: 0.5;
+  padding-left: 0.2rem;
+}
+
+.send__chat__message__button {
+  height: 43px;
+  width: 10%;
+}
+
+.optional__chat__data.false {
+  display: none;
+}
+
+.chat__message__timestamp {
+  font-size: x-small;
+}
+
+.chat__message__sender {
+  margin-right: 10px;
+  margin-left: 5px;
+}
+
+.chat__message__content {
+  width: 75%;
+  color: aliceblue;
+  word-wrap: break-word;
+}
