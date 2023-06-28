@@ -1,19 +1,27 @@
 "use client";
 
-import React from "react";
+import StreamTitleBanner from "../../features/streamTitleBanner";
+import Chat from "@/components/chat";
+import { useTokenStore } from "../../store/tokenStore";
+import { usePathname } from "next/navigation";
 
 import "./style/style.css";
 
-import VideoPlayer from "./components/videoPlayerContainer/index";
-import Stream from "./components/stream/index";
-import StreamTitleBanner from "./components/streamTitleBanner";
-import Viewer from "./components/viewer";
-
 function UserFeed() {
+  const userToken = useTokenStore((state) => state.token);
+  const room = usePathname();
+
   return (
-    <div className="stream_content">
-      {/* <Viewer /> */}
-      <StreamTitleBanner />
+    <div className="stream__feed">
+      <div className="stream__content">
+        <div className="vidia"></div>
+        <StreamTitleBanner />
+      </div>
+      <Chat
+        username={userToken?.name}
+        enableChat={userToken?.name}
+        room={room}
+      />
     </div>
   );
 }

@@ -1,11 +1,12 @@
 import UserFeed from "../../pages/user/index";
+import withFeedWrapper from "@/hoc/feedWrapper/index";
 
-export default function Home() {
+function User() {
   return (
-    <>
-      <div className="section">
-        <UserFeed />
-      </div>
-    </>
+    <div className="user__feed__content">
+      <UserFeed />
+    </div>
   );
 }
+
+export default withFeedWrapper(User);

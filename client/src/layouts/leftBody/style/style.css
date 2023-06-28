@@ -1,4 +1,8 @@
 .left__body {
+  height: 100vh;
+  z-index: 100;
+  background-color: white;
+  position: fixed;
   width: 260px;
   margin-right: 10px;
   border-right: 5px solid rgb(218, 227, 235);

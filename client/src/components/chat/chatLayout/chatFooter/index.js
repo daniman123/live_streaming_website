@@ -1,11 +1,17 @@
 import React from "react";
 
-function ChatFooter({ chatInputRef, setCurrentMessage, handleSendMessage }) {
+function ChatFooter({
+  chatInputRef,
+  enableChat,
+  setCurrentMessage,
+  handleSendMessage,
+}) {
   return (
     <div className="chat__footer">
       <input
-        className="chat__message__input"
         ref={chatInputRef}
+        className="chat__message__input"
+        disabled={!enableChat}
         type="text"
         placeholder="Hey..."
         onKeyDown={(event) => {

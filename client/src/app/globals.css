@@ -12,8 +12,14 @@ body {
   color: inherit;
 }
 
-.content__wrapper {
-  display: flex;
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
 }
-
-
+.content__wrapper {
+  margin-top: 51px;
+  display: flex;
+  position: relative;
+}

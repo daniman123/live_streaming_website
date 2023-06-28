@@ -3,12 +3,22 @@ import { sendMessage } from "./utils/index";
 import ChatHeader from "./chatLayout/chatHeader/index";
 import ChatBody from "./chatLayout/chatBody/index";
 import ChatFooter from "./chatLayout/chatFooter/index";
+
 import "./style/style.css";
 
-function Chat({ socket, username, room }) {
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:3001");
+
+function Chat({ username, enableChat, room }) {
   const chatInputRef = useRef();
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
+
+  useEffect(() => {
+    if (room !== "") {
+      socket.emit("joinRoom", room);
+    }
+  }, []);
 
   useEffect(() => {
     socket.on("receiveMessage", (data) => {
@@ -34,6 +44,7 @@ function Chat({ socket, username, room }) {
       <ChatBody messageList={messageList} showTime={false} />
       <ChatFooter
         chatInputRef={chatInputRef}
+        enableChat={enableChat}
         setCurrentMessage={setCurrentMessage}
         handleSendMessage={handleSendMessage}
       />

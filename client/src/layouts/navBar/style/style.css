@@ -1,4 +1,5 @@
 .nav_bar {
+  /* position: fixed; */
   width: 100%;
   height: 51px;
   display: inline-flex;

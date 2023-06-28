@@ -3,9 +3,13 @@
 }
 
 .chat__wrapper {
-  height: 100vh;
-  width: 250px;
+  position: fixed;
+  right: 0;
+  width: 292px;
+  height: 95vh;
   background-color: lightslategray;
+  box-shadow: 2px 4px 4px 4px grey;
+
 }
 
 .chat__header__wrapper {
