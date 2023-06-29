@@ -1,6 +1,6 @@
 const handleConnection = (socket) => {
-  let messageQueue = []; // Array to store incoming messages
-  let isProcessing = false; // Flag to track if messages are being processed
+  let messageQueue = [];
+  let isProcessing = false;
 
   socket.on("joinRoom", (data) => {
     socket.join(data, (error) => {
@@ -11,10 +11,10 @@ const handleConnection = (socket) => {
   });
 
   socket.on("sendMessage", (data) => {
-    messageQueue.push(data); // Add incoming message to the queue
+    messageQueue.push(data);
 
     if (!isProcessing) {
-      processMessages(); // Start processing messages if not already started
+      processMessages();
     }
   });
 
@@ -29,7 +29,7 @@ const handleConnection = (socket) => {
       setTimeout(processMessages, 1000);
       messageQueue = [];
     } else {
-      isProcessing = false; // Reset the flag as there are no pending messages
+      isProcessing = false;
     }
   };
 };

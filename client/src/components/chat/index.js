@@ -22,7 +22,7 @@ function Chat({ username, enableChat, room }) {
 
   useEffect(() => {
     socket.on("receiveMessage", (data) => {
-      setMessageList((prevState) => [...prevState, data]);
+    setMessageList((prevState) => [...prevState, data].flat());
     });
   }, [socket]);
 
