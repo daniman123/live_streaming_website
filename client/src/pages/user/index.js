@@ -1,6 +1,7 @@
 "use client";
 
 import StreamTitleBanner from "../../features/streamTitleBanner";
+import Viewer from "@/components/viewer/index";
 import Chat from "@/components/chat";
 import { useTokenStore } from "../../store/tokenStore";
 import { usePathname } from "next/navigation";
@@ -14,7 +15,9 @@ function UserFeed() {
   return (
     <div className="stream__feed">
       <div className="stream__content">
-        <div className="vidia"></div>
+        <div className="vidia">
+          <Viewer />
+        </div>
         <StreamTitleBanner />
       </div>
       <Chat
