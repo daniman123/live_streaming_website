@@ -43,7 +43,9 @@ function Broadcast() {
 
     peerConnection.current.onicecandidate = async (event) => {
       if (event.candidate) {
-        textAreaRef.current.value = JSON.stringify(peerConnection.current.localDescription)
+        textAreaRef.current.value = JSON.stringify(
+          peerConnection.current.localDescription
+        );
       }
     };
 
@@ -68,7 +70,9 @@ function Broadcast() {
 
     peerConnection.current.onicecandidate = async (event) => {
       if (event.candidate) {
-        console.log(peerConnection.current.localDescription);
+        textAreaRef2.current.value = JSON.stringify(
+          peerConnection.current.localDescription
+        );
       }
     };
 
