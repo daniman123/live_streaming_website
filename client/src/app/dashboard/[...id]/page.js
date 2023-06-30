@@ -1,4 +1,4 @@
-import Broadcast from "@/components/broadcast/index";
+import Broadcast from "../../../components/broadcast/index";
 
 function Dashboard() {
   return <Broadcast />;

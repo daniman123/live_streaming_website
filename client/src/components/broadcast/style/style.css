@@ -1,0 +1,11 @@
+.vids {
+  display: flex;
+  border: 2px solid red;
+}
+
+video {
+  display: grid;
+  flex-direction: column;
+
+  border: 2px solid rgb(17, 0, 255);
+}
