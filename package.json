@@ -40,6 +40,7 @@
     "k-rpc": "^5.1.0",
     "last-one-wins": "^1.0.4",
     "lru": "^3.1.0",
+    "peer": "^1.0.0",
     "react-router-dom": "^6.12.1",
     "socket.io": "^4.6.2",
     "sqlite3": "^5.1.6",
@@ -48,6 +49,7 @@
     "wrtc": "^0.4.7"
   },
   "devDependencies": {
+    "@types/simple-peer": "^9.11.5",
     "nodemon": "^1.14.9"
   }
 }

@@ -3,23 +3,17 @@ const handleConnection = (socket) => {
   socket.emit("me", socket.id);
 
   socket.on("callUser", ({ userToCall, signalData, from, name }) => {
-    io.to(userToCall).emit("callUser", { signal: signalData, from, name });
+    socket.to(userToCall).emit("callUser", { signal: signalData, from, name });
   });
 
   socket.on("answerCall", (data) => {
-    io.to(data.to).emit("callAccepted", data.signal);
-  });
-
-  // Handle incoming video stream
-  socket.on("broadcast", (data) => {
-    console.log("🚀 ~ file: socketHandlers:6 ~ socket.on ~ data:", data);
-    // Broadcast the received video stream to other connected clients (relay nodes or viewer nodes)
-    socket.broadcast.emit("stream", data);
+    socket.to(data.to).emit("callAccepted", data.signal);
   });
 
   // Cleanup on client disconnection
   socket.on("disconnect", () => {
     console.log("Client disconnected");
+    // Handle disconnection logic here
   });
 };
 
