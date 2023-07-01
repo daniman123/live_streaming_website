@@ -4,7 +4,9 @@ const handleConnection = (socket, answerers) => {
   socket.on("joinRoom", (room) => {
     console.log(`User: ${socket.id}, joined room: ${room}`);
     answerers.push(socket);
-    socket.to(room).emit("joins",socket.id)
+    if (answerers.length > 1) {
+      socket.to(room).emit("joins", socket.id);
+    }
     socket.join(room, (error) => {
       console.log("🚀 ~ file: socketHandlers.js:7 ~ socket.join ~ room:", room);
       if (error) {

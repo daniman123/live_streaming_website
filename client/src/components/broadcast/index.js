@@ -18,6 +18,10 @@ function Broadcast() {
   const localStream = useGetLocalStream();
 
   useEffect(() => {
+    peerConnection.current = new RTCPeerConnection(servers);
+  }, []);
+
+  useEffect(() => {
     socket.on("joins", async (data) => {
       await createOffer();
     });
@@ -27,8 +31,6 @@ function Broadcast() {
   }, [socket]);
 
   const createOffer = async () => {
-    peerConnection.current = new RTCPeerConnection(servers);
-
     localStream.current.srcObject.getTracks().forEach((track) => {
       peerConnection.current.addTrack(track, localStream.current.srcObject);
     });

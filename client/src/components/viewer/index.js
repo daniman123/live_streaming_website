@@ -24,6 +24,9 @@ function Viewer() {
     socket.on("broadcastMessage", (offer) => {
       createAnswer(offer).then();
     });
+    return ()=>{
+      socket.disconnect()
+    }
   }, [socket]);
 
   useEffect(() => {
