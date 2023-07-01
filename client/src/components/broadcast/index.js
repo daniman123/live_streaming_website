@@ -22,9 +22,9 @@ function Broadcast() {
   }, []);
 
   useEffect(() => {
-    socket.on("joins", async (data) => {
-      await createOffer();
-    });
+    // socket.on("joins", async (data) => {
+    //   await createOffer();
+    // });
     socket.on("answerOffer", (data) => {
       addAnswer(data).then();
     });
@@ -51,9 +51,9 @@ function Broadcast() {
   const addAnswer = async (answer) => {
     if (!answer) return alert("NOOOOOOOOOOOOOOOOO offer");
 
-    // if (!peerConnection.current.currentRemoteDescription) {
+    if (!peerConnection.current.currentRemoteDescription) {
       await peerConnection.current.setRemoteDescription(answer);
-    // }
+    }
   };
 
   return (

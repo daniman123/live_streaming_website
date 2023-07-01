@@ -17,8 +17,7 @@ class CdnServer {
     });
     this.PORT = process.env.PORT || 7000;
 
-    this.answerers = [];
-    this.senderStreams;
+    this.answerers = []
   }
 
   configureMiddlewares() {
