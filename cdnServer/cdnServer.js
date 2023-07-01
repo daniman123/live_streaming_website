@@ -16,6 +16,8 @@ class CdnServer {
       },
     });
     this.PORT = process.env.PORT || 7000;
+
+    this.answerers = []
   }
 
   configureMiddlewares() {
@@ -24,7 +26,9 @@ class CdnServer {
   }
 
   setupSocketHandlers() {
-    this.io.on("connection", handleConnection);
+    this.io.on("connection", (socket) => {
+      handleConnection(socket, this.answerers);
+    });
   }
 
   startServer() {

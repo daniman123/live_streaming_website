@@ -18,14 +18,19 @@ function Broadcast() {
   const localStream = useGetLocalStream();
 
   useEffect(() => {
+    peerConnection.current = new RTCPeerConnection(servers);
+  }, []);
+
+  useEffect(() => {
+    socket.on("joins", async (data) => {
+      await createOffer();
+    });
     socket.on("answerOffer", (data) => {
       addAnswer(data).then();
     });
   }, [socket]);
 
   const createOffer = async () => {
-    peerConnection.current = new RTCPeerConnection(servers);
-
     localStream.current.srcObject.getTracks().forEach((track) => {
       peerConnection.current.addTrack(track, localStream.current.srcObject);
     });
@@ -46,9 +51,9 @@ function Broadcast() {
   const addAnswer = async (answer) => {
     if (!answer) return alert("NOOOOOOOOOOOOOOOOO offer");
 
-    if (!peerConnection.current.currentRemoteDescription) {
+    // if (!peerConnection.current.currentRemoteDescription) {
       await peerConnection.current.setRemoteDescription(answer);
-    }
+    // }
   };
 
   return (
