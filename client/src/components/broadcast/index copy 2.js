@@ -1,27 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+import React, { useEffect, useRef } from "react";
 import "./style/style.css";
 import { useGetLocalStream } from "@/lib/customHooks";
-import { servers } from "../../api/config/stunServerConfig";
-import io from "socket.io-client";
-
-const SIGNAL_SERVER_URL = "http://localhost:7000";
-
-const socket = io.connect(SIGNAL_SERVER_URL);
+import servers from "../../api/config/stunServerConfig";
 
 function Broadcast() {
-  const [roomName, setRoomName] = useState(usePathname());
-  const [offer, setOffer] = useState(null);
   const peerConnection = useRef();
   const localStream = useGetLocalStream();
-
-  useEffect(() => {
-    socket.on("answerOffer", (data) => {
-      addAnswer(data).then();
-    });
-  }, [socket]);
+  const textAreaRef = useRef();
+  const textAreaRef2 = useRef();
 
   const createOffer = async () => {
     peerConnection.current = new RTCPeerConnection(servers);
@@ -32,22 +20,23 @@ function Broadcast() {
 
     peerConnection.current.onicecandidate = async (event) => {
       if (event.candidate) {
-        setOffer(peerConnection.current.localDescription);
+        textAreaRef.current.value = JSON.stringify(
+          peerConnection.current.localDescription
+        );
       }
     };
 
     let offer = await peerConnection.current.createOffer();
+    textAreaRef.current.value = JSON.stringify(offer);
     await peerConnection.current.setLocalDescription(offer);
-
-    await socket.emit("joinRoom", roomName);
-    await socket.emit("broadcast", { room: roomName, offer: offer });
   };
 
-  const addAnswer = async (answer) => {
+  const addAnswer = async () => {
+    let answer = JSON.parse(textAreaRef2.current.value);
     if (!answer) return alert("NOOOOOOOOOOOOOOOOO offer");
 
     if (!peerConnection.current.currentRemoteDescription) {
-      await peerConnection.current.setRemoteDescription(answer);
+      peerConnection.current.setRemoteDescription(answer);
     }
   };
 
@@ -57,8 +46,12 @@ function Broadcast() {
         <video ref={localStream} id="localStream" autoPlay playsInline />
       </div>
 
+      <textarea ref={textAreaRef}></textarea>
+      <textarea ref={textAreaRef2}></textarea>
+
       <div className="options">
         <button onClick={createOffer}>createOffer</button>
+        <button onClick={addAnswer}>addAnswer</button>
       </div>
     </div>
   );

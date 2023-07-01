@@ -1,19 +1,26 @@
 const handleConnection = (socket) => {
-  console.log("New client connected");
   socket.emit("me", socket.id);
 
-  socket.on("callUser", ({ userToCall, signalData, from, name }) => {
-    socket.to(userToCall).emit("callUser", { signal: signalData, from, name });
+  socket.on("joinRoom", (room) => {
+    console.log(`User: ${socket.id}, joined room: ${room}`);
+    socket.join(room, (error) => {
+      console.log("🚀 ~ file: socketHandlers.js:7 ~ socket.join ~ room:", room);
+      if (error) {
+        console.error("Error joining room:", error);
+      }
+    });
   });
 
-  socket.on("answerCall", (data) => {
-    socket.to(data.to).emit("callAccepted", data.signal);
+  socket.on("answer", ({ room, answer }) => {
+    socket.to(room).emit("answerOffer", answer);
   });
 
-  // Cleanup on client disconnection
+  socket.on("broadcast", ({ room: roomName, offer: offer }) => {
+    socket.to(roomName).emit("broadcastMessage", offer);
+  });
+
   socket.on("disconnect", () => {
     console.log("Client disconnected");
-    // Handle disconnection logic here
   });
 };
 
