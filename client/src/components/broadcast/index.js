@@ -49,9 +49,9 @@ function Broadcast() {
   const addAnswer = async (answer) => {
     if (!answer) return alert("NOOOOOOOOOOOOOOOOO offer");
 
-    if (!peerConnection.current.currentRemoteDescription) {
+    // if (!peerConnection.current.currentRemoteDescription) {
       await peerConnection.current.setRemoteDescription(answer);
-    }
+    // }
   };
 
   return (
