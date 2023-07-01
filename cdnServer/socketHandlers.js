@@ -1,8 +1,10 @@
-const handleConnection = (socket) => {
+const handleConnection = (socket, answerers) => {
   socket.emit("me", socket.id);
 
   socket.on("joinRoom", (room) => {
     console.log(`User: ${socket.id}, joined room: ${room}`);
+    answerers.push(socket);
+    socket.to(room).emit("joins",socket.id)
     socket.join(room, (error) => {
       console.log("🚀 ~ file: socketHandlers.js:7 ~ socket.join ~ room:", room);
       if (error) {
@@ -21,6 +23,7 @@ const handleConnection = (socket) => {
 
   socket.on("disconnect", () => {
     console.log("Client disconnected");
+    answerers = answerers.filter((answerer) => answerer.id !== socket.id);
   });
 };
 

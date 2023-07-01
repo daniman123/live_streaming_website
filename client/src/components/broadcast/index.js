@@ -18,6 +18,9 @@ function Broadcast() {
   const localStream = useGetLocalStream();
 
   useEffect(() => {
+    socket.on("joins", async (data) => {
+      await createOffer();
+    });
     socket.on("answerOffer", (data) => {
       addAnswer(data).then();
     });
