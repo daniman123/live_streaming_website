@@ -2,7 +2,7 @@ import { useRef } from "react";
 
 import { initializeStream } from "../../utils/broadcastUtils";
 
-function SetMediaDevices({ setStream }) {
+function SetMediaDevices({ setStream, setIsMediaConfig }) {
   const videoRadio = useRef();
   const audioRadio = useRef();
 
@@ -14,6 +14,7 @@ function SetMediaDevices({ setStream }) {
     const stream = await initializeStream(isVideo, isAudio);
 
     setStream(stream);
+    setIsMediaConfig(true);
   };
 
   return (
@@ -22,11 +23,11 @@ function SetMediaDevices({ setStream }) {
       <div className="media__config__options">
         <div className="media__config">
           <h4 className="media__config__name">Video</h4>
-          <input ref={videoRadio} type="checkbox" />
+          <input ref={videoRadio} type="checkbox" defaultChecked={true} />
         </div>
         <div className="media__config">
           <h4 className="media__config__name">Audio</h4>
-          <input ref={audioRadio} type="checkbox" />
+          <input ref={audioRadio} type="checkbox" defaultChecked={true} />
         </div>
       </div>
       <div className="set__config__button__wrapper">

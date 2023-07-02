@@ -1,52 +1,60 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import config from "../utils/config";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { config } from "../utils/config";
 
 import io from "socket.io-client";
 
 const SIGNAL_SERVER_URL = "http://localhost:7000";
 
-const socket = io.connect(SIGNAL_SERVER_URL);
 function Viewer() {
+  const [stream, setStream] = useState(null);
+  const socketConnection = useRef();
+  const peerConnection = useRef();
   const remoteStream = useRef();
 
-  function createPeer() {
-    const peer = new RTCPeerConnection(config);
-    peer.ontrack = handleTrackEvent;
-    peer.onnegotiationneeded = () => handleNegotiationNeededEvent(peer);
-
-    return peer;
-  }
-
-  async function handleNegotiationNeededEvent(peer) {
-    const offer = await peer.createOffer();
-    await peer.setLocalDescription(offer);
+  const handleNegotiationNeededEvent = useCallback(async () => {
+    const offer = await peerConnection.current.createOffer();
+    await peerConnection.current.setLocalDescription(offer);
     const payload = {
-      sdp: peer.localDescription,
+      sdp: peerConnection.current.localDescription,
     };
 
-    socket.emit("viewer", payload);
-    socket.on("answerViewer", (data) => {
+    socketConnection.current.emit("viewer", payload);
+    socketConnection.current.on("answerViewer", (data) => {
       const desc = new RTCSessionDescription(data.sdp);
-      peer.setRemoteDescription(desc).catch((e) => console.log(e));
+      peerConnection.current
+        .setRemoteDescription(desc)
+        .catch((e) => console.log(e));
     });
-  }
+  }, []);
 
-  function handleTrackEvent(e) {
-    if (remoteStream.current) {
-      remoteStream.current.srcObject = e.streams[0];
-    }
-  }
+  const handleTrackEvent = useCallback((e) => {
+    setStream(e.streams[0]);
+  }, []);
 
   useEffect(() => {
-    async function initializeStream() {
-      const peer = createPeer();
-      peer.addTransceiver("video", { direction: "recvonly" });
-      peer.addTransceiver("audio", { direction: "recvonly" });
-    }
-    initializeStream();
+    socketConnection.current = io.connect(SIGNAL_SERVER_URL);
+    socketConnection.current.emit("joinRoom", "gubbistream");
+
+    peerConnection.current = new RTCPeerConnection(config);
+    peerConnection.current.ontrack = handleTrackEvent;
+
+    peerConnection.current.onnegotiationneeded = () =>
+      handleNegotiationNeededEvent();
+
+    peerConnection.current.addTransceiver("video", { direction: "recvonly" });
+    peerConnection.current.addTransceiver("audio", { direction: "recvonly" });
+
+    return () => {
+      socketConnection.current.disconnect();
+      peerConnection.current.close();
+    };
   }, []);
+
+  useEffect(() => {
+    remoteStream.current.srcObject = stream;
+  }, [stream]);
 
   return (
     <div className="stream__video__feed">

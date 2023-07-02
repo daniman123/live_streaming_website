@@ -3,7 +3,7 @@ const compression = require("compression");
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
-const { handleConnection } = require("./socketHandlers");
+const SocketHandlers = require("./socketHandlers");
 
 class CdnServer {
   constructor() {
@@ -17,8 +17,10 @@ class CdnServer {
     });
     this.PORT = process.env.PORT || 7000;
 
-    this.answerers = [];
-    this.senderStreams;
+    this.socketHandlers = new SocketHandlers(); // Create an instance of SocketHandlers
+
+    this.configureMiddlewares();
+    this.setupSocketHandlers();
   }
 
   configureMiddlewares() {
@@ -28,7 +30,7 @@ class CdnServer {
 
   setupSocketHandlers() {
     this.io.on("connection", (socket) => {
-      handleConnection(socket, this.answerers);
+      this.socketHandlers.handleConnection(socket);
     });
   }
 
@@ -39,8 +41,6 @@ class CdnServer {
   }
 
   start() {
-    this.configureMiddlewares();
-    this.setupSocketHandlers();
     this.startServer();
   }
 }

@@ -1,26 +1,28 @@
-const webrtc = require("wrtc");
+const { RTCPeerConnection, RTCSessionDescription } = require("wrtc");
 
-let senderStream; // Define the senderStream variable
+class SocketHandlers {
+  constructor() {
+    this.answerers = new Set();
+    this.senderStream = null;
+    this.broadcastPeer = null;
+  }
 
-const handleConnection = (socket, answerers) => {
-  socket.emit("me", socket.id);
+  handleTrackEvent(e, peer) {
+    this.senderStream = e.streams[0];
+  }
 
-  socket.on("joinRoom", (room) => {
+  handleJoinRoom(socket, room) {
     console.log(`User: ${socket.id}, joined room: ${room}`);
-    answerers.push(socket);
-    if (answerers.length > 1) {
-      socket.to(room).emit("joins", socket.id);
-    }
     socket.join(room, (error) => {
       console.log("🚀 ~ file: socketHandlers.js:7 ~ socket.join ~ room:", room);
       if (error) {
         console.error("Error joining room:", error);
       }
     });
-  });
+  }
 
-  socket.on("viewer", async (data) => {
-    const peer = new webrtc.RTCPeerConnection({
+  handleViewer(socket, data) {
+    const peer = new RTCPeerConnection({
       iceServers: [
         {
           urls: [
@@ -30,25 +32,34 @@ const handleConnection = (socket, answerers) => {
         },
       ],
     });
-    const desc = new webrtc.RTCSessionDescription(data.sdp);
-    await peer.setRemoteDescription(desc);
 
-    if (!senderStream) return;
+    const desc = new RTCSessionDescription(data.sdp);
+    peer
+      .setRemoteDescription(desc)
+      .then(() => {
+        if (!this.senderStream) return;
+        this.senderStream
+          .getTracks()
+          .forEach((track) => peer.addTrack(track, this.senderStream));
+        return peer.createAnswer();
+      })
+      .then((answer) => {
+        if (answer !== typeof Object) return;
+        return peer.setLocalDescription(answer);
+      })
+      .then(() => {
+        const payload = {
+          sdp: peer.localDescription,
+        };
+        socket.emit("answerViewer", payload);
+      })
+      .catch((error) => {
+        console.error("Error creating answer:", error);
+      });
+  }
 
-    senderStream
-      .getTracks()
-      .forEach((track) => peer.addTrack(track, senderStream));
-    const answer = await peer.createAnswer();
-    await peer.setLocalDescription(answer);
-    const payload = {
-      sdp: peer.localDescription,
-    };
-
-    socket.emit("answerViewer", payload);
-  });
-
-  socket.on("broadcast", async (data) => {
-    const peer = new webrtc.RTCPeerConnection({
+  handleBroadcast(socket, data) {
+    this.broadcastPeer = new RTCPeerConnection({
       iceServers: [
         {
           urls: [
@@ -58,32 +69,72 @@ const handleConnection = (socket, answerers) => {
         },
       ],
     });
-    peer.ontrack = (e) => handleTrackEvent(e, peer);
+    this.broadcastPeer.ontrack = (e) => this.handleTrackEvent(e);
 
-    const desc = new webrtc.RTCSessionDescription(data.sdp);
-    await peer.setRemoteDescription(desc);
+    const desc = new RTCSessionDescription(data.sdp);
+    this.broadcastPeer
+      .setRemoteDescription(desc)
+      .then(() => {
+        return this.broadcastPeer.createAnswer();
+      })
+      .then((answer) => {
+        return this.broadcastPeer.setLocalDescription(answer);
+      })
+      .then(() => {
+        const payload = {
+          sdp: this.broadcastPeer.localDescription,
+        };
+        socket.emit("returnPayload", payload);
+      })
+      .catch((error) => {
+        console.error("Error creating answer:", error);
+      });
+  }
 
-    const answer = await peer.createAnswer();
-    await peer.setLocalDescription(answer);
+  handleTerminateBroadcast() {
+    if (this.broadcastPeer) {
+      this.broadcastPeer.close();
+      this.broadcastPeer = null;
+    }
+  }
 
-    const payload = {
-      sdp: peer.localDescription,
-    };
-
-    socket.emit("returnPayload", payload);
-  });
-
-  socket.on("disconnect", () => {
+  handleDisconnect(socket) {
     console.log("Client disconnected");
-    // senderStream = null;
-    answerers = answerers.filter((answerer) => answerer.id !== socket.id);
-  });
-};
+    this.answerers.delete(socket);
+  }
 
-function handleTrackEvent(e, peer) {
-  senderStream = e.streams[0];
+  handleConnection(socket) {
+    socket.emit("me", socket.id);
+
+    socket.on("joinRoom", (room) => {
+      this.handleJoinRoom(socket, room);
+      this.answerers.add(socket);
+      console.log(
+        "🚀 ~ file: socketHandlers.js:111 ~ SocketHandlers ~ socket.on ~ this.answerers:",
+        this.answerers.size
+      );
+
+      if (this.answerers.size > 1) {
+        socket.to(room).emit("joins", socket.id);
+      }
+    });
+
+    socket.on("viewer", (data) => {
+      this.handleViewer(socket, data);
+    });
+
+    socket.on("broadcast", (data) => {
+      this.handleBroadcast(socket, data);
+    });
+
+    socket.on("terminateBroadcast", () => {
+      this.handleTerminateBroadcast();
+    });
+
+    socket.on("disconnect", () => {
+      this.handleDisconnect(socket);
+    });
+  }
 }
 
-module.exports = {
-  handleConnection,
-};
+module.exports = SocketHandlers;

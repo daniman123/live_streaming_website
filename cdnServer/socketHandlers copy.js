@@ -1,3 +1,8 @@
+const webrtc = require("wrtc");
+
+let senderStream; // Define the senderStream variable
+let broadcastPeer;
+
 const handleConnection = (socket, answerers) => {
   socket.emit("me", socket.id);
 
@@ -15,12 +20,65 @@ const handleConnection = (socket, answerers) => {
     });
   });
 
-  socket.on("answer", ({ room, answer }) => {
-    socket.to(room).emit("answerOffer", answer);
+  socket.on("viewer", async (data) => {
+    const peer = new webrtc.RTCPeerConnection({
+      iceServers: [
+        {
+          urls: [
+            "stun:stun1.1.google.com:19302",
+            "stun:stun2.1.google.com:19302",
+          ],
+        },
+      ],
+    });
+    const desc = new webrtc.RTCSessionDescription(data.sdp);
+    await peer.setRemoteDescription(desc);
+
+    if (!senderStream) return;
+
+    senderStream
+      .getTracks()
+      .forEach((track) => peer.addTrack(track, senderStream));
+    const answer = await peer.createAnswer();
+    await peer.setLocalDescription(answer);
+    const payload = {
+      sdp: peer.localDescription,
+    };
+
+    socket.emit("answerViewer", payload);
   });
 
-  socket.on("broadcast", ({ room: roomName, offer: offer }) => {
-    socket.to(roomName).emit("broadcastMessage", offer);
+  socket.on("broadcast", async (data) => {
+    broadcastPeer = new webrtc.RTCPeerConnection({
+      iceServers: [
+        {
+          urls: [
+            "stun:stun1.1.google.com:19302",
+            "stun:stun2.1.google.com:19302",
+          ],
+        },
+      ],
+    });
+    broadcastPeer.ontrack = (e) => handleTrackEvent(e, broadcastPeer);
+
+    const desc = new webrtc.RTCSessionDescription(data.sdp);
+    await broadcastPeer.setRemoteDescription(desc);
+
+    const answer = await broadcastPeer.createAnswer();
+    await broadcastPeer.setLocalDescription(answer);
+
+    const payload = {
+      sdp: broadcastPeer.localDescription,
+    };
+
+    socket.emit("returnPayload", payload);
+  });
+
+  socket.on("terminateBroadcast", () => {
+    if (broadcastPeer) {
+      broadcastPeer.close();
+      broadcastPeer = null;
+    }
   });
 
   socket.on("disconnect", () => {
@@ -28,6 +86,10 @@ const handleConnection = (socket, answerers) => {
     answerers = answerers.filter((answerer) => answerer.id !== socket.id);
   });
 };
+
+function handleTrackEvent(e, peer) {
+  senderStream = e.streams[0];
+}
 
 module.exports = {
   handleConnection,
