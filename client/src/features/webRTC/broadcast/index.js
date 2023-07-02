@@ -11,17 +11,24 @@ import "../style/style.css";
 const socket = io.connect(SIGNAL_SERVER_URL);
 
 function Broadcast() {
+  const [onAir, setOnAir] = useState(false);
+  const [isMediaConfig, setIsMediaConfig] = useState(false);
   const [stream, setStream] = useState(null);
   const localStream = useRef();
 
-  const startBroadcast = async () => {};
+  const startBroadcast = async () => {
+    setOnAir(true);
+  };
 
   useEffect(() => {
-    localStream.current.srcObject = stream;
-    if (stream) {
+    if (stream && onAir) {
+      localStream.current.srcObject = stream;
+      setIsMediaConfig(true);
       initializeStream();
+    } else {
+      localStream.current.srcObject = stream;
     }
-  }, [stream]);
+  }, [onAir]);
 
   async function initializeStream() {
     const peer = createPeer();
@@ -58,8 +65,10 @@ function Broadcast() {
       />
       <div className="dashboard__stream__broadcast__options__wrapper">
         <SetMediaDevices setStream={setStream} />
-        <button onClick={startBroadcast}>START BROADCAST</button>
-        {/* <button onClick={disconnectBroadcast}>DISCONNECT BROADCAST</button> */}
+        <button onClick={startBroadcast} disabled={onAir && isMediaConfig}>
+          START BROADCAST
+        </button>
+        <button onClick={setOnAir(false)}>DISCONNECT BROADCAST</button>
       </div>
     </div>
   );

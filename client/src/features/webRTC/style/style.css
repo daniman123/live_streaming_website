@@ -8,3 +8,16 @@
   height: inherit;
   width: inherit;
 }
+
+.media__config__wrapper{
+  border: 1px solid black;
+}
+
+
+.media__config {
+  display: flex;
+  align-items: center;
+}
+.media__config > * {
+  margin: 5px;
+}
