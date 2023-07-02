@@ -3,9 +3,19 @@
   width: 1340px;
 }
 
-.vidia{
+.stream__video__feed__wrapper {
   height: 755px;
   background-color: red;
+}
+
+.stream__video__feed__player,
+.stream__video__feed {
+  height: 100%;
+  width: 100%;
+}
+
+.stream__video__feed__player {
+  outline: none;
 }
 
 .stream__title__banner {

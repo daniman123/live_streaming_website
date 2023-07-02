@@ -34,7 +34,7 @@ const handleConnection = (socket, answerers) => {
     await peer.setRemoteDescription(desc);
 
     if (!senderStream) return;
-    
+
     senderStream
       .getTracks()
       .forEach((track) => peer.addTrack(track, senderStream));
@@ -75,6 +75,7 @@ const handleConnection = (socket, answerers) => {
 
   socket.on("disconnect", () => {
     console.log("Client disconnected");
+    // senderStream = null;
     answerers = answerers.filter((answerer) => answerer.id !== socket.id);
   });
 };
