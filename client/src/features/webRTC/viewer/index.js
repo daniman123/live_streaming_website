@@ -1,6 +1,14 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+} from "react";
+
+import { usePathname } from "next/navigation";
 import { config } from "../utils/config";
 
 import io from "socket.io-client";
@@ -8,6 +16,11 @@ import io from "socket.io-client";
 const SIGNAL_SERVER_URL = "http://localhost:7000";
 
 function Viewer() {
+  const pathname = usePathname();
+  const roomName = useMemo(() => {
+    return "/dashboard" + pathname;
+  }, [pathname]);
+
   const [stream, setStream] = useState(null);
   const socketConnection = useRef();
   const peerConnection = useRef();
@@ -20,7 +33,10 @@ function Viewer() {
       sdp: peerConnection.current.localDescription,
     };
 
-    socketConnection.current.emit("viewer", payload);
+    socketConnection.current.emit("viewer", {
+      room: roomName,
+      data: payload,
+    });
     socketConnection.current.on("answerViewer", (data) => {
       const desc = new RTCSessionDescription(data.sdp);
       peerConnection.current
@@ -33,9 +49,11 @@ function Viewer() {
     setStream(e.streams[0]);
   }, []);
 
+
+
   useEffect(() => {
     socketConnection.current = io.connect(SIGNAL_SERVER_URL);
-    socketConnection.current.emit("joinRoom", "gubbistream");
+    socketConnection.current.emit("joinRoom", roomName);
 
     peerConnection.current = new RTCPeerConnection(config);
     peerConnection.current.ontrack = handleTrackEvent;
@@ -47,6 +65,7 @@ function Viewer() {
     peerConnection.current.addTransceiver("audio", { direction: "recvonly" });
 
     return () => {
+      socketConnection.current.emit("leaveRoom", roomName);
       socketConnection.current.disconnect();
       peerConnection.current.close();
     };

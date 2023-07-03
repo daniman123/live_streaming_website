@@ -3,7 +3,7 @@ const compression = require("compression");
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
-const SocketHandlers = require("./socketHandlers");
+const SocketHandlers = require("./socketHandlersEDIT");
 
 class CdnServer {
   constructor() {

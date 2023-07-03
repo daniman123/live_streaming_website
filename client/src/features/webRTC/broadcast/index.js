@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import io from "socket.io-client";
 
 import { config, SIGNAL_SERVER_URL } from "../utils/config";
@@ -9,6 +10,11 @@ import SetMediaDevices from "../components/setMediaDevices/index";
 import "../style/style.css";
 
 function Broadcast() {
+  const pathname = usePathname();
+  const roomName = useMemo(() => {
+    return pathname;
+  }, [pathname]);
+
   const [onAir, setOnAir] = useState(false);
   const [isMediaConfig, setIsMediaConfig] = useState(false);
   const [stream, setStream] = useState(null);
@@ -53,7 +59,11 @@ function Broadcast() {
       sdp: peerConnection.current.localDescription,
     };
 
-    socketConnection.current.emit("broadcast", payload);
+    socketConnection.current.emit("broadcast", {
+      room: roomName,
+      data: payload,
+    });
+
     socketConnection.current.on("returnPayload", (data) => {
       const desc = new RTCSessionDescription(data.sdp);
       peerConnection.current
