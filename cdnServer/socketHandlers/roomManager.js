@@ -25,18 +25,12 @@ class RoomManager {
   }
 
   addStreamToRoom = (room, stream) => {
-    console.log(
-      "🚀 ~ file: roomManager.js:29 ~ RoomManager ~ addStreamToRoom ~ room:",
-      room
-    );
+
     if (!this.rooms.has(room)) {
       this.rooms.set(room, new Set());
     }
     this.rooms.get(room).add(stream);
-    console.log(
-      "🚀 ~ file: roomManager.js:32 ~ RoomManager ~ addStreamToRoom ~ this.rooms.get(room):",
-      this.rooms.get(room)
-    );
+
   };
 
   addUserToRoom(userId, room) {

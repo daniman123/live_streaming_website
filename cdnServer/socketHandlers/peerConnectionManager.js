@@ -3,6 +3,7 @@ const { configuration } = require("./configuration");
 
 class PeerConnectionManager {
   static createPeerConnection() {
+    console.log("🚀 ~ file: peerConnectionManager.js:7 ~ PeerConnectionManager ~ createPeerConnection ~ configuration:", configuration)
     return new RTCPeerConnection(configuration);
   }
 
