@@ -10,9 +10,7 @@ class RoomManager {
         console.error("Error joining room:", error);
       } else {
         this.addUserToRoom(socket.id, room);
-        if (this.getRoomUserCount(room) > 1) {
-          socket.to(room).emit("joins", socket.id);
-        }
+
       }
     });
   }
@@ -25,12 +23,10 @@ class RoomManager {
   }
 
   addStreamToRoom = (room, stream) => {
-
     if (!this.rooms.has(room)) {
       this.rooms.set(room, new Set());
     }
     this.rooms.get(room).add(stream);
-
   };
 
   addUserToRoom(userId, room) {

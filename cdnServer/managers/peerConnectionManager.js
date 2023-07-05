@@ -1,10 +1,12 @@
 const { RTCPeerConnection, RTCSessionDescription } = require("wrtc");
-const { configuration } = require("./configuration");
 
 class PeerConnectionManager {
-  static createPeerConnection() {
-    console.log("🚀 ~ file: peerConnectionManager.js:7 ~ PeerConnectionManager ~ createPeerConnection ~ configuration:", configuration)
-    return new RTCPeerConnection(configuration);
+  constructor() {
+    const { configuration } = require("../constants/configuration");
+    this.config = configuration;
+  }
+  createPeerConnection() {
+    return new RTCPeerConnection(this.config);
   }
 
   static setRemoteDescription(peer, desc) {

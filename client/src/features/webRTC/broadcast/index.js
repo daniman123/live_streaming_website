@@ -6,6 +6,7 @@ import io from "socket.io-client";
 
 import { config, SIGNAL_SERVER_URL } from "../utils/config";
 import SetMediaDevices from "../components/setMediaDevices/index";
+import StreamToggleOptions from "../components/streamToggleOptions/index";
 
 import "../style/style.css";
 
@@ -81,19 +82,33 @@ function Broadcast() {
         playsInline
       />
       <div className="dashboard__stream__broadcast__options__wrapper">
-        <SetMediaDevices
-          setStream={setStream}
-          setIsMediaConfig={setIsMediaConfig}
-        />
-        <button
-          onClick={startBroadcast}
-          disabled={(onAir && isMediaConfig) || stream === null}
-        >
-          START BROADCAST
-        </button>
-        <button onClick={terminateBroadcast} disabled={!onAir}>
-          DISCONNECT BROADCAST
-        </button>
+        <div className="broadcast__options">
+          <div className="broadcast__buttons">
+            <button
+              onClick={startBroadcast}
+              disabled={(onAir && isMediaConfig) || stream === null}
+            >
+              START BROADCAST
+            </button>
+            <button onClick={terminateBroadcast} disabled={!onAir}>
+              DISCONNECT BROADCAST
+            </button>
+          </div>
+
+          {isMediaConfig && <StreamToggleOptions stream={stream} />}
+          {isMediaConfig && onAir && (
+            <div className="on__air">
+              <div class="live-icon"></div>
+              <p class="text">ON AIR</p>
+            </div>
+          )}
+        </div>
+        <div className="pre__broadcast__options">
+          <SetMediaDevices
+            setStream={setStream}
+            setIsMediaConfig={setIsMediaConfig}
+          />
+        </div>
       </div>
     </div>
   );

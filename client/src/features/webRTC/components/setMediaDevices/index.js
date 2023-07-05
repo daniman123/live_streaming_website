@@ -19,14 +19,14 @@ function SetMediaDevices({ setStream, setIsMediaConfig }) {
 
   return (
     <div className="media__config__wrapper">
-      <h3> Configure Media Devices</h3>
+      <h4> Configure Media Devices</h4>
       <div className="media__config__options">
         <div className="media__config">
-          <h4 className="media__config__name">Video</h4>
+          <h5 className="media__config__name">Video</h5>
           <input ref={videoRadio} type="checkbox" defaultChecked={true} />
         </div>
         <div className="media__config">
-          <h4 className="media__config__name">Audio</h4>
+          <h5 className="media__config__name">Audio</h5>
           <input ref={audioRadio} type="checkbox" defaultChecked={true} />
         </div>
       </div>

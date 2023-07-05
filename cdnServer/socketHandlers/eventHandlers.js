@@ -1,17 +1,16 @@
 const {
-  RTCPeerConnection,
   RTCSessionDescription,
   MediaStream,
 } = require("wrtc");
 
-const PeerConnectionManager = require("./peerConnectionManager");
+const PeerConnectionManager = require("../managers/peerConnectionManager");
 
-async function handleViewer(socket, config, room, data) {
+async function handleViewer(socket, room, data) {
   const mediaStream = [...room].find((item) => item instanceof MediaStream);
 
   if (!mediaStream) return;
-  // const peer = PeerConnectionManager.createPeerConnection();
-  const peer = new RTCPeerConnection(config);
+  const conn = new PeerConnectionManager()
+  const peer = conn.createPeerConnection();
 
   const desc = new RTCSessionDescription(data.sdp);
   await peer.setRemoteDescription(desc);
@@ -29,9 +28,9 @@ async function handleViewer(socket, config, room, data) {
   socket.emit("answerViewer", payload);
 }
 
-async function handleBroadcast(socket, config, room, data, handleTrackEvent) {
-  const broadcastPeer = PeerConnectionManager.createPeerConnection();
-  const peer = new RTCPeerConnection(config);
+async function handleBroadcast(socket, room, data, handleTrackEvent) {
+  const conn = new PeerConnectionManager()
+  const broadcastPeer = conn.createPeerConnection();
 
   broadcastPeer.ontrack = (e) =>
     handleTrackEvents(e, broadcastPeer, room, handleTrackEvent);

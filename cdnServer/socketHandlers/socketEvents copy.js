@@ -5,37 +5,19 @@
  */
 
 const { RTCPeerConnection, RTCSessionDescription } = require("wrtc");
-const RoomManager = require("./socketHandlers/roomManager");
-const {
-  handleViewer,
-  handleBroadcast,
-} = require("./socketHandlers/eventHandlers");
+const RoomManager = require("../managers/roomManager");
+const { handleViewer, handleBroadcast } = require("./eventHandlers");
 
 /**
  * Class representing socket handlers.
  */
-class SocketHandlers {
+class SocketEvents {
   constructor() {
     /**
      * Instance of RoomManager.
      * @type {RoomManager}
      */
     this.roomManager = new RoomManager();
-
-    /**
-     * Configuration for RTCPeerConnection.
-     * @type {Object}
-     */
-    this.configuration = {
-      iceServers: [
-        {
-          urls: [
-            "stun:stun1.1.google.com:19302",
-            "stun:stun2.1.google.com:19302",
-          ],
-        },
-      ],
-    };
   }
 
   /**
@@ -58,30 +40,22 @@ class SocketHandlers {
       /**
        * Handles viewer event.
        * @param {Socket} socket - The socket object.
-       * @param {Object} configuration - The RTC configuration.
-       * @param {Room} room - The room object.
+       * @param {room} room - The room object.
        * @param {any} data - The viewer data.
        */
-      await handleViewer(
-        socket,
-        this.configuration,
-        this.roomManager.getRoom(room),
-        data
-      );
+      await handleViewer(socket, this.roomManager.getRoom(room), data);
     });
 
     socket.on("broadcast", async ({ room, data }) => {
       /**
        * Handles broadcast event.
        * @param {Socket} socket - The socket object.
-       * @param {Object} configuration - The RTC configuration.
        * @param {string} room - The room name.
        * @param {any} data - The broadcast data.
        * @param {Function} addStreamToRoom - The function to add a stream to a room.
        */
       await handleBroadcast(
         socket,
-        this.configuration,
         room,
         data,
         this.roomManager.addStreamToRoom
@@ -99,4 +73,4 @@ class SocketHandlers {
   }
 }
 
-module.exports = SocketHandlers;
+module.exports = SocketEvents;

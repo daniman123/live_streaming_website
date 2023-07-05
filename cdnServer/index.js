@@ -1,4 +1,4 @@
-const CdnServer = require("./cdnServer");
+const CdnServer = require("./server/cdnServer");
 
 const cdnServer = new CdnServer();
 cdnServer.start();

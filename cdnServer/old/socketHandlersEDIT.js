@@ -1,6 +1,6 @@
 const { RTCPeerConnection, RTCSessionDescription } = require("wrtc");
-const RoomManager = require("./roomManager");
-const PeerConnectionManager = require("./peerConnectionManager");
+const RoomManager = require("../socketHandlers/roomManager");
+const PeerConnectionManager = require("../socketHandlers/peerConnectionManager");
 
 class SocketHandlers {
   constructor() {
