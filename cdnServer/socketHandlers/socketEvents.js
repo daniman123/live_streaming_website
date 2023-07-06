@@ -1,6 +1,6 @@
 /**
  * @typedef {import('socket.io').Socket} Socket
-*/
+ */
 const RoomManager = require("../managers/roomManager");
 const { handleViewer, handleBroadcast } = require("./eventHandlers");
 
@@ -24,6 +24,12 @@ class SocketEvents {
     socket.on("broadcast", async ({ room, data }) =>
       this.handleBroadcast(socket, room, data)
     );
+
+    socket.on("terminateBroadcast", async (room) => {
+
+      this.handleTerminateBroadcast(room);
+    });
+
     socket.on("leaveRoom", async (room) => this.handleLeaveRoom(socket, room));
   }
 
@@ -57,6 +63,10 @@ class SocketEvents {
   async handleBroadcast(socket, room, data) {
     const addStreamToRoom = this.roomManager.addStreamToRoom;
     await handleBroadcast(socket, room, data, addStreamToRoom);
+  }
+
+  async handleTerminateBroadcast(room) {
+    this.roomManager.deleteRoom(room)
   }
 
   /**

@@ -49,13 +49,12 @@ function Viewer() {
     setStream(e.streams[0]);
   }, []);
 
-
-
   useEffect(() => {
     socketConnection.current = io.connect(SIGNAL_SERVER_URL);
     socketConnection.current.emit("joinRoom", roomName);
 
     peerConnection.current = new RTCPeerConnection(config);
+
     peerConnection.current.ontrack = handleTrackEvent;
 
     peerConnection.current.onnegotiationneeded = () =>
@@ -65,15 +64,19 @@ function Viewer() {
     peerConnection.current.addTransceiver("audio", { direction: "recvonly" });
 
     return () => {
-      socketConnection.current.emit("leaveRoom", roomName);
-      socketConnection.current.disconnect();
-      peerConnection.current.close();
+      disconnect();
     };
   }, []);
 
   useEffect(() => {
     remoteStream.current.srcObject = stream;
   }, [stream]);
+
+  const disconnect = () => {
+    socketConnection.current.emit("leaveRoom", roomName);
+    socketConnection.current.disconnect();
+    peerConnection.current.close();
+  };
 
   return (
     <div className="stream__video__feed">

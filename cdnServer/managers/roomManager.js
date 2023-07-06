@@ -10,7 +10,6 @@ class RoomManager {
         console.error("Error joining room:", error);
       } else {
         this.addUserToRoom(socket.id, room);
-
       }
     });
   }
@@ -59,6 +58,13 @@ class RoomManager {
 
   getRoomUserCount(room) {
     return this.rooms.get(room)?.size || 0;
+  }
+
+  deleteRoom(room) {
+    if (this.rooms.has(room)) {
+      this.rooms.delete(room);
+      console.log("Room:", room, "is deleted");
+    }
   }
 }
 

@@ -17,6 +17,47 @@
 }
 
 /* ############################ */
+
+button[disabled]{
+  opacity: 0.4;
+}
+
+button {
+  cursor: pointer;
+}
+
+button.broadcast {
+  padding-bottom: 3px;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 2px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #233142;
+  margin: 0.5rem;
+  border: none;
+  outline: none;
+
+  height: 55px;
+  width: 250px;
+
+  border-radius: 15px;
+}
+
+button.broadcast:hover {
+  box-shadow: 0 2px 8px -1px #233142;
+}
+
+#start:hover {
+  background-color: green;
+}
+
+#stop:hover {
+  background-color: red;
+}
+
+/* ############################ */
 .on__air {
   display: flex;
   justify-content: center;

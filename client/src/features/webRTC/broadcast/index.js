@@ -35,9 +35,10 @@ function Broadcast() {
 
   const terminateBroadcast = async () => {
     setOnAir(false);
-    socketConnection.current.emit("terminateBroadcast");
+    await socketConnection.current.emit("terminateBroadcast", roomName);
     setStream(null);
     localStream.current.srcObject = stream;
+    peerConnection.current.close();
     peerConnection.current = null;
     socketConnection.current.disconnect();
     window.location.reload();
@@ -80,17 +81,25 @@ function Broadcast() {
         ref={localStream}
         autoPlay
         playsInline
+        controls
       />
       <div className="dashboard__stream__broadcast__options__wrapper">
         <div className="broadcast__options">
           <div className="broadcast__buttons">
             <button
+              className="broadcast"
+              id="start"
               onClick={startBroadcast}
               disabled={(onAir && isMediaConfig) || stream === null}
             >
               START BROADCAST
             </button>
-            <button onClick={terminateBroadcast} disabled={!onAir}>
+            <button
+              className="broadcast"
+              id="stop"
+              onClick={terminateBroadcast}
+              disabled={!onAir}
+            >
               DISCONNECT BROADCAST
             </button>
           </div>
