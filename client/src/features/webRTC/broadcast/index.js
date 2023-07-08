@@ -6,6 +6,7 @@ import io from "socket.io-client";
 
 import { config, SIGNAL_SERVER_URL } from "../utils/config";
 import SetMediaDevices from "../components/setMediaDevices/index";
+import BroadcastButtons from "../components/broadcastButtons/index";
 import StreamToggleOptions from "../components/streamToggleOptions/index";
 
 import "../style/style.css";
@@ -84,39 +85,29 @@ function Broadcast() {
         controls
       />
       <div className="dashboard__stream__broadcast__options__wrapper">
-        <div className="broadcast__options">
-          <div className="broadcast__buttons">
-            <button
-              className="broadcast"
-              id="start"
-              onClick={startBroadcast}
-              disabled={(onAir && isMediaConfig) || stream === null}
-            >
-              START BROADCAST
-            </button>
-            <button
-              className="broadcast"
-              id="stop"
-              onClick={terminateBroadcast}
-              disabled={!onAir}
-            >
-              DISCONNECT BROADCAST
-            </button>
-          </div>
+        <SetMediaDevices
+          setStream={setStream}
+          setIsMediaConfig={setIsMediaConfig}
+        />
 
+        <div className="broadcast__options">
+          <BroadcastButtons
+            isMediaConfig={isMediaConfig}
+            startBroadcast={startBroadcast}
+            onAir={onAir}
+            stream={stream}
+            terminateBroadcast={terminateBroadcast}
+          />
           {isMediaConfig && <StreamToggleOptions stream={stream} />}
+        </div>
+        
+        <div className="broadcast__meta__data">
           {isMediaConfig && onAir && (
             <div className="on__air">
               <div class="live-icon"></div>
               <p class="text">ON AIR</p>
             </div>
           )}
-        </div>
-        <div className="pre__broadcast__options">
-          <SetMediaDevices
-            setStream={setStream}
-            setIsMediaConfig={setIsMediaConfig}
-          />
         </div>
       </div>
     </div>
