@@ -8,6 +8,9 @@ import { config, SIGNAL_SERVER_URL } from "../utils/config";
 import SetMediaDevices from "../components/setMediaDevices/index";
 import BroadcastButtons from "../components/broadcastButtons/index";
 import StreamToggleOptions from "../components/streamToggleOptions/index";
+import Chat from "@/components/chat";
+import { useTokenStore } from "../../../store/tokenStore";
+
 
 import "../style/style.css";
 
@@ -16,6 +19,7 @@ function Broadcast() {
   const roomName = useMemo(() => {
     return pathname;
   }, [pathname]);
+  const userToken = useTokenStore((state) => state.token);
 
   const [onAir, setOnAir] = useState(false);
   const [isMediaConfig, setIsMediaConfig] = useState(false);
@@ -76,40 +80,47 @@ function Broadcast() {
   };
 
   return (
-    <div className="dashboard__streamer__broadcast__wrapper">
-      <video
-        className="dashboard__streamer__broadcast__player"
-        ref={localStream}
-        autoPlay
-        playsInline
-        controls
-      />
-      <div className="dashboard__stream__broadcast__options__wrapper">
-        <SetMediaDevices
-          setStream={setStream}
-          setIsMediaConfig={setIsMediaConfig}
+    <div className="dashboard__feed">
+      <div className="dashboard__streamer__broadcast__wrapper">
+        <video
+          className="dashboard__streamer__broadcast__player"
+          ref={localStream}
+          autoPlay
+          playsInline
+          controls
         />
-
-        <div className="broadcast__options">
-          <BroadcastButtons
-            isMediaConfig={isMediaConfig}
-            startBroadcast={startBroadcast}
-            onAir={onAir}
-            stream={stream}
-            terminateBroadcast={terminateBroadcast}
+        <div className="dashboard__stream__broadcast__options__wrapper">
+          <SetMediaDevices
+            setStream={setStream}
+            setIsMediaConfig={setIsMediaConfig}
           />
-          {isMediaConfig && <StreamToggleOptions stream={stream} />}
-        </div>
-        
-        <div className="broadcast__meta__data">
-          {isMediaConfig && onAir && (
-            <div className="on__air">
-              <div class="live-icon"></div>
-              <p class="text">ON AIR</p>
-            </div>
-          )}
+
+          <div className="broadcast__options">
+            <BroadcastButtons
+              isMediaConfig={isMediaConfig}
+              startBroadcast={startBroadcast}
+              onAir={onAir}
+              stream={stream}
+              terminateBroadcast={terminateBroadcast}
+            />
+            {isMediaConfig && <StreamToggleOptions stream={stream} />}
+          </div>
+
+          <div className="broadcast__meta__data">
+            {isMediaConfig && onAir && (
+              <div className="on__air">
+                <div class="live-icon"></div>
+                <p class="text">ON AIR</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
+      <Chat
+        username={userToken?.name}
+        enableChat={userToken?.name}
+        room={roomName}
+      />
     </div>
   );
 }

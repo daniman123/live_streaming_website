@@ -7,10 +7,14 @@ import { useTokenStore } from "../../store/tokenStore";
 import { usePathname } from "next/navigation";
 
 import "./style/style.css";
+import { useMemo } from "react";
 
 function UserFeed() {
   const userToken = useTokenStore((state) => state.token);
-  const room = usePathname();
+  const pathname = usePathname();
+  const room = useMemo(() => {
+    return "/dashboard" + pathname;
+  }, [pathname]);
 
   return (
     <div className="stream__feed">
