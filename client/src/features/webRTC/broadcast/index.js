@@ -80,15 +80,20 @@ function Broadcast() {
             {isMediaConfig && <StreamToggleOptions stream={stream} />}
           </div>
 
-          <div className="broadcast__meta__data">
-            {isMediaConfig && onAir && (
-              <div className="on__air">
-                <div className="live-icon"></div>
-                <p className="text">ON AIR</p>
-                <p>TOTAL VIEWERS:{viewCount}</p>
+          {isMediaConfig && onAir && (
+            <>
+              <div className="broadcast__meta__data">
+                <div className="on__air">
+                  <div className="live-icon"></div>
+                  <p className="text">ON AIR</p>
+                </div>
+
+                <div>
+                  <p>TOTAL VIEWERS:{viewCount}</p>
+                </div>
               </div>
-            )}
-          </div>
+            </>
+          )}
         </div>
       </div>
       <Chat

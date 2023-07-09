@@ -1,4 +1,4 @@
-.dashboard__feed{
+.dashboard__feed {
   display: grid;
   width: 1340px;
 }
@@ -27,7 +27,8 @@
   display: flex;
   height: 70px;
   margin: 0.3rem;
-  /* margin-left: .5rem; */
+  margin-left: 1rem;
+  margin-right: 1rem;
   border-radius: 10px;
   background-color: #2f3846;
 }
@@ -194,6 +195,14 @@ input:checked + .toggle__slider {
 }
 
 /* ############################ */
+
+.broadcast__meta__data {
+  background-color: #2f3846;
+  width: 30%;
+  border-radius: 15px;
+  margin: 0.3rem;
+}
+
 .on__air {
   display: flex;
   justify-content: center;
