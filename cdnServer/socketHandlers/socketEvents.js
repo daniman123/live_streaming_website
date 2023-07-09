@@ -26,11 +26,17 @@ class SocketEvents {
     );
 
     socket.on("terminateBroadcast", async (room) => {
-
       this.handleTerminateBroadcast(room);
     });
 
     socket.on("leaveRoom", async (room) => this.handleLeaveRoom(socket, room));
+
+    socket.on("getViewCount", async (room) => {
+      socket.emit(
+        "concurrentViewers",
+        this.roomManager.getRoomUserCount(room) - 1
+      );
+    });
   }
 
   /**
@@ -66,7 +72,7 @@ class SocketEvents {
   }
 
   async handleTerminateBroadcast(room) {
-    this.roomManager.deleteRoom(room)
+    this.roomManager.deleteRoom(room);
   }
 
   /**

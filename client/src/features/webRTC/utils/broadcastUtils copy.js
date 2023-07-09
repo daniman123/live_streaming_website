@@ -1,32 +1,42 @@
-import config from "./config";
+import io from "socket.io-client";
+import { config, SIGNAL_SERVER_URL } from "../utils/config";
 
-export default async function initializeStream(localStream, socket) {
-  const stream = await navigator.mediaDevices.getUserMedia({
-    video: true,
-    audio: true,
+function initializeStream(setVideo, setAudio) {
+  return navigator.mediaDevices.getUserMedia({
+    video: {
+      width: { exact: 1340 },
+      height: { exact: 755 },
+    },
+    audio: setAudio,
   });
-
-  localStream.current.srcObject = stream;
-  const peer = createPeer(socket);
-  stream.getTracks().forEach((track) => peer.addTrack(track, stream));
 }
 
-const createPeer = (socket) => {
-  const peer = new RTCPeerConnection(config);
-  peer.onnegotiationneeded = () => handleNegotiationNeededEvent(peer, socket);
-  return peer;
+export const startBroadcast = async (
+  socketConnection,
+  setOnAir,
+  peerConnection
+) => {
+  socketConnection.current = io.connect(SIGNAL_SERVER_URL);
+  setOnAir(true);
+  peerConnection.current = new RTCPeerConnection(config);
 };
 
-const handleNegotiationNeededEvent = async (peer, socket) => {
-  const offer = await peer.createOffer();
-  await peer.setLocalDescription(offer);
-  const payload = {
-    sdp: peer.localDescription,
-  };
-
-  socket.emit("broadcast", payload);
-  socket.on("returnPayload", (data) => {
-    const desc = new RTCSessionDescription(data.sdp);
-    peer.setRemoteDescription(desc).catch((error) => console.log(error));
-  });
+export const terminateBroadcast = async (
+  setOnAir,
+  socketConnection,
+  roomName,
+  setStream,
+  localStream,
+  peerConnection
+) => {
+  setOnAir(false);
+  await socketConnection.current.emit("terminateBroadcast", roomName);
+  setStream(null);
+  localStream.current.srcObject = null;
+  peerConnection.current.close();
+  peerConnection.current = null;
+  socketConnection.current.disconnect();
+  window.location.reload();
 };
+
+module.exports = { initializeStream, startBroadcast, terminateBroadcast };
