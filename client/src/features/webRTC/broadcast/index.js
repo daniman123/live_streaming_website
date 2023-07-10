@@ -12,6 +12,8 @@ import BroadcastButtons from "../components/broadcastButtons/index";
 import StreamToggleOptions from "../components/streamToggleOptions/index";
 import Chat from "@/components/chat";
 import { useTokenStore } from "../../../store/tokenStore";
+import BroadcastHandler from "../utils/broadcastHandler";
+const broadcastHandler = new BroadcastHandler();
 
 import "../style/style.css";
 
@@ -25,7 +27,6 @@ function Broadcast() {
   const [stream, setStream] = useState(null);
   const [viewCount, setViewCount] = useState(null);
   const localStream = useRef();
-  const peerConnection = useRef(new RTCPeerConnection(config));
 
   useEffect(() => {
     localStream.current.srcObject = stream;
@@ -33,7 +34,7 @@ function Broadcast() {
 
   const updateViewCount = useCallback(() => {
     if (stream !== null) {
-      getViewCount(roomName, setViewCount);
+      broadcastHandler.getViewCount(roomName, setViewCount);
     }
   }, [roomName, stream]);
 
@@ -53,8 +54,8 @@ function Broadcast() {
           />
           <div className="broadcast__options">
             <BroadcastButtons
+              broadcastHandler={broadcastHandler}
               isMediaConfig={isMediaConfig}
-              peerConnection={peerConnection}
               roomName={roomName}
               setOnAir={setOnAir}
               onAir={onAir}

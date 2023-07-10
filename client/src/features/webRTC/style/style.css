@@ -23,14 +23,18 @@
 
 /* ############################ */
 
-.broadcast__buttons {
-  display: flex;
-  height: 70px;
-  margin: 0.3rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  border-radius: 10px;
+.broadcast__options {
+  margin-top: 0.3rem;
+  margin-left: 4rem;
+  margin-right: 5rem;
   background-color: #2f3846;
+  border-radius: 10px;
+  height: 190px;
+}
+
+.broadcast__buttons {
+  margin: 0.3rem;
+  display: flex;
 }
 
 button[disabled] {
@@ -196,22 +200,28 @@ input:checked + .toggle__slider {
 
 /* ############################ */
 
-.broadcast__meta__data {
+.broadcast__meta__data__wrapper {
+  height: 70px;
   background-color: #2f3846;
   width: 30%;
   border-radius: 15px;
   margin: 0.3rem;
 }
 
-.on__air {
+.broadcast__meta__data {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.on__air {
+  display: flex;
+  margin: 0.5rem;
+  margin-right: 8rem;
+}
+
 .live-icon {
   display: inline-block;
-  margin: 0 auto;
   border-radius: 50%;
   background: red;
   width: 20px;
@@ -226,6 +236,7 @@ input:checked + .toggle__slider {
   font-family: arial;
   font-weight: bold;
   position: relative;
+  top: 2px;
   left: 5px;
 }
 
@@ -237,4 +248,8 @@ input:checked + .toggle__slider {
   50% {
     background: red;
   }
+}
+
+.viewer__count__dashboard {
+  color: red;
 }

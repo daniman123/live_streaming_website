@@ -1,9 +1,10 @@
-import { startBroadcast, terminateBroadcast } from "../../utils/broadcastUtils";
+
+
 const BroadcastButtons = ({
+  broadcastHandler,
   isMediaConfig,
   onAir,
   stream,
-  peerConnection,
   roomName,
   setOnAir,
 }) => {
@@ -13,15 +14,7 @@ const BroadcastButtons = ({
         <button
           className="broadcast"
           id="start"
-          onClick={() =>
-            startBroadcast(
-              peerConnection.current,
-              stream,
-              roomName,
-              isMediaConfig,
-              setOnAir
-            )
-          }
+          onClick={() => broadcastHandler.start(stream, roomName, isMediaConfig, setOnAir)}
           disabled={(onAir && isMediaConfig) || stream === null}
         >
           START BROADCAST
@@ -29,9 +22,7 @@ const BroadcastButtons = ({
         <button
           className="broadcast"
           id="stop"
-          onClick={() =>
-            terminateBroadcast(peerConnection.current, setOnAir, roomName)
-          }
+          onClick={() => broadcastHandler.terminate(setOnAir, roomName)}
           disabled={!onAir}
         >
           DISCONNECT BROADCAST
