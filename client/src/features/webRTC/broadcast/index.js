@@ -1,15 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { config } from "../utils/config";
-import {
-  startBroadcast,
-  terminateBroadcast,
-  getViewCount,
-} from "../utils/broadcastUtils";
+import { getViewCount } from "../utils/broadcastUtils";
 import SetMediaDevices from "../components/setMediaDevices/index";
+import VideoPlayer from "../components/videoPlayer/index";
+import BroadcastMetaData from "../components/broadcastMetaData/index";
 import BroadcastButtons from "../components/broadcastButtons/index";
 import StreamToggleOptions from "../components/streamToggleOptions/index";
 import Chat from "@/components/chat";
@@ -33,66 +31,40 @@ function Broadcast() {
     localStream.current.srcObject = stream;
   }, [stream]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (stream !== null) {
-        getViewCount(roomName, setViewCount);
-      }
-    }, 5000);
+  const updateViewCount = useCallback(() => {
+    if (stream !== null) {
+      getViewCount(roomName, setViewCount);
+    }
+  }, [roomName, stream]);
 
+  useEffect(() => {
+    const interval = setInterval(updateViewCount, 5000);
     return () => clearInterval(interval);
-  }, [stream]);
+  }, [updateViewCount]);
 
   return (
     <div className="dashboard__feed">
       <div className="dashboard__streamer__broadcast__wrapper">
-        <video
-          className="dashboard__streamer__broadcast__player"
-          ref={localStream}
-          autoPlay
-          playsInline
-          controls
-        />
+        <VideoPlayer localStream={localStream} />
         <div className="dashboard__stream__broadcast__options__wrapper">
           <SetMediaDevices
             setStream={setStream}
             setIsMediaConfig={setIsMediaConfig}
           />
-
           <div className="broadcast__options">
             <BroadcastButtons
               isMediaConfig={isMediaConfig}
-              startBroadcast={() =>
-                startBroadcast(
-                  peerConnection.current,
-                  stream,
-                  roomName,
-                  isMediaConfig,
-                  setOnAir
-                )
-              }
+              peerConnection={peerConnection}
+              roomName={roomName}
+              setOnAir={setOnAir}
               onAir={onAir}
               stream={stream}
-              terminateBroadcast={() =>
-                terminateBroadcast(peerConnection.current, setOnAir, roomName)
-              }
             />
             {isMediaConfig && <StreamToggleOptions stream={stream} />}
           </div>
 
           {isMediaConfig && onAir && (
-            <>
-              <div className="broadcast__meta__data">
-                <div className="on__air">
-                  <div className="live-icon"></div>
-                  <p className="text">ON AIR</p>
-                </div>
-
-                <div>
-                  <p>TOTAL VIEWERS:{viewCount}</p>
-                </div>
-              </div>
-            </>
+            <BroadcastMetaData viewCount={viewCount} />
           )}
         </div>
       </div>
