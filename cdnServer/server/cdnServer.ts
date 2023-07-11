@@ -1,11 +1,17 @@
-const express = require("express");
-const compression = require("compression");
-const http = require("http");
-const cors = require("cors");
-const { Server } = require("socket.io");
-const SocketHandlers = require("../socketHandlers/socketEvents");
+import express from "express";
+import compression from "compression";
+import http from "http";
+import cors from "cors";
+import { Server, Socket } from "socket.io";
+import SocketHandlers from "../socketHandlers/socketEvents";
 
 class CdnServer {
+  private app: express.Application;
+  private server: http.Server;
+  private io: Server;
+  private socketHandlers: SocketHandlers;
+  private PORT: number;
+
   constructor() {
     this.app = express();
     this.server = http.createServer(this.app);
@@ -15,7 +21,7 @@ class CdnServer {
         methods: ["GET", "POST"],
       },
     });
-    this.PORT = process.env.PORT || 7000;
+    this.PORT = Number(process.env.PORT) || 7000;
 
     this.socketHandlers = new SocketHandlers(); // Create an instance of SocketHandlers
 
@@ -23,26 +29,26 @@ class CdnServer {
     this.setupSocketHandlers();
   }
 
-  configureMiddlewares() {
+  private configureMiddlewares(): void {
     this.app.use(cors());
     this.app.use(compression());
   }
 
-  setupSocketHandlers() {
-    this.io.on("connection", (socket) => {
+  private setupSocketHandlers(): void {
+    this.io.on("connection", (socket: Socket) => {
       this.socketHandlers.initHandlers(socket);
     });
   }
 
-  startServer() {
+  public startServer(): void {
     this.server.listen(this.PORT, () => {
       console.log("Server running on port:", this.PORT);
     });
   }
 
-  start() {
+  public start(): void {
     this.startServer();
   }
 }
 
-module.exports = CdnServer;
+export default CdnServer;

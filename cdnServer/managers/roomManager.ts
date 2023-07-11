@@ -1,10 +1,12 @@
 class RoomManager {
+  private rooms: Map<string, Set<any>>;
+
   constructor() {
     this.rooms = new Map();
   }
 
-  joinRoom(socket, room) {
-    socket.join(room, (error) => {
+  public joinRoom(socket: any, room: string): void {
+    socket.join(room, (error: any) => {
       console.log(`User: ${socket.id}, joined room: ${room}`);
       if (error) {
         console.error("Error joining room:", error);
@@ -14,28 +16,31 @@ class RoomManager {
     });
   }
 
-  getRoom(room) {
-    if (this.rooms.has(room)) {
-      return this.rooms.get(room);
+  public getRoom(room: string): Set<any> {
+    if (!this.rooms.has(room)) {
+      throw new Error("Room not found");
     }
-    return new Error("Room not found");
+    return this.rooms.get(room)!;
   }
 
-  addStreamToRoom = (room, stream) => {
+  public addStreamToRoom = (room: string, stream: any): void => {
     if (!this.rooms.has(room)) {
       this.rooms.set(room, new Set());
     }
-    this.rooms.get(room).add(stream);
+    this.rooms.get(room)!.add(stream);
   };
 
-  addUserToRoom(userId, room) {
+  public addUserToRoom(userId: any, room: string): void {
     if (!this.rooms.has(room)) {
       this.rooms.set(room, new Set());
     }
-    this.rooms.get(room).add(userId);
+    this.rooms.get(room)!.add(userId);
   }
 
-  removeUserFromAllRooms(userId, callback) {
+  public removeUserFromAllRooms(
+    userId: any,
+    callback: (room: string) => void
+  ): void {
     this.rooms.forEach((users, room) => {
       if (users.has(userId)) {
         this.removeUserFromRoom(userId, room);
@@ -44,9 +49,9 @@ class RoomManager {
     });
   }
 
-  removeUserFromRoom(userId, room) {
+  public removeUserFromRoom(userId: any, room: string): void {
     if (this.rooms.has(room)) {
-      this.rooms.get(room).delete(userId);
+      this.rooms.get(room)!.delete(userId);
       console.log("User:", userId, "has been removed from room:", room);
       if (this.getRoomUserCount(room) === 0) {
         this.rooms.delete(room);
@@ -56,11 +61,11 @@ class RoomManager {
     }
   }
 
-  getRoomUserCount(room) {
+  public getRoomUserCount(room: string): number {
     return this.rooms.get(room)?.size || 0;
   }
 
-  deleteRoom(room) {
+  public deleteRoom(room: string): void {
     if (this.rooms.has(room)) {
       this.rooms.delete(room);
       console.log("Room:", room, "is deleted");
@@ -68,4 +73,4 @@ class RoomManager {
   }
 }
 
-module.exports = RoomManager;
+export default RoomManager;
