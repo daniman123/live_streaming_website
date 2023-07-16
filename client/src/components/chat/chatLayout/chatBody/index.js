@@ -11,7 +11,7 @@ function ChatBody({ messageList, showTime }) {
             key={index}
             sender={messageContent.author}
             content={messageContent.message}
-            timestamp={messageContent.time}
+            // timestamp={messageContent.time}
             showTime={showTime}
           />
         ))}

@@ -6,42 +6,29 @@ import ChatFooter from "./chatLayout/chatFooter/index";
 
 import "./style/style.css";
 
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:3001");
+
 function Chat({ username, enableChat, room }) {
-  const socketUrl = "ws://localhost:12345";
-  const socketRef = useRef(null);
   const chatInputRef = useRef();
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 
   useEffect(() => {
-    socketRef.current = new WebSocket(socketUrl);
-
-    const handleOpen = () => {
-      const payload = { join_room: room };
-      const strPayload = JSON.stringify(payload);
-      socketRef.current.send(strPayload);
-    };
-
-    socketRef.current.addEventListener("open", handleOpen);
-
-    const handleMessage = (event) => {
-      const message = event.data;
-      console.log("🚀 ~ file: index.js:21 ~ handleMessage ~ message:", message);
-      const payload = JSON.parse(message);
-      setMessageList((prevMessages) => [...prevMessages, payload]);
-    };
-
-    socketRef.current.addEventListener("message", handleMessage);
-
-    return () => {
-      socketRef.current.removeEventListener("message", handleMessage);
-      socketRef.current.close();
-    };
+    if (room !== "") {
+      socket.emit("joinRoom", room);
+    }
   }, []);
+
+  useEffect(() => {
+    socket.on("receiveMessage", (data) => {
+    setMessageList((prevState) => [...prevState, data].flat());
+    });
+  }, [socket]);
 
   const handleSendMessage = () => {
     sendMessage(
-      socketRef.current,
+      socket,
       room,
       username,
       currentMessage,

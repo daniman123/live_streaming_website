@@ -3,7 +3,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { authenticateToken } = require("./middlewares/auth-middleware");
 
-const PORT = 8000;
+const PORT = 8001;
 
 const routes = [
   { path: "/", router: require("./routes/generalRoutes") },

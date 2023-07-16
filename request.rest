@@ -19,3 +19,6 @@ Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZ2FiIiwia
 
 ###
 GET http://localhost:8000/logout
+
+###
+POST http://127.0.0.1:8000/message

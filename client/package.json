@@ -26,6 +26,7 @@
     "react-dom": "18.2.0",
     "react-redux": "^8.1.0",
     "react-twitch-embed": "^3.0.1",
+    "react-websocket": "^2.1.0",
     "redux": "^4.2.1",
     "simple-peer": "^9.11.1",
     "socket.io-client": "^4.6.2",
