@@ -36,6 +36,31 @@ div.nav_container {
   padding: 10px;
   border-radius: 25px 0 0 25px;
   width: 300px;
+  text-indent: 12.5px; /* Adjust the value as needed */
+
+}
+
+.searchbar__dropdown {
+  display: block;
+  position:absolute;
+  background-color: aliceblue;
+  left: 15px;
+  width: 77%;
+  padding-bottom: 3px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.dropdown__result__element{
+  height: 35px;
+  padding-left: 7px;
+  padding-top: 10px;
+  border-radius: 1px;
+  cursor: pointer;
+}
+
+.dropdown__result__element__wrapper:hover {
+  background-color: rgb(217, 214, 214);
 }
 
 .search-bar-btn-container {

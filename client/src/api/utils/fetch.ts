@@ -17,6 +17,7 @@ export const fetchData = async (url: string, method: string = "get", options: Re
       method,
       ...options,
     });
+    
     return response.data;
   } catch (error) {
     handleRequestError(error);

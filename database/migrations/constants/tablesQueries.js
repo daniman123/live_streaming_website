@@ -20,7 +20,7 @@ const TABLES = {
       `,
   },
   FOLLOWING_TABLE: {
-    NAME: "Following",
+    NAME: "Following",  
     DEFINITION: `
         follow_id INTEGER PRIMARY KEY AUTOINCREMENT,
         follower_id INTEGER,
