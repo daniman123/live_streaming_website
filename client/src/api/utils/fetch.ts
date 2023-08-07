@@ -17,9 +17,9 @@ export const fetchData = async (url: string, method: string = "get", options: Re
       method,
       ...options,
     });
-    
     return response.data;
   } catch (error) {
+    console.log("🚀 ~ file: fetch.ts:23 ~ fetchData ~ error:", error)
     handleRequestError(error);
   }
 };

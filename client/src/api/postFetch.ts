@@ -20,7 +20,7 @@ export const postFollowing = async (userData: any | null, token: string): Promis
 };
 
 export const postRegister = async (username: string, email: string, password: string): Promise<any> => {
-  const url = "/register";
+  const url = "/database-queries/create-new-user";
   const method = "post";
   const options: RequestOptions = {
     headers: {
@@ -29,20 +29,19 @@ export const postRegister = async (username: string, email: string, password: st
     data: {
       username: username,
       email: email,
-      password: password,
+      passphrase: password,
     },
   };
   return fetchData(url, method, options);
 };
 
-export const postForm = async (fetchUrl: string, inputData: any): Promise<any> => {
-  const url = fetchUrl;
+export async function postForm(endpoint:string , data:Object) {
   const method = "post";
   const options: RequestOptions = {
     headers: {
       "Content-Type": "application/json",
     },
-    data: inputData,
+    data: data,
   };
-  return fetchData(url, method, options);
-};
+  return fetchData(endpoint, method, options);
+}

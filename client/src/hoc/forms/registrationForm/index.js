@@ -8,7 +8,7 @@ const RegistrationForm = (props) => {
   const inputFields = [
     { name: "username", type: "text", label: "Username" },
     { name: "email", type: "email", label: "Email" },
-    { name: "password", type: "password", label: "Password" },
+    { name: "passphrase", type: "passphrase", label: "Passphrase" },
   ];
 
   return (
@@ -25,7 +25,7 @@ const RegistrationForm = (props) => {
 const initialState = {
   username: "",
   email: "",
-  password: "",
+  passphrase: "",
 };
 
-export default withUserForm(RegistrationForm, "/register", initialState);
+export default withUserForm(RegistrationForm, "/database-queries/create-new-user", initialState);

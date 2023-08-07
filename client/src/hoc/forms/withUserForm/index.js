@@ -21,12 +21,13 @@ const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
     const handleRegister = async () => {
       try {
         setInputAlerts({});
+        console.log("🚀 ~ file: index.js:25 ~ handleRegister ~ userInput:", userInput)
         const result = await postForm(fetchUrl, userInput);
-        setToken(result);
+        console.log("🚀 ~ file: index.js:25 ~ handleRegister ~ result:", result)
+        setToken(result?.access_token);
         setInputAlerts({ status: "Succes!" });
         setLogin();
         props.togglePopup();
-        // window.location.reload();
       } catch (error) {
         handleError(error);
       }
@@ -35,6 +36,8 @@ const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
     const handleError = (error) => {
       console.log("🚀 ~ file: index.js:38 ~ handleError ~ error:", error);
       if (!error) return;
+
+      console.log(error.message)
       const { status, data } = JSON.parse(error.message);
       const ERRORS = JSON.parse(data);
       setInputAlerts((prevState) => ({
@@ -44,7 +47,7 @@ const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
       }));
     };
 
-    const renderInput = (name, type, placeholder) => (
+    const renderInput = (name, type, placeholder,submitted) => (
       <div key={name} className="userInput__wrapper">
         <h5>{inputAlerts[name]}</h5>
         <input
@@ -54,6 +57,7 @@ const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
           name={name}
           value={userInput[name]}
           onChange={handleInputChange}
+          disabled={submitted}
         />
       </div>
     );

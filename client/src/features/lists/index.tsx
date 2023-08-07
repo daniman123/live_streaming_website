@@ -5,20 +5,23 @@
  * @module Lists
  */
 
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import ChannelsList from "../channelsList/index";
 import { useTokenStore, TokenStoreState } from "../../store/tokenStore";
 import { postFollowing } from "../../api/postFetch";
 import { getRecommended } from "../../api/getFetch";
 import useFetch from "../../api/utils/useFetch";
 
-interface ListsProps {}
+interface ListsProps {
+  data:{}
+  // data:[]
+}
 
 /**
  * Lists component.
  * @returns {JSX.Element} The rendered component.
  */
-const Lists: FC<ListsProps> = () => {
+const Lists: FC<ListsProps> = (): JSX.Element => {
   const userToken = useTokenStore((state: TokenStoreState) => state.token);
 
   /**
@@ -33,11 +36,13 @@ const Lists: FC<ListsProps> = () => {
   /**
    * Fetches recommended channels.
    */
-  const { data: recommendedChannels } = useFetch<Array<any>>(
+  const { data: recommendedChannels, loading: recLoading } = useFetch(
     getRecommended,
     10
-  );
+    );
 
+    
+    
   /**
    * Renders the ChannelsList component.
    * @param {string} name - The name of the ChannelsList component.
@@ -49,7 +54,7 @@ const Lists: FC<ListsProps> = () => {
     name: string,
     title: string,
     channels: Array<any>
-  ): JSX.Element => {
+  ): JSX.Element => {    
     return <ChannelsList title={title} channels={channels} />;
   };
 
@@ -62,11 +67,11 @@ const Lists: FC<ListsProps> = () => {
           "Followed channels",
           followedChannels
         )}
-      {recommendedChannels &&
+      {!recLoading &&
         renderChannelsList(
           "recommended__channels",
           "Recommended channels",
-          recommendedChannels
+          recommendedChannels?.result
         )}
     </div>
   );

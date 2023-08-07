@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style/style.css";
 
 const UserForm = (props) => {
+
+  const [isSub, setIsSub] = useState(false)
+
+  const handleSub = async () =>{
+    setIsSub(prevState => prevState = true)
+    await handleSubmit()
+  }
+
   const {
     message,
     userInput,
@@ -20,10 +28,10 @@ const UserForm = (props) => {
           {message + (inputAlerts.status ? " " + inputAlerts.status : "")}
         </h4>
         {inputFields.map((field) =>
-          renderInput(field.name, field.type, field.label)
+          renderInput(field.name, field.type, field.label, isSub)
         )}
         <div className="popup-buttons-wrapper">
-          <button onClick={handleSubmit}>{buttonText}</button>
+          <button onClick={handleSub} disabled={isSub}>{buttonText}</button>
           <button onClick={togglePopup} className="close-btn">
             Close
           </button>

@@ -26,4 +26,4 @@ const initialState = {
   password: "",
 };
 
-export default withUserForm(LoginForm, "/login", initialState);
+export default withUserForm(LoginForm, "/user/login", initialState);

@@ -9,7 +9,7 @@ function Grid({ data }) {
   return (
     <div className="video-grid-container">
       {data &&
-        Object.values(data).map((item, index) => (
+        Object.values(data.result).map((item, index) => (
           <GridItem key={index} item={item} />
         ))}
     </div>

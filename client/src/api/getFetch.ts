@@ -5,16 +5,17 @@ import { fetchData, RequestOptions } from "./utils/fetch";
  * @returns {Promise<any>} A promise that resolves with the recommended data.
  */
 export const getRecommended = async (amount: number): Promise<any> => {
-  const url = "/recommended";
+  const url = "/database-queries/recommended-channels";
   const options: RequestOptions = {
     headers: {
       "Content-Type": "application/json",
     },
-    data: {
-      limit: amount,
+    data:{
+      limit: amount
     },
   };
-  return fetchData(url, "post", options);
+  let data = await fetchData(url, "post", options);
+  return data
 };
 
 /**

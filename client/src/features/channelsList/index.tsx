@@ -31,7 +31,8 @@ interface ChannelsListProps {
   channels: string[];
 }
 
-function ChannelsList({ title, channels }: ChannelsListProps) {
+function ChannelsList({ title, channels }: ChannelsListProps) {  
+  
   return (
     <div className="left__body__element">
       <div className="channels__title__wrapper">

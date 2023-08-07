@@ -6,9 +6,9 @@ import HeroSection from "../../features/heroSection/index";
 import StreamersSpotlight from "../../features/streamersSpotlight/index";
 import TopCategorySection from "../../features/topCategorySection/index";
 
-type Props = {};
 
 function HomePage({ data }) {
+  
   return (
     <div className="home__page">
       <HeroSection />

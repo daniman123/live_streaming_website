@@ -9,8 +9,8 @@ type FetchState<T> = {
 };
 
 const useFetch = <T,>(
-  request: (...args: any[]) => Promise<T>,
-  ...args: any[]
+  request: (...args: any) => Promise<T>,
+  ...args: any
 ): FetchState<T> => {
   const [state, setState] = useState<FetchState<T>>({
     data: null,
@@ -20,12 +20,12 @@ const useFetch = <T,>(
 
   const { data, loading, error } = state;
 
-  const prevRequest = useRef<(...args: any[]) => Promise<T>>();
+  const prevRequest = useRef<(...args: any) => Promise<T>>();
   const prevArgs = useRef<any[]>([]);
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await request(...args);
+      const response = await request(...args);      
       setState({ data: response, loading: false, error: null });
     } catch (error) {
       setState({ data: null, loading: false, error: Object(error) });
@@ -37,7 +37,7 @@ const useFetch = <T,>(
       prevRequest.current !== request ||
       JSON.stringify(prevArgs.current) !== JSON.stringify(args)
     ) {
-      fetchData();
+      fetchData()
     }
 
     prevRequest.current = request;
