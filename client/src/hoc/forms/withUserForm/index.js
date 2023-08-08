@@ -4,7 +4,7 @@ import { useTokenStore } from "../../../store/tokenStore";
 
 const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
   return (props) => {
-    const { token, setToken, setUsername, setLogin } = useTokenStore();
+    const { setUserId, setToken, setUsername, setLogin } = useTokenStore();
     const [userInput, setUserInput] = useState({ ...initialState });
 
     const [inputAlerts, setInputAlerts] = useState({});
@@ -23,7 +23,8 @@ const withUserForm = (WrappedComponent, fetchUrl, initialState = {}) => {
         setInputAlerts({});
         console.log("🚀 ~ file: index.js:25 ~ handleRegister ~ userInput:", userInput)
         const result = await postForm(fetchUrl, userInput);
-        console.log("🚀 ~ file: index.js:25 ~ handleRegister ~ result:", result)
+        console.log("🚀 ~ file: index.js:25 ~ handleRegister ~ result:", result.user_id)
+        setUserId(result.user_id)
         setToken(result?.access_token);
         setInputAlerts({ status: "Succes!" });
         setLogin();

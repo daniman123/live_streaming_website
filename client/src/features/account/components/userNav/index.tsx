@@ -5,13 +5,13 @@ import { tokenStore } from "@/store/tokenStore";
 
 interface UserNavProps {
   removeToken: () => void;
-  token: tokenStore | null;
-  userToken: tokenStore | null;
+  userId: number;
+  userName: string | null;
 }
 
-const UserNav: React.FC<UserNavProps> = ({ removeToken, token, userToken }) => {
+const UserNav: React.FC<UserNavProps> = ({ removeToken, userId, userName }) => {
   async function handleLogout() {
-    await getLogout(token);
+    await getLogout(userId);
     removeToken();
   }
   
@@ -20,13 +20,13 @@ const UserNav: React.FC<UserNavProps> = ({ removeToken, token, userToken }) => {
       <button onClick={handleLogout} className="logout__button">
         Log Out
       </button>
-      {userToken?.name && (
-        <Link href={userToken?.name} className="hidden-link">
+      {userName && (
+        <Link href={userName} className="hidden-link">
           <button className="user_button">Your Channel</button>
         </Link>
       )}
-      {userToken?.name && (
-        <Link href={"/dashboard/" + userToken?.name} className="hidden-link">
+      {userName && (
+        <Link href={"/dashboard/" + userName} className="hidden-link">
           <button className="user_button">Dashboard</button>
         </Link>
       )}

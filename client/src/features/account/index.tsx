@@ -11,7 +11,8 @@ const Account: React.FC = () => {
   const { data, loading, error } = useFetch(setToken);
 
   const userStatus: boolean = useTokenStore((state) => state.isLoggedIn);
-  const userToken = useTokenStore((state) => state.token);
+  const userName = useTokenStore((state) => state.username);
+  const userId = useTokenStore((state) => state.userId);
 
   useEffect(() => {
     if (token) {
@@ -24,8 +25,8 @@ const Account: React.FC = () => {
       {userStatus && !loading ? (
         <UserNav
           removeToken={removeToken}
-          token={token}
-          userToken={userToken}
+          userId={userId}
+          userName={userName}
         />
       ) : (
         <GuestNav />

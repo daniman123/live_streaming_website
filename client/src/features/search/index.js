@@ -1,45 +1,79 @@
 import axios from "axios";
-import React, { useEffect, useRef,useState } from "react";
-import SearchBarDropdown from "./components/searchDropdown/index"
-
+import React, { useEffect, useRef, useState } from "react";
+import SearchBarDropdown from "./components/searchDropdown/index";
 
 function Search() {
-  const [searchQueryRecomendations, setSearchQueryRecomendations] = useState([])
-const searchBarInput = useRef()
+	const [isFocused, setIsFocused] = useState(false);
+	const [searchQueryRecomendations, setSearchQueryRecomendations] = useState(
+		[]
+	);
+	const searchBarInput = useRef();
+	const searchContainerRef = useRef(null);
 
-  async function runQuery(searchQuery){
+	async function runQuery(searchQuery) {
+		if (searchQuery.length == 0) {
+			setSearchQueryRecomendations([]);
+			return;
+		}
+		try {
+			const response = await axios.post(
+				"http://localhost:9000/database-queries/search-query",
+				{
+					query: searchQuery,
+				}
+			);
 
-    if (searchQuery.length == 0) {
-      setSearchQueryRecomendations([])
-      return
-    }
-      try {
-        const response = await axios.post('http://localhost:9000/query', {
-          query: searchQuery,
-        });
+			const responseArr = Object.values(response.data);
 
-        setSearchQueryRecomendations(prevState => prevState=response.data)
-        console.log("🚀 ~ file: index.js:19 ~ runQuery ~ response:", response.data)
-      } catch (error) {
-        console.log("🚀 ~ file: index.js:21 ~ runQuery ~ error:", error)
-        
-      }
-  }  
-  
+			setSearchQueryRecomendations((prevState) => (prevState = responseArr));
+		} catch (error) {
+			console.log("🚀 ~ file: index.js:21 ~ runQuery ~ error:", error);
+		}
+	}
 
-  return (
-    <div className="search-bar">
-      <div className="search-bar-container">
-        <div className="input__content">
-        <input ref={searchBarInput} onChange={(e)=>runQuery(e.target.value)} className="search-bar-input" placeholder="Search"></input>
-        {<SearchBarDropdown results={searchQueryRecomendations}/>}
-        </div>
-      </div>
-      <div className="search-bar-btn-container">
-        <button className="search-bar-button">search</button>
-      </div>
-    </div>
-  );
+	useEffect(() => {
+		function handleClickOutside(event) {
+			if (
+				searchContainerRef.current &&
+				searchContainerRef.current.contains(event.target)
+			) {
+				setIsFocused((prevState) => (prevState = true));
+			}
+			if (
+				searchContainerRef.current &&
+				!searchContainerRef.current.contains(event.target)
+			) {
+				setIsFocused((prevState) => (prevState = false));
+			}
+		}
+
+		window.addEventListener("click", handleClickOutside);
+
+		return () => {
+			window.removeEventListener("click", handleClickOutside);
+		};
+	}, []);
+
+	return (
+		<div className="search-bar" ref={searchContainerRef}>
+			<div className="search-bar-container">
+				<div className="input__content">
+					<input
+						ref={searchBarInput}
+						onChange={(e) => runQuery(e.target.value)}
+						className="search-bar-input"
+						placeholder="Search"
+					></input>
+					{isFocused ? (
+						<SearchBarDropdown results={searchQueryRecomendations} />
+					) : null}
+				</div>
+			</div>
+			<div className="search-bar-btn-container">
+				<button className="search-bar-button">search</button>
+			</div>
+		</div>
+	);
 }
 
 export default Search;

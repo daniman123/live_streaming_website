@@ -35,17 +35,19 @@ export const getDiscoverMedia = async (n: number = 1): Promise<string[]> => {
 
 /**
  * Performs a logout operation.
- * @param {object} token - The access token.
+ * @param {number} userId - The access token.
  * @returns {Promise<void>} A promise that resolves when the logout is complete.
  */
-export const getLogout = async (token: any): Promise<void> => {
-  const url = "/logout";
-  const method = "get";
+export const getLogout = async (userId: number): Promise<void> => {
+  console.log("🚀 ~ file: getFetch.ts:42 ~ getLogout ~ userId:", userId)
+  const url = "/user/logout";
+  const method = "post";
   const options: RequestOptions = {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      // Authorization: `Bearer ${token}`,
     },
+    data: userId,
   };
   await fetchData(url, method, options);
 };
