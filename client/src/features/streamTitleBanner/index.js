@@ -1,6 +1,7 @@
 'use client'
 
 import React from "react";
+import ActvitiesFollow from "../activities/followActivity";
 
 function StreamTitleBanner() {
   return (
@@ -15,6 +16,7 @@ function StreamTitleBanner() {
           <p className="category__banner">Category</p>
         </div>
       </div>
+      <ActvitiesFollow />
       <div className="viewer__count__banner">
         <p>10000</p>
       </div>

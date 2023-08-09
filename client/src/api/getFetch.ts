@@ -14,7 +14,7 @@ export const getRecommended = async (amount: number): Promise<any> => {
       limit: amount
     },
   };
-  let data = await fetchData(url, "post", options);
+  let data = await fetchData(url, "get", options);
   return data
 };
 

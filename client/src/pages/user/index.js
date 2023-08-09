@@ -10,7 +10,7 @@ import "./style/style.css";
 import { useMemo } from "react";
 
 function UserFeed() {
-  const userToken = useTokenStore((state) => state.token);
+  const username = useTokenStore((state) => state.username);
   const pathname = usePathname();
   const room = useMemo(() => {
     return "/dashboard" + pathname;
@@ -25,8 +25,8 @@ function UserFeed() {
         <StreamTitleBanner />
       </div>
       <Chat
-        username={userToken?.name}
-        enableChat={userToken?.name}
+        username={username}
+        enableChat={username}
         room={room}
       />
     </div>
