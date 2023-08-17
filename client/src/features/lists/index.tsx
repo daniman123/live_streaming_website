@@ -22,15 +22,15 @@ interface ListsProps {
  * @returns {JSX.Element} The rendered component.
  */
 const Lists: FC<ListsProps> = (): JSX.Element => {
-  const userToken = useTokenStore((state: TokenStoreState) => state.token);
+  const token = useTokenStore((state: TokenStoreState) => state.token);
 
   /**
    * Fetches followed channels.
    */
   const { data: followedChannels, loading } = useFetch<Array<any>>(
     postFollowing,
-    userToken?.name,
-    userToken?.accessToken
+    token,
+    token
   );
 
   /**
@@ -40,7 +40,6 @@ const Lists: FC<ListsProps> = (): JSX.Element => {
     getRecommended,
     10
     );
-
     
     
   /**
@@ -54,7 +53,7 @@ const Lists: FC<ListsProps> = (): JSX.Element => {
     name: string,
     title: string,
     channels: Array<any>
-  ): JSX.Element => {    
+  ): JSX.Element => {   
     return <ChannelsList title={title} channels={channels} />;
   };
 

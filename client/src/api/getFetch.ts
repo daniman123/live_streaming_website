@@ -39,7 +39,7 @@ export const getDiscoverMedia = async (n: number = 1): Promise<string[]> => {
  * @returns {Promise<void>} A promise that resolves when the logout is complete.
  */
 export const getLogout = async (userId: number): Promise<void> => {
-  console.log("🚀 ~ file: getFetch.ts:42 ~ getLogout ~ userId:", userId)
+  // console.log("🚀 ~ file: getFetch.ts:42 ~ getLogout ~ userId:", userId)
   const url = "/user/logout";
   const method = "post";
   const options: RequestOptions = {

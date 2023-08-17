@@ -1,64 +1,28 @@
-import React, { useEffect, useState } from "react";
-import SetFollowMetaData from "./components/setMetaData";
+import React, { useState } from "react";
 import { useTokenStore } from "@/store/tokenStore";
-import { followActivity } from "./utils";
+import FollowButton from "./components/FollowButton";
+import { getActivityData } from "./utils/memoConstants";
+import useFollowStatusEffect from "./utils/activityHook";
 
-const ActvitiesFollow = () => {
+const ActivitiesFollow: React.FC = () => {
 	const [isFollowing, setIsFollowing] = useState(false);
-	const userId: number = useTokenStore((state) => state.userId);
+	const { userId, subjectUserId } = useTokenStore((state) => ({
+		userId: state.userId,
+		subjectUserId: state.subjectUserId,
+	}));
 
-
-	const followButtonMetaData = {
-		0: {
-			className: "unFollow-activity-button",
-			buttonInnerText: "Unfollow",
-		},
-		1: {
-			className: "follow-activity-button",
-			buttonInnerText: "Follow",
-		},
-	};
-
-	// TODO - data from request
-	const activityType = isFollowing ? "UnFollow" : "Follow";
-
-	const activityData = {
-		type: activityType,
-		userId: userId,
-		subjectId: 2,
-	};
-
-	const followingStatus = async () => {
-		const { type, userId, subjectId } = activityData;
-		try {
-			if(userId !== 0){
-				const response = await followActivity("/isfollowing","post",type, userId, subjectId);
-				setIsFollowing(response);
-			}
-		} catch (error:any) {
-			// console.log("🚀 ~ file: index.tsx:36 ~ followingStatus ~ error:", error)
-		}
-	};
-
-
-	useEffect(() => {
-		const runner = async () => {
-		  await followingStatus()
-		} 
-		runner()
-	  }, [userId])
+	const activityData = getActivityData(isFollowing, userId, subjectUserId);
+	useFollowStatusEffect(activityData, setIsFollowing, isFollowing);
 
 	return (
 		<div className="follow-channel-button-container">
-			<SetFollowMetaData
-				followButtonMetaData={
-					isFollowing ? followButtonMetaData["0"] : followButtonMetaData["1"]
-				}
+			<FollowButton
 				activityData={activityData}
 				setIsFollowing={setIsFollowing}
+				isFollowing={isFollowing}
 			/>
 		</div>
 	);
 };
 
-export default ActvitiesFollow;
+export default ActivitiesFollow;

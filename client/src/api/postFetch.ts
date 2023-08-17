@@ -3,20 +3,11 @@ import { fetchData, RequestOptions } from "./utils/fetch";
 export const postFollowing = async (userData: any | null, token: string): Promise<any> => {
   if (!userData || !token) return;
 
-  const url = "/user/following";
-  const method = "post";
-  const options: RequestOptions = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    data: {
-      username: userData,
-    },
-  };
-  const response = await fetchData(url, method, options);
-  const { data } = response;
-  return data;
+  const url = "/user/get-protected-followers";
+  const method = "get";
+
+  const { result } = await fetchData(url, method);
+  return result;
 };
 
 export const postRegister = async (username: string, email: string, password: string): Promise<any> => {

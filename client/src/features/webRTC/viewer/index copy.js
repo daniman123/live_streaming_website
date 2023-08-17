@@ -50,34 +50,22 @@ function Viewer() {
   }, []);
 
   useEffect(() => {
-    // socketConnection.current = io.connect(SIGNAL_SERVER_URL);
-    // socketConnection.current.emit("joinRoom", roomName);
+    socketConnection.current = io.connect(SIGNAL_SERVER_URL);
+    socketConnection.current.emit("joinRoom", roomName);
 
-    const socketUrl = "ws://localhost:12346";
-		socketConnection.current = new WebSocket(socketUrl);
+    peerConnection.current = new RTCPeerConnection(config);
 
-    const handleMessage = (event) => {
-			const message = event.data;
-			console.log("🚀 ~ file: index.js:21 ~ handleMessage ~ message:", message);
-			const payload = JSON.parse(message);
-			setMessageList((prevMessages) => [...prevMessages, payload]);
-		};
+    peerConnection.current.ontrack = handleTrackEvent;
 
-		socketConnection.current.addEventListener("message", handleMessage);
+    peerConnection.current.onnegotiationneeded = () =>
+      handleNegotiationNeededEvent();
 
-    // peerConnection.current = new RTCPeerConnection(config);
+    peerConnection.current.addTransceiver("video", { direction: "recvonly" });
+    peerConnection.current.addTransceiver("audio", { direction: "recvonly" });
 
-    // peerConnection.current.ontrack = handleTrackEvent;
-
-    // peerConnection.current.onnegotiationneeded = () =>
-    //   handleNegotiationNeededEvent();
-
-    // peerConnection.current.addTransceiver("video", { direction: "recvonly" });
-    // peerConnection.current.addTransceiver("audio", { direction: "recvonly" });
-
-    // return () => {
-    //   disconnect();
-    // };
+    return () => {
+      disconnect();
+    };
   }, []);
 
   useEffect(() => {

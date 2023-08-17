@@ -11,10 +11,12 @@ export interface TokenStoreState {
   username: string | null;
   isLoggedIn: boolean;
   userId: number;
+  subjectUserId: number;
   setLogin: () => void;
   setToken: (token?: string) => Promise<void>;
   setUsername: (username: string) => void;
   setUserId: (userId: number) => void;
+  setSubjectUserId: (subjectUserId: number) => void;
   removeToken: () => void;
 }
 
@@ -22,6 +24,7 @@ export const useTokenStore = create<TokenStoreState>((set) => ({
   token: null,
   username: null,
   userId: 0,
+  subjectUserId: 0,
   isLoggedIn: false,
   setLogin: () => set((state) => ({ ...state, isLoggedIn: true })),
   setToken: async (token?: string) => {
@@ -30,5 +33,6 @@ export const useTokenStore = create<TokenStoreState>((set) => ({
   },
   setUsername: (username) => set((state) => ({ ...state, username })),
   setUserId: (userId) => set((state) => ({ ...state, userId})),
+  setSubjectUserId: (subjectUserId) => set((state) => ({ ...state, subjectUserId})),
   removeToken: () => set({ userId: 0,  username: null, isLoggedIn: false }),
 }));
